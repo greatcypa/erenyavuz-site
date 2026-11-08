@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Eren Yavuz | Art Director & Motion Designer</title>
-<meta name="description" content="İstanbul'da yaşayan art director ve motion designer Eren Yavuz'un portfolyosu.">
+<title>Eren Yavuz | Graphic & Motion Designer / Art Director</title>
+<meta name="description" content="Eren Yavuz, İstanbul'da çalışan grafik ve motion tasarımcı, art director.">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 6C48 6 58 18 58 34S48 60 32 60 6 50 6 34 16 6 32 6Z' fill='%23fff' stroke='%230E9F8E' stroke-width='4'/%3E%3Ccircle cx='23' cy='29' r='7' fill='%23fff' stroke='%230E9F8E' stroke-width='3'/%3E%3Ccircle cx='42' cy='28' r='5.5' fill='%23fff' stroke='%230E9F8E' stroke-width='3'/%3E%3Ccircle cx='24' cy='30' r='3' fill='%230E9F8E'/%3E%3Ccircle cx='43' cy='29' r='2.4' fill='%230E9F8E'/%3E%3Cpath d='M20 41Q32 46 44 40Q38 54 20 41Z' fill='%23fff' stroke='%230E9F8E' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Shantell+Sans:wght,BNCE,INFM@300..800,-100..100,0..100&display=swap" rel="stylesheet">
 <style>
 /* ===== Tasarım sistemi (DESIGN.md ile aynı) ===== */
 :root{
@@ -20,8 +20,10 @@
   --mint:#E3F4F0;
   --fog:#6B7270;
   --rule:#D9DDDC;
+  --pattern:#A9DCD2;
 
   --font:"Bricolage Grotesque","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-name:"Shantell Sans","Bricolage Grotesque","Comic Sans MS",cursive;
 
   --s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:64px;--s7:96px;--s8:144px;
   --pad:clamp(20px,4vw,56px);
@@ -34,7 +36,7 @@
   --t-work:clamp(26px,3.2vw,44px);
   --t-h2:clamp(32px,4.4vw,60px);
   --t-cta:clamp(44px,7vw,112px);
-  --t-hero:clamp(64px,15.2vw,250px);
+  --t-hero:clamp(68px,13vw,230px);
 
   --ease:cubic-bezier(.65,0,.25,1);
   --ease-out:cubic-bezier(.2,.8,.2,1);
@@ -53,7 +55,7 @@ body{
 img,video,svg{display:block;max-width:100%}
 a{color:inherit}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
-h1,h2,h3,p,ul,ol{margin:0}
+h1,h2,h3,p,ul,ol,figure{margin:0}
 ul,ol{padding:0;list-style:none}
 :focus-visible{outline:3px solid var(--monster);outline-offset:3px;border-radius:4px}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -61,28 +63,28 @@ ul,ol{padding:0;list-style:none}
 .skip:focus{top:12px}
 
 /* ===== Canavarlar ===== */
-.m{display:inline-block;position:relative;line-height:0;-webkit-tap-highlight-color:transparent}
-.mon{width:100%;height:auto;overflow:visible}
-.mon .ln{
+.m{display:inline-block;position:relative;line-height:0;pointer-events:none;-webkit-tap-highlight-color:transparent}
+.mon{width:100%;height:auto;overflow:visible;transform-origin:50% 92%}
+.mon .ln,.pattern .ln{
   fill:var(--paper);stroke:var(--monster);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round;
   stroke-dasharray:1 1;stroke-dashoffset:1;
   transition:stroke-dashoffset 1.15s var(--ease) var(--d,0s);
 }
-.mon .ln.open-line{fill:none}
-.m.in .ln{stroke-dashoffset:0}
-.mon .fl{fill:var(--monster);opacity:0;transition:opacity .45s ease calc(var(--d,0s) + .75s)}
-.mon .glint{fill:var(--paper)}
-.m.in .fl{opacity:1}
+.mon .ln{pointer-events:visiblePainted;cursor:pointer}
+.mon .ln.open-line,.pattern .ln.open-line{fill:none}
+.m.in .ln,.pattern.in .ln{stroke-dashoffset:0}
+.mon .fl,.pattern .fl{fill:var(--monster);opacity:0;transition:opacity .45s ease calc(var(--d,0s) + .75s)}
+.mon .glint,.pattern .glint{fill:var(--paper)}
+.m.in .fl,.pattern.in .fl{opacity:1}
 .mon .eye{transform-box:fill-box;transform-origin:center;transition:transform .07s ease}
 .m.blink .eye{transform:scaleY(.08)}
 .mon .reel{transform-box:fill-box;transform-origin:center;animation:spin 7s linear infinite}
 .mon .arm{transform-origin:170px 126px}
 .m.waving .arm{animation:wave .55s ease-in-out 4}
-.mon .wake{display:none}
+.wake{display:none}
 .m.awake .wake{display:inline}
 .m.awake .sleep{display:none}
 .m:hover .mon,.m.boing .mon{animation:squash .6s var(--ease-out)}
-.mon{transform-origin:50% 92%}
 @keyframes squash{
   0%{transform:scale(1,1)}
   22%{transform:scale(1.07,.9)}
@@ -92,6 +94,10 @@ ul,ol{padding:0;list-style:none}
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes wave{0%,100%{transform:rotate(0)}35%{transform:rotate(-16deg)}70%{transform:rotate(9deg)}}
+
+/* Arka plan deseni: ince, açık, etkileşimsiz */
+.pattern .ln{stroke:var(--pattern);stroke-width:1.6;vector-effect:non-scaling-stroke}
+.pattern .fl{fill:var(--pattern)}
 
 /* ===== Menü ===== */
 .nav{
@@ -112,6 +118,12 @@ ul,ol{padding:0;list-style:none}
 .lang{display:flex;align-items:center;gap:6px;color:var(--fog);font-size:17px}
 .lang button{color:var(--fog)}
 .lang button[aria-pressed="true"]{color:var(--ink)}
+.sound-btn{display:flex;align-items:center;justify-content:center;width:40px;height:40px;margin:0 -6px;border-radius:999px;transition:background .2s}
+.sound-btn:hover{background:var(--mint)}
+.sound-btn svg{width:26px;height:26px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sound-btn .slash{display:none}
+.sound-btn[aria-pressed="false"] .waves{display:none}
+.sound-btn[aria-pressed="false"] .slash{display:inline}
 .menu-btn{display:none;font-weight:500;font-size:17px;padding:8px 0}
 .menu{
   position:fixed;inset:0;z-index:60;background:var(--paper);
@@ -127,10 +139,9 @@ ul,ol{padding:0;list-style:none}
 
 /* ===== Ortak bölüm düzeni ===== */
 .section{padding:var(--s8) var(--pad);scroll-margin-top:var(--nav-h)}
-.wrap{max-width:var(--max);margin:0 auto}
 .sec-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--s3)}
 .sec-grid > .sec-label{grid-column:1 / span 3}
-.sec-grid > .sec-body{grid-column:4 / -1}
+.sec-grid > .sec-body{grid-column:4 / -1;min-width:0}
 .sec-label{font-size:var(--t-sm);font-weight:500;letter-spacing:.01em;color:var(--fog);padding-top:.55em}
 .sec-label .count{font-variant-numeric:tabular-nums}
 .h2{font-size:var(--t-h2);font-weight:500;letter-spacing:-.03em;line-height:1.02;max-width:18ch}
@@ -140,61 +151,78 @@ ul,ol{padding:0;list-style:none}
 
 /* ===== Giriş ekranı ===== */
 .hero{
-  position:relative;overflow:hidden;min-height:100svh;
-  padding:calc(var(--nav-h) + clamp(16px,4vh,48px)) var(--pad) clamp(240px,21vw,330px);
-  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;height:100svh;min-height:600px;
   border-bottom:1px solid var(--ink);
 }
+.pattern{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-text{
+  position:relative;z-index:3;pointer-events:none;
+  padding:calc(var(--nav-h) + clamp(20px,6vh,72px)) var(--pad) 0;
+  max-width:var(--max);margin:0 auto;
+}
 .name{
-  font-size:var(--t-hero);font-weight:600;letter-spacing:-.045em;line-height:.86;
-  font-variation-settings:"opsz" 96;margin-left:-.04em;white-space:nowrap;
+  font-family:var(--font-name);font-size:var(--t-hero);font-weight:800;line-height:.92;letter-spacing:-.015em;
+  font-variation-settings:"INFM" 100,"BNCE" var(--bnce,30);
+  margin-left:-.03em;
+  text-shadow:0 0 22px #fff,0 0 8px #fff,0 0 3px #fff;
 }
 .name span{display:inline-block}
-.hero-row{
-  display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--s3);
-  margin-top:clamp(28px,5vh,56px);align-items:end;
+.hero-tag{
+  margin-top:clamp(16px,3vh,32px);font-size:var(--t-lead);font-weight:500;letter-spacing:-.01em;
+  text-shadow:0 0 16px #fff,0 0 6px #fff,0 0 2px #fff;
 }
-.hero-tag{grid-column:1 / span 6;max-width:30ch}
-.hero-meta{grid-column:9 / -1;display:flex;flex-direction:column;gap:2px;font-size:var(--t-body)}
-.hero-meta .link{margin-top:var(--s2);align-self:flex-start;font-size:var(--t-body)}
-.crowd{
-  position:absolute;left:0;right:0;bottom:0;
-  display:flex;justify-content:center;align-items:flex-end;pointer-events:none;
-}
-.crowd .m{
-  --w:clamp(120px,17vw,290px);
-  width:var(--w);flex:none;margin:0 calc(var(--w) * -.09);
-  transform:translateY(var(--y,30%));pointer-events:auto;
-}
-.crowd .c1{--w:clamp(110px,15vw,250px);--y:16%;z-index:1}
-.crowd .c2{--w:clamp(130px,19vw,310px);--y:9%;z-index:2}
-.crowd .c3{--w:clamp(120px,17vw,280px);--y:4%;z-index:4}
-.crowd .c4{--w:clamp(140px,20vw,330px);--y:11%;z-index:3}
-.crowd .c5{--w:clamp(110px,16vw,260px);--y:8%;z-index:2}
-.crowd .c6{--w:clamp(100px,14vw,230px);--y:18%;z-index:1}
+.cast{position:absolute;inset:0;z-index:2;pointer-events:none}
+.cast .m{position:absolute;left:var(--x);top:var(--y);width:var(--w)}
+.cast .c1{--x:83%;--y:9%; --w:min(11vw,22vh)}
+.cast .c2{--x:61%;--y:44%;--w:min(14vw,28vh)}
+.cast .c3{--x:5%; --y:60%;--w:min(15vw,30vh)}
+.cast .c4{--x:31%;--y:68%;--w:min(11vw,22vh)}
+.cast .c5{--x:81%;--y:58%;--w:min(13vw,26vh)}
+.cast .c6{--x:48%;--y:80%;--w:min(8.5vw,16vh)}
 
-/* ===== İşler ===== */
-.work-list{border-bottom:1px solid var(--rule)}
-.work-list a{
-  display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:var(--s3);
-  padding:clamp(18px,2vw,26px) 0;border-top:1px solid var(--rule);text-decoration:none;
+/* ===== İşler: carousel + liste ===== */
+.carousel{
+  --h:clamp(280px,56vh,640px);
+  margin-right:calc(-1 * (var(--pad) + max(0px, (100vw - var(--max) - 2 * var(--pad)) / 2)));
+}
+.track{
+  position:relative;display:flex;gap:var(--s3);overflow-x:auto;overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;
+  padding-right:calc(var(--pad) + max(0px, (100vw - var(--max) - 2 * var(--pad)) / 2));
+  cursor:grab;user-select:none;-webkit-user-select:none;
+}
+.track::-webkit-scrollbar{display:none}
+.track.drag{scroll-snap-type:none;scroll-behavior:auto;cursor:grabbing}
+.track:focus-visible{outline-offset:6px}
+.slide{flex:none;scroll-snap-align:start;display:flex;flex-direction:column;gap:12px}
+.media{
+  position:relative;height:var(--h);aspect-ratio:var(--r,4/3);border-radius:14px;overflow:hidden;
+  background:var(--bg,var(--mint));
+}
+.media img,.media video{position:absolute;inset:0;width:100%;height:100%;object-fit:var(--fit,cover);object-position:var(--pos,50% 50%);-webkit-user-drag:none;pointer-events:none}
+.media .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.media .ph .m{width:min(42%,220px)}
+.slide figcaption{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;column-gap:var(--s2);row-gap:2px;width:0;min-width:100%}
+.slide .cap-t{font-size:20px;font-weight:600;letter-spacing:-.01em}
+.slide .cap-k{font-size:16px;color:var(--fog)}
+.car-controls{display:flex;align-items:center;justify-content:space-between;margin-top:var(--s4)}
+.car-count{font-size:var(--t-sm);font-weight:500;color:var(--fog);font-variant-numeric:tabular-nums}
+.car-arrows{display:flex;gap:12px}
+.arrow{width:54px;height:54px;border-radius:999px;border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;transition:background .2s,opacity .2s}
+.arrow:hover{background:var(--mint)}
+.arrow:disabled{opacity:.25;cursor:default;background:none}
+.arrow svg{width:26px;height:26px;fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.arrow.prev svg{transform:scaleX(-1)}
+.work-list{margin-top:var(--s7);border-bottom:1px solid var(--rule)}
+.work-row{
+  width:100%;display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:var(--s3);text-align:left;
+  padding:clamp(18px,2vw,26px) 0;border-top:1px solid var(--rule);
 }
 .work-title{font-size:var(--t-work);font-weight:500;letter-spacing:-.02em;line-height:1.1;transition:transform .45s var(--ease),color .25s}
 .work-kind{font-size:var(--t-body);color:var(--fog);text-align:right}
-.work-list a:hover .work-title,.work-list a:focus-visible .work-title{transform:translateX(14px);color:var(--monster-deep)}
-.peek{
-  position:fixed;left:0;top:0;z-index:40;pointer-events:none;
-  width:clamp(260px,26vw,400px);aspect-ratio:4/3;border-radius:14px;overflow:hidden;
-  opacity:0;transform:translate3d(-999px,-999px,0);scale:.92;
-  transition:opacity .25s ease,scale .35s var(--ease-out);
-}
-.peek.on{opacity:1;scale:1}
-.peek-item{position:absolute;inset:0;opacity:0;transition:opacity .25s ease;background:var(--mint)}
-.peek-item.cur{opacity:1}
-.peek-item img,.peek-item video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.peek-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:10px;padding-bottom:18px}
-.peek-ph .m{width:44%}
-.peek-ph span{font-size:var(--t-sm);font-weight:500;color:var(--monster-deep)}
+.work-row:hover .work-title,.work-row:focus-visible .work-title{transform:translateX(14px)}
+.work-row.cur .work-title{color:var(--monster-deep)}
+.all-work{display:inline-block;margin-top:var(--s4)}
 
 /* ===== Hizmetler ===== */
 .services-head .lead{margin-top:var(--s3)}
@@ -212,30 +240,20 @@ ul,ol{padding:0;list-style:none}
   padding:calc(var(--nav-h) + 8px) var(--pad) var(--s5);
 }
 .story-pin .sec-grid{width:100%}
-.comp{
-  --name:200px;
-  margin-top:var(--s6);border:1px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--paper);
-}
+.comp{--name:200px;margin-top:var(--s6);border:1px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--paper)}
 .comp-bar{display:flex;align-items:center;gap:var(--s2);height:40px;padding:0 var(--s2);border-bottom:1px solid var(--rule)}
 .comp-tab{font-size:var(--t-sm);font-weight:500;padding:4px 12px;border-radius:999px;background:var(--mint);color:var(--monster-deep)}
 .comp-body{position:relative;padding:0 22px var(--s2) 0}
-.ruler{
-  display:grid;grid-template-columns:var(--name) 1fr;height:34px;border-bottom:1px solid var(--rule);
-  font-size:13px;color:var(--fog);font-variant-numeric:tabular-nums;
-}
+.ruler{display:grid;grid-template-columns:var(--name) 1fr;height:34px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--fog);font-variant-numeric:tabular-nums}
 .ruler-scale{
   position:relative;display:flex;justify-content:space-between;align-items:center;padding:0 2px;
   background:linear-gradient(to right,var(--rule) 1px,transparent 1px) 0 100%/calc(100% / 15) 9px repeat-x;
 }
 .layer{display:grid;grid-template-columns:var(--name) 1fr;align-items:center;height:46px;border-bottom:1px solid #EEF1F0;transition:background .3s}
-.layer:last-of-type{border-bottom:0}
 .layer-name{display:flex;align-items:center;gap:10px;padding:0 var(--s2);font-size:16px;font-weight:500;color:var(--fog);transition:color .3s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .layer-name::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--rule);flex:none;transition:background .3s}
-.track{position:relative;height:100%}
-.bar{
-  position:absolute;top:12px;bottom:12px;left:calc(var(--s) * 100%);width:calc((var(--e) - var(--s)) * 100%);
-  border-radius:6px;background:var(--mint);transition:background .35s;
-}
+.track-tl{position:relative;height:100%}
+.bar{position:absolute;top:12px;bottom:12px;left:calc(var(--s) * 100%);width:calc((var(--e) - var(--s)) * 100%);border-radius:6px;background:var(--mint);transition:background .35s}
 .kf{position:absolute;top:50%;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;background:var(--paper);border:2px solid var(--monster);transform:rotate(45deg);transition:background .3s}
 .kf:first-child{left:0}
 .kf:last-child{left:100%}
@@ -244,10 +262,7 @@ ul,ol{padding:0;list-style:none}
 .layer.live .bar{background:#BFE7DF}
 .layer.live .kf{background:var(--monster)}
 .layer.focus{background:#F5FBFA}
-.playhead{
-  position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--monster);
-  left:calc(var(--name) + (100% - var(--name) - 22px) * var(--p,0));pointer-events:none;
-}
+.playhead{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--monster);left:calc(var(--name) + (100% - var(--name) - 22px) * var(--p,0));pointer-events:none}
 .playhead::before{content:"";position:absolute;top:2px;left:50%;width:14px;height:20px;margin-left:-7px;background:var(--monster);clip-path:polygon(0 0,100% 0,100% 60%,50% 100%,0 60%)}
 .chapter{margin-top:var(--s4);font-size:var(--t-lead);line-height:1.3;letter-spacing:-.01em;max-width:42ch;min-height:2.6em;transition:opacity .25s ease}
 .chapter.swap{opacity:0}
@@ -260,10 +275,7 @@ ul,ol{padding:0;list-style:none}
 .steps p{margin-top:var(--s1);max-width:30ch;color:#2B2F2E}
 
 /* ===== CTA ===== */
-.cta{
-  position:relative;overflow:hidden;scroll-margin-top:var(--nav-h);
-  padding:var(--s8) var(--pad) calc(var(--s8) + 40px);border-top:1px solid var(--ink);
-}
+.cta{position:relative;overflow:hidden;scroll-margin-top:var(--nav-h);padding:var(--s8) var(--pad) calc(var(--s8) + 40px);border-top:1px solid var(--ink)}
 .cta-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:2}
 .cta-title{font-size:var(--t-cta);font-weight:600;letter-spacing:-.035em;line-height:.95;max-width:12ch}
 .mail{display:inline-block;margin-top:var(--s6);font-size:clamp(24px,3vw,40px);font-weight:500;letter-spacing:-.02em;text-decoration:underline;text-decoration-color:var(--monster);text-decoration-thickness:3px;text-underline-offset:8px;word-break:break-all}
@@ -280,13 +292,13 @@ ul,ol{padding:0;list-style:none}
 /* ===== Footer ===== */
 .foot{position:relative;padding:0 var(--pad) var(--s4);border-top:1px solid var(--ink)}
 .sleepers{position:absolute;left:0;right:0;top:-82px;height:82px;overflow:hidden;display:flex;align-items:flex-end;justify-content:flex-start;padding:0 var(--pad);gap:clamp(6px,2vw,28px);pointer-events:none}
-.sleepers .m{width:clamp(76px,8vw,110px);transform:translateY(30%);pointer-events:auto}
+.sleepers .m{width:clamp(76px,8vw,110px);transform:translateY(30%)}
 .foot-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--s3);row-gap:var(--s5);padding-top:var(--s6)}
 .foot-grid > :nth-child(1){grid-column:1 / span 4}
 .foot-grid > :nth-child(2){grid-column:6 / span 2}
 .foot-grid > :nth-child(3){grid-column:8 / span 2}
 .foot-grid > :nth-child(4){grid-column:10 / span 3}
-.foot-name{font-size:28px;font-weight:600;letter-spacing:-.02em}
+.foot-name{font-family:var(--font-name);font-size:30px;font-weight:800;font-variation-settings:"INFM" 100,"BNCE" 30;letter-spacing:-.01em}
 .foot .fog{color:var(--fog);margin-top:4px;max-width:26ch}
 .foot-h{font-size:var(--t-sm);font-weight:500;color:var(--fog);margin-bottom:var(--s1)}
 .foot li a{text-decoration:none}
@@ -300,26 +312,27 @@ ul,ol{padding:0;list-style:none}
 @media (max-width:1100px){
   .services{grid-template-columns:repeat(2,1fr)}
   .steps{grid-template-columns:repeat(2,1fr)}
-  .hero-tag{grid-column:1 / span 7}
-  .hero-meta{grid-column:9 / -1}
 }
 @media (max-width:820px){
   :root{--nav-h:64px}
+  .nav{gap:var(--s3)}
   .nav-links,.nav .lang{display:none}
   .menu-btn{display:block}
   .section{padding:var(--s7) var(--pad)}
   .sec-grid > .sec-label,.sec-grid > .sec-body{grid-column:1 / -1}
   .sec-label{padding:0 0 var(--s3)}
-  .name{font-size:clamp(64px,27vw,200px);line-height:.84;white-space:normal}
+  .name{font-size:clamp(68px,23vw,180px);line-height:.88}
   .name span{display:block}
-  .hero-row{grid-template-columns:1fr;row-gap:var(--s3)}
-  .hero-tag,.hero-meta{grid-column:1 / -1}
-  .hero{padding-bottom:clamp(150px,40vw,220px)}
-  .crowd .c5,.crowd .c6{display:none}
-  .crowd .m{--w:clamp(110px,34vw,220px)}
-  .crowd .c1{--w:clamp(96px,30vw,190px)}
-  .crowd .c4{--w:clamp(120px,36vw,230px)}
-  .work-list a{grid-template-columns:1fr;gap:2px}
+  .cast .c1{--x:60%;--y:50%;--w:30vw}
+  .cast .c2{--x:4%; --y:57%;--w:34vw}
+  .cast .c3{--x:44%;--y:66%;--w:38vw}
+  .cast .c4{--x:2%; --y:79%;--w:27vw}
+  .cast .c5{--x:70%;--y:80%;--w:27vw}
+  .cast .c6{display:none}
+  .carousel{--h:clamp(220px,62vw,420px)}
+  .slide figcaption{flex-direction:column;gap:2px}
+  .work-list{margin-top:var(--s6)}
+  .work-row{grid-template-columns:1fr;gap:2px}
   .work-kind{text-align:left;font-size:16px}
   .services{grid-template-columns:1fr;margin-top:var(--s5)}
   .steps{grid-template-columns:1fr;margin-top:var(--s5);row-gap:var(--s4)}
@@ -332,18 +345,17 @@ ul,ol{padding:0;list-style:none}
   .cta{padding-bottom:calc(var(--s7) + 150px)}
   .cta-m{right:var(--pad);bottom:-40px;width:170px}
   .sleepers .m:nth-child(n+3){display:none}
-  .foot-grid > *{grid-column:1 / -1 !important}
   .foot-grid{grid-template-columns:1fr 1fr}
+  .foot-grid > *{grid-column:1 / -1 !important}
   .foot-grid > :nth-child(2),.foot-grid > :nth-child(3){grid-column:span 1 !important}
 }
-@media (hover:none),(pointer:coarse){.peek{display:none}}
-
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .mon .ln{transition:none;stroke-dashoffset:0}
-  .mon .fl{transition:none;opacity:1}
+  .track{scroll-behavior:auto}
+  .mon .ln,.pattern .ln{transition:none;stroke-dashoffset:0}
+  .mon .fl,.pattern .fl{transition:none;opacity:1}
   .mon .reel,.m.waving .arm,.m:hover .mon,.m.boing .mon{animation:none}
-  .nav,.work-title,.peek,.chapter{transition:none}
+  .nav,.work-title,.chapter{transition:none}
 }
 </style>
 </head>
@@ -359,12 +371,15 @@ ul,ol{padding:0;list-style:none}
 </svg>
 
 <header class="nav" id="nav">
-  <a class="brand" href="#top" aria-label="Eren Yavuz, başa dön"><span class="m" data-m="classic" data-seed="3"></span><span>Eren Yavuz</span></a>
+  <a class="brand" href="#top" aria-label="Eren Yavuz"><span class="m" data-m="classic" data-seed="3"></span><span>Eren Yavuz</span></a>
   <nav class="nav-links" aria-label="Ana menü">
     <a href="#work" data-i18n="nav.work">İşler</a>
     <a href="#about" data-i18n="nav.about">Hakkımda</a>
     <a href="#contact" data-i18n="nav.contact">İletişim</a>
   </nav>
+  <button type="button" class="sound-btn" id="soundBtn" aria-pressed="true">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 12.5h5.5L18 6v20l-7.5-6.5H5z"/><g class="waves"><path d="M22 11.5q3 4.5 0 9"/><path d="M25.5 8q5.5 8 0 16"/></g><path class="slash" d="M4 4l24 24"/></svg>
+  </button>
   <div class="lang" role="group" aria-label="Dil / Language">
     <button type="button" data-lang="tr" aria-pressed="true">TR</button><span aria-hidden="true">/</span><button type="button" data-lang="en" aria-pressed="false">EN</button>
   </div>
@@ -389,23 +404,19 @@ ul,ol{padding:0;list-style:none}
 <main id="top">
 
   <!-- Giriş ekranı -->
-  <section class="hero" aria-labelledby="name">
-    <h1 class="name" id="name"><span>Eren</span> <span>Yavuz</span></h1>
-    <div class="hero-row">
-      <p class="lead hero-tag" data-i18n="hero.tagline">Art director ve motion designer. 2011'den beri fikirleri tasarlıyor, sonra yerinde durmalarına izin vermiyorum.</p>
-      <div class="hero-meta">
-        <p data-i18n="hero.where">İstanbul'da yaşıyorum.</p>
-        <p data-i18n="hero.avail">Serbest ve tam zamanlı işlere açığım.</p>
-        <a class="link" href="#work" data-i18n="hero.cta">İşlere göz at</a>
-      </div>
-    </div>
-    <div class="crowd" aria-hidden="true">
-      <span class="m c1" data-m="antenna" data-seed="11"></span>
-      <span class="m c2" data-m="crown" data-seed="4"></span>
-      <span class="m c3" data-m="glasses" data-seed="7"></span>
-      <span class="m c4" data-m="reel" data-seed="2"></span>
+  <section class="hero" id="hero" aria-labelledby="name">
+    <svg class="pattern" id="pattern" aria-hidden="true" focusable="false"></svg>
+    <div class="cast" aria-hidden="true">
+      <span class="m c1" data-m="crown" data-seed="4"></span>
+      <span class="m c2" data-m="glasses" data-seed="7"></span>
+      <span class="m c3" data-m="reel" data-seed="2"></span>
+      <span class="m c4" data-m="antenna" data-seed="11"></span>
       <span class="m c5" data-m="classic" data-seed="9"></span>
-      <span class="m c6" data-m="crown" data-seed="15"></span>
+      <span class="m c6" data-m="classic" data-seed="15"></span>
+    </div>
+    <div class="hero-text">
+      <h1 class="name" id="name"><span>Eren</span> <span>Yavuz</span></h1>
+      <p class="hero-tag">Graphic &amp; Motion Designer /<span> Art&nbsp;Director</span></p>
     </div>
   </section>
 
@@ -414,11 +425,21 @@ ul,ol{padding:0;list-style:none}
     <div class="sec-grid">
       <p class="sec-label"><span data-i18n="work.label">Seçili işler</span> <span class="count" id="workCount"></span></p>
       <div class="sec-body">
+        <div class="carousel" id="carousel" role="region" aria-roledescription="carousel" aria-label="Seçili işler">
+          <div class="track" id="track" tabindex="0"></div>
+        </div>
+        <div class="car-controls">
+          <span class="car-count" id="carCount" aria-live="polite">01 / 08</span>
+          <div class="car-arrows">
+            <button type="button" class="arrow prev" id="prevBtn" data-i18n-label="car.prev" aria-label="Önceki"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 16.5h21M18.5 8.5l8 8-8 8"/></svg></button>
+            <button type="button" class="arrow next" id="nextBtn" data-i18n-label="car.next" aria-label="Sonraki"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 16.5h21M18.5 8.5l8 8-8 8"/></svg></button>
+          </div>
+        </div>
         <ul class="work-list" id="workList"></ul>
+        <a class="link all-work" id="allWork" href="https://www.behance.net/jakuperen" target="_blank" rel="noopener" data-i18n="work.all">Tüm işler Behance'te</a>
       </div>
     </div>
   </section>
-  <div class="peek" id="peek" aria-hidden="true"></div>
 
   <!-- Hizmetler -->
   <section class="section" id="services">
@@ -445,16 +466,16 @@ ul,ol{padding:0;list-style:none}
       <div class="sec-grid">
         <p class="sec-label" data-i18n="story.label">Hikâye</p>
         <div class="sec-body">
-          <h2 class="h2" id="storyTitle" data-i18n="story.title">On beş yıl, tek merak: bir şeyleri kıpırdatmak.</h2>
+          <h2 class="h2" id="storyTitle" data-i18n="story.title">Bir film şeridinde 15 yıl.</h2>
           <div class="comp" id="comp" aria-hidden="true">
             <div class="comp-bar"><span class="comp-tab">kariyer_final_v15</span></div>
             <div class="comp-body">
               <div class="ruler"><span></span><span class="ruler-scale"><span>2011</span><span data-i18n="story.today">bugün</span></span></div>
-              <div class="layer" data-key="flash" style="--s:0;--e:.3"><span class="layer-name" data-i18n="layer.flash">Flash</span><span class="track"><span class="bar"><i class="kf"></i><i class="kf"></i></span></span></div>
-              <div class="layer" data-key="ae" style="--s:.2;--e:1"><span class="layer-name" data-i18n="layer.ae">After Effects</span><span class="track"><span class="bar"><i class="kf"></i><i class="kf"></i></span></span></div>
-              <div class="layer" data-key="static" style="--s:.08;--e:1"><span class="layer-name" data-i18n="layer.static">Basılı ve dijital</span><span class="track"><span class="bar"><i class="kf"></i><i class="kf"></i></span></span></div>
-              <div class="layer" data-key="ad" style="--s:0;--e:1"><span class="layer-name" data-i18n="layer.ad">Art direction</span><span class="track"><span class="bar"><i class="kf"></i><i class="kf"></i></span></span></div>
-              <div class="layer" data-key="ai" style="--s:.82;--e:1"><span class="layer-name" data-i18n="layer.ai">Yapay zekâ</span><span class="track"><span class="bar"><i class="kf"></i><i class="kf"></i></span></span></div>
+              <div class="layer" data-key="flash" style="--s:0;--e:.3"><span class="layer-name" data-i18n="layer.flash">Flash</span><span class="track-tl"><span class="bar"><i class="kf"></i><i class="kf"></i></span></span></div>
+              <div class="layer" data-key="ae" style="--s:.2;--e:1"><span class="layer-name" data-i18n="layer.ae">After Effects</span><span class="track-tl"><span class="bar"><i class="kf"></i><i class="kf"></i></span></span></div>
+              <div class="layer" data-key="static" style="--s:.08;--e:1"><span class="layer-name" data-i18n="layer.static">Basılı ve dijital</span><span class="track-tl"><span class="bar"><i class="kf"></i><i class="kf"></i></span></span></div>
+              <div class="layer" data-key="ad" style="--s:0;--e:1"><span class="layer-name" data-i18n="layer.ad">Art direction</span><span class="track-tl"><span class="bar"><i class="kf"></i><i class="kf"></i></span></span></div>
+              <div class="layer" data-key="ai" style="--s:.82;--e:1"><span class="layer-name" data-i18n="layer.ai">Yapay zekâ</span><span class="track-tl"><span class="bar"><i class="kf"></i><i class="kf"></i></span></span></div>
               <span class="playhead"></span>
             </div>
           </div>
@@ -486,7 +507,7 @@ ul,ol{padding:0;list-style:none}
   <!-- Sonraki adım -->
   <section class="cta" id="contact" aria-labelledby="ctaTitle">
     <div class="cta-inner">
-      <h2 class="cta-title" id="ctaTitle"><span data-i18n="cta.l1">Aklında bir fikir mi var?</span><br><span data-i18n="cta.l2">Birlikte hareket ettirelim.</span></h2>
+      <h2 class="cta-title" id="ctaTitle"><span data-i18n="cta.l1">Aklında bir fikir mi var?</span><br><span data-i18n="cta.l2">Birlikte gerçekleştirelim.</span></h2>
       <a class="mail" id="mailLink" href="mailto:hello@erenyavuz.com">hello@erenyavuz.com</a>
       <div class="cta-actions">
         <a class="btn btn--ink" id="mailBtn" href="mailto:hello@erenyavuz.com" data-i18n="cta.mail">E-posta yaz</a>
@@ -499,14 +520,14 @@ ul,ol{padding:0;list-style:none}
 
 <footer class="foot">
   <div class="sleepers" aria-hidden="true">
-    <span class="m" data-m="sleepy" data-seed="31"></span>
-    <span class="m" data-m="sleepy" data-seed="32"></span>
-    <span class="m" data-m="sleepy" data-seed="33"></span>
-    <span class="m" data-m="sleepy" data-seed="34"></span>
-    <span class="m" data-m="sleepy" data-seed="35"></span>
+    <span class="m" data-quiet="1" data-m="sleepy" data-seed="31"></span>
+    <span class="m" data-quiet="1" data-m="sleepy" data-seed="32"></span>
+    <span class="m" data-quiet="1" data-m="sleepy" data-seed="33"></span>
+    <span class="m" data-quiet="1" data-m="sleepy" data-seed="34"></span>
+    <span class="m" data-quiet="1" data-m="sleepy" data-seed="35"></span>
   </div>
   <div class="foot-grid">
-    <div><p class="foot-name">Eren Yavuz</p><p class="fog" data-i18n="footer.tagline">Art director ve motion designer, İstanbul.</p></div>
+    <div><p class="foot-name">Eren Yavuz</p><p class="fog">Motion and Graphic Designer</p></div>
     <nav aria-label="Site"><p class="foot-h">Site</p><ul>
       <li><a href="#work" data-i18n="nav.work">İşler</a></li>
       <li><a href="#about" data-i18n="nav.about">Hakkımda</a></li>
@@ -524,93 +545,101 @@ ul,ol{padding:0;list-style:none}
 (() => {
   "use strict";
 
-  /* ---------- Ayarlar: buradan düzenle ---------- */
+  /* =========================================================
+     AYARLAR: burayı düzenle
+     ========================================================= */
   const EMAIL = "hello@erenyavuz.com";
   const BEHANCE = "https://www.behance.net/jakuperen";
 
-  // İşler: görselleri assets/work/ klasörüne koy, adı burada yaz. .mp4 de olur.
+  // İşler (carousel ve liste buradan oluşur)
+  // media : görselin yolu, ör. "assets/work/venatura.jpg" (.mp4 de olur). Boşsa canavar görünür.
+  // ratio : kutunun oranı. Yatay "16/9", "4/3"; dikey afiş "3/4", "4/5"; kare "1/1".
+  // pos   : görselin kutu içindeki konumu (kırpma noktası). "50% 50%" orta, "50% 20%" üst taraf.
+  // fit   : "cover" kutuyu doldurur (kırpar), "contain" görselin tamamını gösterir.
+  // bg    : fit "contain" iken boş kalan alanın rengi.
+  // url   : başlığa tıklanınca açılacak adres (boşsa link olmaz).
   const WORKS = [
-    { t:{tr:"Venatura", en:"Venatura"}, k:{tr:"Key visual ve ürün iletişimi", en:"Key visuals and product communication"}, media:"assets/work/venatura.jpg", url:BEHANCE },
-    { t:{tr:"Motion graphics", en:"Motion graphics"}, k:{tr:"Animasyon", en:"Animation"}, media:"assets/work/motion.mp4", url:BEHANCE },
-    { t:{tr:"Afişler", en:"Posters"}, k:{tr:"Basılı tasarım", en:"Print design"}, media:"assets/work/afis.jpg", url:BEHANCE },
-    { t:{tr:"Sosyal medya", en:"Social media"}, k:{tr:"Dijital kampanyalar", en:"Digital campaigns"}, media:"assets/work/sosyal-medya.jpg", url:BEHANCE },
-    { t:{tr:"İnfografik", en:"Infographics"}, k:{tr:"Bilgi tasarımı", en:"Information design"}, media:"assets/work/infografik.jpg", url:BEHANCE },
-    { t:{tr:"İllüstrasyon", en:"Illustration"}, k:{tr:"Karakter ve sahne", en:"Characters and scenes"}, media:"assets/work/illustrasyon.jpg", url:BEHANCE },
-    { t:{tr:"GIF döngüleri", en:"GIF loops"}, k:{tr:"Kısa animasyon", en:"Short animation"}, media:"assets/work/gif.mp4", url:BEHANCE },
-    { t:{tr:"Yapay zekâ deneyleri", en:"AI experiments"}, k:{tr:"Yapay zekâ ile üretim", en:"AI-assisted production"}, media:"assets/work/yapay-zeka.jpg", url:BEHANCE },
+    { t:{tr:"Venatura", en:"Venatura"}, k:{tr:"Key visual ve ürün iletişimi", en:"Key visuals and product communication"}, media:"", ratio:"4/3", pos:"50% 50%", fit:"cover", bg:"", url:"" },
+    { t:{tr:"Motion graphics", en:"Motion graphics"}, k:{tr:"Animasyon", en:"Animation"}, media:"", ratio:"16/9", pos:"50% 50%", fit:"cover", bg:"", url:"" },
+    { t:{tr:"Afişler", en:"Posters"}, k:{tr:"Basılı tasarım", en:"Print design"}, media:"", ratio:"3/4", pos:"50% 50%", fit:"cover", bg:"", url:"" },
+    { t:{tr:"Sosyal medya", en:"Social media"}, k:{tr:"Dijital kampanyalar", en:"Digital campaigns"}, media:"", ratio:"4/5", pos:"50% 50%", fit:"cover", bg:"", url:"" },
+    { t:{tr:"İnfografik", en:"Infographics"}, k:{tr:"Bilgi tasarımı", en:"Information design"}, media:"", ratio:"4/3", pos:"50% 50%", fit:"cover", bg:"", url:"" },
+    { t:{tr:"İllüstrasyon", en:"Illustration"}, k:{tr:"Karakter ve sahne", en:"Characters and scenes"}, media:"", ratio:"1/1", pos:"50% 50%", fit:"cover", bg:"", url:"" },
+    { t:{tr:"GIF döngüleri", en:"GIF loops"}, k:{tr:"Kısa animasyon", en:"Short animation"}, media:"", ratio:"1/1", pos:"50% 50%", fit:"cover", bg:"", url:"" },
+    { t:{tr:"Yapay zekâ deneyleri", en:"AI experiments"}, k:{tr:"Yapay zekâ ile üretim", en:"AI-assisted production"}, media:"", ratio:"16/9", pos:"50% 50%", fit:"cover", bg:"", url:"" },
   ];
+
+  // 3D ikonlar: PNG'leri assets/3d/ klasörüne yükleyince true yap
+  // (art-direction.png, motion-design.png, graphic-design.png, ai.png).
+  const USE_3D_PNGS = false;
 
   const T = {
     tr:{
       "skip":"İçeriğe geç",
       "nav.work":"İşler","nav.about":"Hakkımda","nav.contact":"İletişim","nav.menu":"Menü","nav.close":"Kapat",
-      "hero.tagline":"Art director ve motion designer. 2011'den beri fikirleri tasarlıyor, sonra yerinde durmalarına izin vermiyorum.",
-      "hero.where":"İstanbul'da yaşıyorum.","hero.avail":"Serbest ve tam zamanlı işlere açığım.","hero.cta":"İşlere göz at",
-      "work.label":"Seçili işler","work.soon":"Görsel eklenecek",
+      "sound.on":"Sesi kapat","sound.off":"Sesi aç",
+      "work.label":"Seçili işler","work.all":"Tüm işler Behance'te","car.prev":"Önceki iş","car.next":"Sonraki iş","car.label":"Seçili işler",
       "services.label":"Neler yapıyorum","services.title":"Fikirden ekrana, tek elden.",
       "services.intro":"Konsepti kurarım, görsel dili belirlerim, sonra her şeyi hareket ettiririm. Çoğu projede bu üç işin başında ben dururum.",
       "s1.t":"Art direction","s1.d":"Fikri bulur, görsel dili kurar, bütün üretimi aynı yöne baktırırım.",
       "s2.t":"Motion design","s2.d":"Logo animasyonundan kampanya filmine: 2D, kinetik tipografi ve açıklayıcı videolar.",
       "s3.t":"Grafik tasarım","s3.d":"Key visual, afiş, ürün iletişimi, sosyal medya ve infografik. Basılı ve dijital.",
       "s4.t":"Yapay zekâ ile üretim","s4.d":"Yapay zekâyı konsept ve üretim aşamalarına katarak daha hızlı, daha geniş deneme.",
-      "story.label":"Hikâye","story.title":"On beş yıl, tek merak: bir şeyleri kıpırdatmak.","story.today":"bugün",
+      "story.label":"Hikâye","story.title":"Bir film şeridinde 15 yıl.","story.today":"bugün",
       "layer.flash":"Flash","layer.ae":"After Effects","layer.static":"Basılı ve dijital","layer.ad":"Art direction","layer.ai":"Yapay zekâ",
       "ch.flash":"2011'de motion'a Adobe Flash'la, interaktif işlerle başladım. Her şey hem tıklanıyor hem hareket ediyordu.",
-      "ch.ae":"Sonra sahneyi After Effects'e taşıdım. Motion graphics o günden beri ana dilim.",
+      "ch.ae":"Sonra sahneyi After Effects'e taşıdım, yeni markalarla uzun iş birlikleri yaptım.",
       "ch.static":"Bu arada bolca basılı ve dijital statik iş yaptım: afiş, key visual, ürün iletişimi, sosyal medya, infografik.",
       "ch.ad":"Neredeyse her işin art direktörü bendim. Fikri de, görsel dili de, üretimi de ben yönettim.",
       "ch.ai":"Bugün yapay zekâyı üretim hattıma katıyorum. Daha hızlı deneme, daha cesur fikirler.",
       "process.label":"Süreç","process.title":"Bir proje nasıl ilerler?",
-      "p1.t":"Brif","p1.d":"Dinlerim, soru sorarım, defterin kenarına bir canavar çizerim.",
-      "p2.t":"Konsept","p2.d":"Fikri ve görsel yönü birlikte belirleriz. Art direction burada başlar.",
-      "p3.t":"Stil kareleri","p3.d":"Hareketten önce kareler: renk, tipografi, kompozisyon.",
-      "p4.t":"Hareket","p4.d":"Tasarımı canlandırırım. Gerektiğinde yapay zekâyla hızlanırım.",
-      "p5.t":"Teslim","p5.d":"Her formatta, düzenli klasörlerde, adı anlaşılır dosyalar.",
-      "p6.t":"Çay","p6.d":"Proje bitti, çay demlendi. Sıradaki fikir gelsin.",
-      "cta.l1":"Aklında bir fikir mi var?","cta.l2":"Birlikte hareket ettirelim.","cta.mail":"E-posta yaz","cta.copy":"Adresi kopyala","cta.copied":"Kopyalandı",
-      "footer.tagline":"Art director ve motion designer, İstanbul.","footer.elsewhere":"Başka yerlerde","footer.time":"İstanbul'da saat","footer.top":"Başa dön",
-      "meta.title":"Eren Yavuz | Art Director & Motion Designer",
-      "meta.desc":"İstanbul'da yaşayan art director ve motion designer Eren Yavuz'un portfolyosu."
+      "p1.t":"Brif","p1.d":"Dinlerim, soru sorarım, kafamda şekillendirmeye başlarım.",
+      "p2.t":"Konsept","p2.d":"Fikri ve görsel yönü birlikte belirleriz.",
+      "p3.t":"Stil kareleri","p3.d":"Aklımızdakileri şekillendirmeye başlarız: renk, kompozisyon, tipografi.",
+      "p4.t":"Hareket","p4.d":"Kare kare sahnelerden konuşuruz.",
+      "p5.t":"Teslim","p5.d":"Onaylanmış tasarımı talep edilen formatta hazırlarım.",
+      "p6.t":"Çay","p6.d":"Bir sonraki projeye kadar kendime çok iyi bakarım.",
+      "cta.l1":"Aklında bir fikir mi var?","cta.l2":"Birlikte gerçekleştirelim.","cta.mail":"E-posta yaz","cta.copy":"Adresi kopyala","cta.copied":"Kopyalandı",
+      "footer.elsewhere":"Başka yerlerde","footer.time":"İstanbul'da saat","footer.top":"Başa dön",
+      "meta.desc":"Eren Yavuz, İstanbul'da çalışan grafik ve motion tasarımcı, art director."
     },
     en:{
       "skip":"Skip to content",
       "nav.work":"Work","nav.about":"About","nav.contact":"Contact","nav.menu":"Menu","nav.close":"Close",
-      "hero.tagline":"Art director and motion designer. Designing ideas since 2011, then refusing to let them sit still.",
-      "hero.where":"Based in Istanbul.","hero.avail":"Open to freelance and full-time work.","hero.cta":"See the work",
-      "work.label":"Selected work","work.soon":"Visual coming soon",
+      "sound.on":"Mute sounds","sound.off":"Turn sounds on",
+      "work.label":"Selected work","work.all":"All work on Behance","car.prev":"Previous project","car.next":"Next project","car.label":"Selected work",
       "services.label":"What I do","services.title":"From idea to screen, in one pair of hands.",
       "services.intro":"I shape the concept, set the visual language, then make everything move. On most projects, I lead all three.",
       "s1.t":"Art direction","s1.d":"I find the idea, build the visual language and keep the whole production pointing the same way.",
       "s2.t":"Motion design","s2.d":"From logo animations to campaign films: 2D, kinetic type and explainer videos.",
       "s3.t":"Graphic design","s3.d":"Key visuals, posters, product communication, social media and infographics. Print and digital.",
       "s4.t":"AI-assisted production","s4.d":"Bringing AI into concept and production for faster, wider exploration.",
-      "story.label":"Story","story.title":"Fifteen years, one obsession: making things move.","story.today":"today",
+      "story.label":"Story","story.title":"Fifteen years on a film strip.","story.today":"today",
       "layer.flash":"Flash","layer.ae":"After Effects","layer.static":"Print and digital","layer.ad":"Art direction","layer.ai":"AI",
       "ch.flash":"I started motion in 2011 with Adobe Flash, building interactive work. Everything was clickable, and everything moved.",
-      "ch.ae":"Then I moved the stage to After Effects. Motion graphics has been my main language ever since.",
+      "ch.ae":"Then I moved the stage to After Effects and built long-running collaborations with new brands.",
       "ch.static":"Along the way I made plenty of print and digital stills: posters, key visuals, product communication, social media, infographics.",
       "ch.ad":"I art directed nearly every project I worked on, leading the idea, the visual language and the production.",
       "ch.ai":"Today I'm bringing AI into my production pipeline. Faster tests, bolder ideas.",
       "process.label":"Process","process.title":"How a project moves",
-      "p1.t":"Brief","p1.d":"I listen, ask questions and doodle a monster in the margin.",
-      "p2.t":"Concept","p2.d":"We set the idea and the visual direction together. Art direction starts here.",
-      "p3.t":"Style frames","p3.d":"Frames before motion: colour, type, composition.",
-      "p4.t":"Motion","p4.d":"I bring the design to life, speeding up with AI where it helps.",
-      "p5.t":"Delivery","p5.d":"Every format, tidy folders, file names that make sense.",
-      "p6.t":"Tea","p6.d":"Project done, tea brewed. Bring on the next idea.",
-      "cta.l1":"Got an idea?","cta.l2":"Let's make it move.","cta.mail":"Write an email","cta.copy":"Copy address","cta.copied":"Copied",
-      "footer.tagline":"Art director and motion designer, Istanbul.","footer.elsewhere":"Elsewhere","footer.time":"Time in Istanbul","footer.top":"Back to top",
-      "meta.title":"Eren Yavuz | Art Director & Motion Designer",
-      "meta.desc":"Portfolio of Eren Yavuz, an Istanbul-based art director and motion designer."
+      "p1.t":"Brief","p1.d":"I listen, ask questions and start shaping it in my head.",
+      "p2.t":"Concept","p2.d":"We set the idea and the visual direction together.",
+      "p3.t":"Style frames","p3.d":"We start shaping what's in our heads: colour, composition, typography.",
+      "p4.t":"Motion","p4.d":"We talk through the scenes, frame by frame.",
+      "p5.t":"Delivery","p5.d":"I prepare the approved design in the formats you need.",
+      "p6.t":"Tea","p6.d":"Until the next project, I take very good care of myself.",
+      "cta.l1":"Got an idea?","cta.l2":"Let's make it happen.","cta.mail":"Write an email","cta.copy":"Copy address","cta.copied":"Copied",
+      "footer.elsewhere":"Elsewhere","footer.time":"Time in Istanbul","footer.top":"Back to top",
+      "meta.desc":"Portfolio of Eren Yavuz, an Istanbul-based graphic and motion designer and art director."
     }
   };
 
   const CHAPTERS = [
-    { at:0,    key:"flash"  },
-    { at:.22,  key:"ae"     },
-    { at:.44,  key:"static" },
-    { at:.64,  key:"ad"     },
-    { at:.84,  key:"ai"     },
+    { at:0,   key:"flash"  },
+    { at:.22, key:"ae"     },
+    { at:.44, key:"static" },
+    { at:.64, key:"ad"     },
+    { at:.84, key:"ai"     },
   ];
 
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -619,7 +648,97 @@ ul,ol{padding:0;list-style:none}
   const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
   let lang = "tr";
 
-  /* ---------- Canavar çizimi ---------- */
+  /* =========================================================
+     SES (foley): Web Audio ile üretilen kısa, muzip sesler
+     ========================================================= */
+  const Sound = (() => {
+    let ctx = null, master = null, last = 0, noiseBuf = null;
+    let on = true;
+    try { on = localStorage.getItem("sound") !== "off"; } catch {}
+
+    function ensure(){
+      if (!ctx){
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return null;
+        ctx = new AC();
+        const comp = ctx.createDynamicsCompressor();
+        master = ctx.createGain(); master.gain.value = .22;
+        master.connect(comp); comp.connect(ctx.destination);
+        noiseBuf = ctx.createBuffer(1, ctx.sampleRate * .5, ctx.sampleRate);
+        const d = noiseBuf.getChannelData(0);
+        for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      }
+      if (ctx.state === "suspended") ctx.resume().catch(() => {});
+      return ctx;
+    }
+    // Tarayıcılar sesi ancak ilk tıklama/dokunuştan sonra açar
+    const unlock = () => ensure();
+    ["pointerdown","keydown","touchstart"].forEach(ev => addEventListener(ev, unlock, { capture:true, passive:true }));
+
+    function tone({ type="sine", t, dur, f, peak=.5, attack=.008, vib=0, vibRate=0, via=null }){
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = type;
+      o.frequency.setValueAtTime(f[0][1], t);
+      for (let i = 1; i < f.length; i++) o.frequency.exponentialRampToValueAtTime(f[i][1], t + f[i][0]);
+      g.gain.setValueAtTime(.0001, t);
+      g.gain.exponentialRampToValueAtTime(peak, t + attack);
+      g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      if (vib){
+        const l = ctx.createOscillator(), lg = ctx.createGain();
+        l.frequency.value = vibRate; lg.gain.value = vib;
+        l.connect(lg); lg.connect(o.frequency); l.start(t); l.stop(t + dur + .05);
+      }
+      o.connect(g);
+      if (via){ g.connect(via); } else g.connect(master);
+      o.start(t); o.stop(t + dur + .05);
+    }
+    function noise({ t, dur, freq=2000, q=6, peak=.4 }){
+      const s = ctx.createBufferSource(), bp = ctx.createBiquadFilter(), g = ctx.createGain();
+      s.buffer = noiseBuf; bp.type = "bandpass"; bp.frequency.value = freq; bp.Q.value = q;
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + .004); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      s.connect(bp); bp.connect(g); g.connect(master); s.start(t); s.stop(t + dur + .02);
+    }
+
+    const SFX = {
+      // taçlı: yaylı "boing"
+      boing:(t,p) => tone({ t, dur:.5, f:[[0,150*p],[.07,520*p],[.5,200*p]], peak:.5, vib:38*p, vibRate:16 }),
+      // antenli: robot bip-bop
+      beep:(t,p) => { tone({ type:"square", t, dur:.09, f:[[0,880*p]], peak:.12 }); tone({ type:"square", t:t+.11, dur:.13, f:[[0,1320*p],[.13,1180*p]], peak:.12 }); },
+      // gözlüklü: havalı aşağı kayan ıslık
+      slide:(t,p) => tone({ type:"triangle", t, dur:.42, f:[[0,820*p],[.42,360*p]], peak:.45, vib:12, vibRate:7 }),
+      // makaralı: projektör tıkırtısı
+      reel:(t,p) => { for (let i = 0; i < 8; i++) noise({ t:t + i*.042, dur:.018, freq:2400*p, q:9, peak:.5 }); tone({ type:"sawtooth", t, dur:.36, f:[[0,95],[.36,115]], peak:.04 }); },
+      // klasik: kıkırdama
+      giggle:(t,p) => { for (let i = 0; i < 4; i++) tone({ t:t + i*.085, dur:.075, f:[[0,(540 + i*70)*p],[.075,(760 + i*90)*p]], peak:.32 }); },
+      // el sallayan: "hii!"
+      hi:(t,p) => { tone({ t, dur:.16, f:[[0,620*p],[.16,920*p]], peak:.38 }); tone({ t:t+.18, dur:.26, f:[[0,920*p],[.26,1120*p]], peak:.38, vib:18, vibRate:9 }); },
+      // uykucu: esneme
+      yawn:(t,p) => {
+        const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.Q.value = 6;
+        lp.frequency.setValueAtTime(500, t); lp.frequency.linearRampToValueAtTime(1500, t + .3); lp.frequency.linearRampToValueAtTime(450, t + .75);
+        lp.connect(master);
+        tone({ type:"sawtooth", t, dur:.78, f:[[0,240*p],[.28,320*p],[.78,170*p]], peak:.18, attack:.08, via:lp });
+      },
+      // tıklama: "pop"
+      pop:(t,p) => { tone({ t, dur:.13, f:[[0,460*p],[.13,90*p]], peak:.5 }); noise({ t, dur:.02, freq:3000, q:2, peak:.2 }); },
+    };
+
+    function play(name, pitch=1){
+      if (!on || !ctx || ctx.state !== "running" || !SFX[name]) return;
+      const now = ctx.currentTime;
+      if (now - last < .07) return;
+      last = now;
+      try { SFX[name](now + .005, pitch); } catch {}
+    }
+    function setOn(v){ on = v; try { localStorage.setItem("sound", v ? "on" : "off"); } catch {} }
+    return { play, setOn, isOn:() => on, ensure };
+  })();
+
+  const VOICE = { crown:"boing", antenna:"beep", glasses:"slide", reel:"reel", classic:"giggle", wave:"hi", sleepy:"yawn" };
+
+  /* =========================================================
+     CANAVAR ÇİZİMİ
+     ========================================================= */
   function rand(seed){
     let a = seed * 9301 + 49297;
     return () => {
@@ -640,10 +759,10 @@ ul,ol{padding:0;list-style:none}
     }
     let d = `M${f(pts[0][0])} ${f(pts[0][1])}`;
     for (let i = 0; i < n; i++){
-      const p0 = pts[(i-1+n)%n], p1_ = pts[i], p2_ = pts[(i+1)%n], p3 = pts[(i+2)%n];
-      const c1 = [p1_[0] + (p2_[0]-p0[0])/6, p1_[1] + (p2_[1]-p0[1])/6];
-      const c2 = [p2_[0] - (p3[0]-p1_[0])/6, p2_[1] - (p3[1]-p1_[1])/6];
-      d += `C${f(c1[0])} ${f(c1[1])} ${f(c2[0])} ${f(c2[1])} ${f(p2_[0])} ${f(p2_[1])}`;
+      const p0 = pts[(i-1+n)%n], q1 = pts[i], q2 = pts[(i+1)%n], p3 = pts[(i+2)%n];
+      const c1 = [q1[0] + (q2[0]-p0[0])/6, q1[1] + (q2[1]-p0[1])/6];
+      const c2 = [q2[0] - (p3[0]-q1[0])/6, q2[1] - (p3[1]-q1[1])/6];
+      d += `C${f(c1[0])} ${f(c1[1])} ${f(c2[0])} ${f(c2[1])} ${f(q2[0])} ${f(q2[1])}`;
     }
     return d + "Z";
   }
@@ -653,9 +772,9 @@ ul,ol{padding:0;list-style:none}
     ? `<circle class="${cls}" pathLength="1" cx="${f(cx)}" cy="${f(cy)}" r="${f(rr)}"/>`
     : `<circle class="${cls}" cx="${f(cx)}" cy="${f(cy)}" r="${f(rr)}"/>`;
 
-  function eye(cx, cy, rr, extraCls=""){
+  function eye(cx, cy, rr){
     const pr = rr * .43;
-    return `<g class="eye${extraCls}" data-cx="${f(cx)}" data-cy="${f(cy)}" data-max="${f(rr - pr - 2)}">`
+    return `<g class="eye" data-cx="${f(cx)}" data-cy="${f(cy)}" data-max="${f(rr - pr - 2)}">`
       + C(cx, cy, rr)
       + `<g class="pupil">${C(cx, cy + 1, pr, "fl")}<circle class="glint" cx="${f(cx + pr*.35)}" cy="${f(cy + 1 - pr*.4)}" r="${f(pr*.28)}"/></g>`
       + `</g>`;
@@ -683,24 +802,20 @@ ul,ol{padding:0;list-style:none}
     return s;
   }
 
-  function monster(variant, seed){
+  function monsterInner(variant, seed){
     const r = rand(seed);
     const body = blob(r, 100, 114, 76 + r()*8, 78 + r()*8);
     let back = "", front = "", face = "";
     const lx = 74 + r()*4, rx_ = 126 - r()*4, ey = 96 + r()*6;
     const lr = 15 + r()*4, rr = 12 + r()*5;
 
-    if (variant === "crown"){
-      back = L("M60 54L66 20L80 42L92 6L104 40L116 12L126 42L138 22L142 56Z");
-    }
-    if (variant === "antenna"){
-      back = L("M84 44L72 12", " open-line") + L("M116 42L130 14", " open-line") + C(71, 9, 7) + C(131, 11, 6);
-    }
+    if (variant === "crown") back = L("M60 54L66 20L80 42L92 6L104 40L116 12L126 42L138 22L142 56Z");
+    if (variant === "antenna") back = L("M84 44L72 12", " open-line") + L("M116 42L130 14", " open-line") + C(71, 9, 7) + C(131, 11, 6);
 
     if (variant === "glasses"){
-      face = `<g class="eye shades" data-cx="100" data-cy="94" data-max="3" data-shades="1"><g class="pupil">`
-        + `<rect class="ln lens" pathLength="1" x="52" y="80" width="44" height="28" rx="10"/>`
-        + `<rect class="ln lens" pathLength="1" x="104" y="78" width="44" height="28" rx="10"/>`
+      face = `<g class="eye shades" data-cx="100" data-cy="94" data-max="3"><g class="pupil">`
+        + `<rect class="ln" pathLength="1" x="52" y="80" width="44" height="28" rx="10"/>`
+        + `<rect class="ln" pathLength="1" x="104" y="78" width="44" height="28" rx="10"/>`
         + `<rect class="fl" x="53.7" y="81.7" width="40.6" height="24.6" rx="8.5"/>`
         + `<rect class="fl" x="105.7" y="79.7" width="40.6" height="24.6" rx="8.5"/>`
         + `<path class="glint" d="M60 88l9-4M112 86l9-4" stroke="#fff" stroke-width="3" stroke-linecap="round"/>`
@@ -725,30 +840,214 @@ ul,ol{padding:0;list-style:none}
       front = `<g class="arm">` + L("M170 126Q194 104 190 74", " open-line") + C(190, 66, 9) + `</g>`
         + L("M30 130Q14 142 22 160", " open-line");
     }
-
-    return `<svg class="mon" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><g filter="url(#boil)">`
-      + back + L(body) + spots(r) + face + front + `</g></svg>`;
+    return back + L(body) + spots(r) + face + front;
   }
 
-  /* ---------- Canavarları sayfaya yerleştir ---------- */
+  const monster = (variant, seed) =>
+    `<svg class="mon" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><g filter="url(#boil)">${monsterInner(variant, seed)}</g></svg>`;
+
+  /* ---------- Etkileşimli canavarlar ---------- */
   const eyes = [];
+  const visible = new Set();
+
+  function wave(el){
+    if (reduce) return;
+    el.classList.remove("waving"); void el.offsetWidth; el.classList.add("waving");
+  }
+
   function mount(el, i){
-    el.innerHTML = monster(el.dataset.m, +el.dataset.seed || i + 1);
+    const variant = el.dataset.m, seed = +el.dataset.seed || i + 1;
+    el.innerHTML = monster(variant, seed);
     const svg = el.querySelector("svg");
     el.style.setProperty("--d", (el.dataset.d || 0) + "s");
-    $$(".eye", el).forEach(g => eyes.push({ el, svg, g, pupil: g.querySelector(".pupil"),
-      cx:+g.dataset.cx, cy:+g.dataset.cy, max:+g.dataset.max }));
-    el.addEventListener("click", () => {
+    $$(".eye", el).forEach(g => eyes.push({ el, svg, pupil: g.querySelector(".pupil"), cx:+g.dataset.cx, cy:+g.dataset.cy, max:+g.dataset.max }));
+    const pitch = .9 + (seed % 5) * .05;
+    const voice = VOICE[variant];
+    const quiet = el.dataset.quiet === "1";
+
+    // Fare karakterin üstüne gelince sesini BİR KEZ çıkarır; fare ayrılana kadar susar
+    let armed = true, rearm = 0;
+    el.addEventListener("pointerenter", e => {
+      if (e.pointerType !== "mouse") return;
+      clearTimeout(rearm);
+      if (!armed || quiet) return;
+      armed = false;
+      Sound.play(voice, pitch);
+      if (variant === "wave") wave(el);
+    });
+    el.addEventListener("pointerleave", e => {
+      if (e.pointerType !== "mouse") return;
+      rearm = setTimeout(() => { armed = true; }, 220);
+    });
+    el.addEventListener("click", e => {
       el.classList.remove("boing"); void el.offsetWidth; el.classList.add("boing");
-      if (el.dataset.m === "wave") wave(el);
+      if (!quiet) Sound.play(e.pointerType === "mouse" ? "pop" : voice, pitch);
+      if (variant === "wave") wave(el);
     });
     el.addEventListener("animationend", e => { if (e.animationName === "squash") el.classList.remove("boing"); });
   }
-  $$(".crowd .m").forEach((el, i) => { el.dataset.d = (.15 + i * .12).toFixed(2); });
+
+  /* ---------- Giriş: canavar deseni (etkileşimsiz) ---------- */
+  const hero = $("#hero"), pattern = $("#pattern");
+  const PATTERN_VARIANTS = ["classic","crown","antenna","glasses","reel","sleepy","classic","crown"];
+  let patternW = 0;
+  function buildPattern(){
+    const w = hero.clientWidth, h = hero.clientHeight;
+    if (!w || !h) return;
+    patternW = w;
+    pattern.setAttribute("viewBox", `0 0 ${w} ${h}`);
+    const hb = hero.getBoundingClientRect();
+    const avoid = $$(".cast .m").filter(el => el.offsetParent).map(el => {
+      const b = el.getBoundingClientRect();
+      return { l:b.left - hb.left - 10, r:b.right - hb.left + 10, t:b.top - hb.top - 10, b:b.bottom - hb.top + 10 };
+    });
+    const cell = w < 700 ? 96 : 132;
+    const r = rand(7);
+    let out = "", n = 0, row = 0;
+    for (let y = -cell * .25; y < h + cell * .3; y += cell * .84, row++){
+      for (let x = -cell * .3 + (row % 2 ? cell * .5 : 0); x < w + cell * .3; x += cell){
+        if (r() < .16) continue;
+        const size = cell * (.5 + r() * .28);
+        const cx = x + (r() - .5) * cell * .3, cy = y + (r() - .5) * cell * .3;
+        const half = size / 2;
+        if (avoid.some(a => cx + half > a.l && cx - half < a.r && cy + half > a.t && cy - half < a.b)) continue;
+        const variant = PATTERN_VARIANTS[Math.floor(r() * PATTERN_VARIANTS.length)];
+        const rot = (r() - .5) * 34;
+        const d = ((cx / w) * .7 + r() * .25).toFixed(2);
+        out += `<g style="--d:${d}s" transform="translate(${f(cx)} ${f(cy)}) rotate(${f(rot)}) scale(${(size/200).toFixed(3)}) translate(-100 -100)">${monsterInner(variant, 100 + n++)}</g>`;
+      }
+    }
+    pattern.classList.remove("in");
+    pattern.innerHTML = out;
+    $$(".pupil", pattern).forEach(p => p.setAttribute("transform", `translate(${f((r()-.5)*7)} ${f((r()-.5)*7)})`));
+    requestAnimationFrame(() => requestAnimationFrame(() => pattern.classList.add("in")));
+  }
+
+  // İsim, fare hareketiyle hafifçe zıplar (Shantell Sans "Bounce" ekseni)
+  const nameEl = $("#name");
+  if (fine && !reduce){
+    let target = 30, cur = 30, raf = 0;
+    const step = () => {
+      cur += (target - cur) * .12;
+      nameEl.style.setProperty("--bnce", cur.toFixed(1));
+      raf = Math.abs(target - cur) > .3 ? requestAnimationFrame(step) : 0;
+    };
+    hero.addEventListener("pointermove", e => {
+      const b = hero.getBoundingClientRect();
+      target = ((e.clientX - b.left) / b.width - .5) * 140;
+      if (!raf) raf = requestAnimationFrame(step);
+    });
+  }
+
+  /* ---------- İşler: carousel ---------- */
+  const track = $("#track"), list = $("#workList"), count = $("#carCount");
+  const prevBtn = $("#prevBtn"), nextBtn = $("#nextBtn");
+  const PH = ["classic","crown","glasses","antenna","reel","classic","crown","antenna"];
+  $("#workCount").textContent = `(${String(WORKS.length).padStart(2, "0")})`;
+
+  WORKS.forEach((w, i) => {
+    const fig = document.createElement("figure");
+    fig.className = "slide";
+    fig.setAttribute("role", "group");
+    fig.setAttribute("aria-roledescription", "slide");
+    const style = `--r:${w.ratio || "4/3"};--pos:${w.pos || "50% 50%"};--fit:${w.fit || "cover"};${w.bg ? `--bg:${w.bg};` : ""}`;
+    fig.innerHTML = `<div class="media" style="${style}"><div class="ph"><span class="m" data-m="${PH[i % PH.length]}" data-seed="${50 + i}" data-quiet="1"></span></div></div>`
+      + `<figcaption><span class="cap-t"></span><span class="cap-k"></span></figcaption>`;
+    if (w.media){
+      const isVid = /\.(mp4|webm)$/i.test(w.media);
+      const m = document.createElement(isVid ? "video" : "img");
+      if (isVid){ m.muted = true; m.loop = true; m.playsInline = true; m.preload = "metadata"; m.setAttribute("muted", ""); }
+      else { m.alt = ""; m.loading = "lazy"; m.decoding = "async"; m.draggable = false; }
+      m.addEventListener("error", () => m.remove());
+      m.src = w.media;
+      $(".media", fig).appendChild(m);
+    }
+    track.appendChild(fig);
+
+    const li = document.createElement("li");
+    li.innerHTML = `<button type="button" class="work-row" data-i="${i}"><span class="work-title"></span><span class="work-kind"></span></button>`;
+    list.appendChild(li);
+  });
+  const slides = $$(".slide", track), rows = $$(".work-row", list);
+  let curSlide = -1;
+
+  function renderWorks(){
+    slides.forEach((s, i) => {
+      const w = WORKS[i];
+      const t = $(".cap-t", s);
+      t.innerHTML = w.url ? `<a class="link" href="${w.url}" target="_blank" rel="noopener"></a>` : "";
+      (w.url ? $("a", t) : t).textContent = w.t[lang];
+      $(".cap-k", s).textContent = w.k[lang];
+      s.setAttribute("aria-label", `${i + 1} / ${WORKS.length}: ${w.t[lang]}`);
+    });
+    rows.forEach((b, i) => {
+      $(".work-title", b).textContent = WORKS[i].t[lang];
+      $(".work-kind", b).textContent = WORKS[i].k[lang];
+    });
+  }
+
+  function goTo(i, smooth=true){
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    track.scrollTo({ left: slides[i].offsetLeft - slides[0].offsetLeft, behavior: smooth && !reduce ? "smooth" : "auto" });
+  }
+  function nearest(){
+    const x = track.scrollLeft;
+    let best = 0, dist = Infinity;
+    slides.forEach((s, i) => { const d = Math.abs(s.offsetLeft - slides[0].offsetLeft - x); if (d < dist){ dist = d; best = i; } });
+    const atEnd = x + track.clientWidth >= track.scrollWidth - 4;
+    return atEnd && dist > 4 ? slides.length - 1 : best;
+  }
+  function updateCarousel(){
+    const i = nearest();
+    if (i === curSlide) return;
+    curSlide = i;
+    count.textContent = `${String(i + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
+    rows.forEach((b, j) => { b.classList.toggle("cur", j === i); b.setAttribute("aria-current", j === i ? "true" : "false"); });
+    prevBtn.disabled = i === 0;
+    nextBtn.disabled = i === slides.length - 1;
+    slides.forEach((s, j) => { const v = $("video", s); if (v){ j === i ? v.play().catch(() => {}) : v.pause(); } });
+  }
+  let carRaf = 0;
+  track.addEventListener("scroll", () => { if (!carRaf) carRaf = requestAnimationFrame(() => { carRaf = 0; updateCarousel(); }); }, { passive:true });
+  prevBtn.addEventListener("click", () => goTo(curSlide - 1));
+  nextBtn.addEventListener("click", () => goTo(curSlide + 1));
+  track.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight"){ e.preventDefault(); goTo(curSlide + 1); }
+    if (e.key === "ArrowLeft"){ e.preventDefault(); goTo(curSlide - 1); }
+  });
+  rows.forEach(b => b.addEventListener("click", () => {
+    goTo(+b.dataset.i);
+    const r = $("#carousel").getBoundingClientRect();
+    if (r.top < 0 || r.bottom > innerHeight) $("#carousel").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block:"center" });
+  }));
+
+  // Fareyle sürükleme
+  let drag = null;
+  track.addEventListener("pointerdown", e => {
+    if (e.pointerType !== "mouse" || e.button !== 0) return;
+    drag = { x:e.clientX, left:track.scrollLeft, moved:false };
+  });
+  addEventListener("pointermove", e => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x;
+    if (!drag.moved && Math.abs(dx) > 4){ drag.moved = true; track.classList.add("drag"); }
+    if (drag.moved) track.scrollLeft = drag.left - dx;
+  });
+  addEventListener("pointerup", () => {
+    if (!drag) return;
+    const moved = drag.moved; drag = null;
+    if (!moved) return;
+    track.classList.remove("drag");
+    goTo(nearest());
+    const stop = ev => { ev.preventDefault(); ev.stopPropagation(); };
+    track.addEventListener("click", stop, { capture:true, once:true });
+    setTimeout(() => track.removeEventListener("click", stop, { capture:true }), 0);
+  });
+
+  /* ---------- Tüm canavarları yerleştir ---------- */
+  $$(".cast .m").forEach((el, i) => { el.dataset.d = (.55 + i * .12).toFixed(2); });
   $$(".m[data-m]").forEach(mount);
 
-  // Görünür olunca çizilsin (trim path)
-  const visible = new Set();
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting){ e.target.classList.add("in"); visible.add(e.target); }
@@ -759,11 +1058,6 @@ ul,ol{padding:0;list-style:none}
     });
   }, { threshold: .15 });
   $$(".m[data-m]").forEach(el => io.observe(el));
-
-  function wave(el){
-    if (reduce) return;
-    el.classList.remove("waving"); void el.offsetWidth; el.classList.add("waving");
-  }
   document.addEventListener("animationend", e => {
     if (e.animationName === "wave") e.target.closest(".m")?.classList.remove("waving");
   });
@@ -779,7 +1073,7 @@ ul,ol{padding:0;list-style:none}
   function lookAt(){
     eyeQueued = false;
     for (const e of eyes){
-      if (!visible.has(e.el) && !e.el.closest(".peek")) continue;
+      if (!visible.has(e.el)) continue;
       const b = e.svg.getBoundingClientRect(); if (!b.width) continue;
       const s = b.width / 200, ex = b.left + e.cx * s, ey = b.top + e.cy * s;
       const dx = px - ex, dy = py - ey, d = Math.hypot(dx, dy) || 1;
@@ -790,18 +1084,15 @@ ul,ol{padding:0;list-style:none}
   const queueLook = () => { if (!eyeQueued){ eyeQueued = true; requestAnimationFrame(lookAt); } };
   addEventListener("pointermove", e => { px = e.clientX; py = e.clientY; queueLook(); }, { passive:true });
   addEventListener("scroll", queueLook, { passive:true });
-  setTimeout(lookAt, 200);
+  setTimeout(lookAt, 300);
 
   // Göz kırpma
   if (!reduce){
-    const blinkers = $$(".m[data-m]").filter(el => el.dataset.m !== "glasses" && el.dataset.m !== "sleepy");
-    blinkers.forEach(el => {
-      const loop = () => {
-        setTimeout(() => {
-          if (visible.has(el)){ el.classList.add("blink"); setTimeout(() => el.classList.remove("blink"), 130); }
-          loop();
-        }, 2200 + Math.random() * 4800);
-      };
+    $$(".m[data-m]").filter(el => el.dataset.m !== "glasses" && el.dataset.m !== "sleepy").forEach(el => {
+      const loop = () => setTimeout(() => {
+        if (visible.has(el)){ el.classList.add("blink"); setTimeout(() => el.classList.remove("blink"), 130); }
+        loop();
+      }, 2200 + Math.random() * 4800);
       loop();
     });
   }
@@ -821,74 +1112,12 @@ ul,ol{padding:0;list-style:none}
       + `<filter id="sh-${i}" x="-20%" y="-20%" width="140%" height="160%"><feGaussianBlur stdDeviation="4"/></filter></defs>`
       + `<ellipse cx="60" cy="108" rx="34" ry="5" fill="#000" opacity=".12" filter="url(#sh-${i})"/>`
       + ICONS[name].replaceAll("url(#g1)", `url(#g1-${i})`).replaceAll("url(#g2)", `url(#g2-${i})`) + `</svg>`;
+    if (!USE_3D_PNGS) return;
     const img = new Image();
     img.alt = ""; img.decoding = "async";
     img.onload = () => { box.innerHTML = ""; box.appendChild(img); };
     img.src = `assets/3d/${name}.png`;
   });
-
-  /* ---------- İşler listesi ve önizleme ---------- */
-  const list = $("#workList"), peek = $("#peek");
-  $("#workCount").textContent = `(${String(WORKS.length).padStart(2, "0")})`;
-  WORKS.forEach((w, i) => {
-    const li = document.createElement("li");
-    li.innerHTML = `<a href="${w.url}" target="_blank" rel="noopener" data-i="${i}"><span class="work-title"></span><span class="work-kind"></span></a>`;
-    list.appendChild(li);
-
-    const item = document.createElement("div");
-    item.className = "peek-item";
-    const variants = ["classic","crown","glasses","antenna","reel","classic","crown","antenna"];
-    item.innerHTML = `<div class="peek-ph"><span class="m in" data-m="${variants[i % variants.length]}" data-seed="${50 + i}"></span><span class="soon"></span></div>`;
-    peek.appendChild(item);
-    mount(item.querySelector(".m"), i);
-    if (w.media){
-      const isVid = /\.(mp4|webm)$/i.test(w.media);
-      const m = document.createElement(isVid ? "video" : "img");
-      if (isVid){ Object.assign(m, { muted:true, loop:true, playsInline:true, preload:"metadata" }); m.setAttribute("muted",""); }
-      else { m.alt = ""; m.decoding = "async"; }
-      m.addEventListener("error", () => m.remove());
-      m.src = w.media;
-      item.appendChild(m);
-    }
-  });
-  function renderWorks(){
-    $$("#workList a").forEach(a => {
-      const w = WORKS[+a.dataset.i];
-      a.querySelector(".work-title").textContent = w.t[lang];
-      a.querySelector(".work-kind").textContent = w.k[lang];
-    });
-    $$(".peek .soon").forEach((s, i) => s.textContent = WORKS[i].k[lang]);
-  }
-
-  if (fine){
-    let tx = 0, ty = 0, cx = 0, cy = 0, on = false, raf = 0;
-    const items = $$(".peek-item");
-    const step = () => {
-      cx += (tx - cx) * (reduce ? 1 : .16); cy += (ty - cy) * (reduce ? 1 : .16);
-      const w = peek.offsetWidth, h = peek.offsetHeight;
-      let x = cx + 28, y = cy - h / 2;
-      if (x + w > innerWidth - 12) x = cx - w - 28;
-      y = Math.max(12, Math.min(innerHeight - h - 12, y));
-      peek.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      raf = on || Math.abs(tx - cx) > .5 ? requestAnimationFrame(step) : 0;
-    };
-    list.addEventListener("pointermove", e => {
-      tx = e.clientX; ty = e.clientY;
-      if (!on){ on = true; cx = tx; cy = ty; peek.classList.add("on"); }
-      if (!raf) raf = requestAnimationFrame(step);
-    });
-    list.addEventListener("pointerleave", () => {
-      on = false; peek.classList.remove("on");
-      items.forEach(it => it.querySelector("video")?.pause());
-    });
-    list.addEventListener("pointerover", e => {
-      const a = e.target.closest("a[data-i]"); if (!a) return;
-      items.forEach((it, j) => {
-        const cur = j === +a.dataset.i; it.classList.toggle("cur", cur);
-        const v = it.querySelector("video"); if (v){ cur ? v.play().catch(() => {}) : v.pause(); }
-      });
-    });
-  }
 
   /* ---------- Hikâye: kaydırdıkça ilerleyen playhead ---------- */
   const story = $("#about"), comp = $("#comp"), chapter = $("#chapter"), layers = $$(".layer");
@@ -916,22 +1145,26 @@ ul,ol{padding:0;list-style:none}
   }
 
   /* ---------- Menü davranışı ---------- */
-  const nav = $("#nav");
+  const nav = $("#nav"), menu = $("#menu"), menuBtn = $("#menuBtn"), menuClose = $("#menuClose");
   let lastY = scrollY, ticking = false;
   function onScroll(){
     ticking = false;
     const y = scrollY;
     nav.classList.toggle("lined", y > 8);
-    if (!$("#menu").hidden) return;
+    if (!menu.hidden) return;
     nav.classList.toggle("hide", y > lastY && y > 160);
     lastY = y;
     scrub();
   }
   addEventListener("scroll", () => { if (!ticking){ ticking = true; requestAnimationFrame(onScroll); } }, { passive:true });
-  addEventListener("resize", scrub);
+  let resizeT = 0;
+  addEventListener("resize", () => {
+    scrub();
+    clearTimeout(resizeT);
+    resizeT = setTimeout(() => { if (Math.abs(hero.clientWidth - patternW) > 40) buildPattern(); }, 250);
+  });
   nav.addEventListener("focusin", () => nav.classList.remove("hide"));
 
-  const menu = $("#menu"), menuBtn = $("#menuBtn"), menuClose = $("#menuClose");
   const openMenu = () => { menu.hidden = false; menuBtn.setAttribute("aria-expanded","true"); document.body.style.overflow = "hidden"; $(".menu-links a").focus(); };
   const closeMenu = () => { menu.hidden = true; menuBtn.setAttribute("aria-expanded","false"); document.body.style.overflow = ""; menuBtn.focus({ preventScroll:true }); };
   menuBtn.addEventListener("click", openMenu);
@@ -939,9 +1172,24 @@ ul,ol{padding:0;list-style:none}
   $$(".menu a").forEach(a => a.addEventListener("click", () => { menu.hidden = true; menuBtn.setAttribute("aria-expanded","false"); document.body.style.overflow = ""; }));
   addEventListener("keydown", e => { if (e.key === "Escape" && !menu.hidden) closeMenu(); });
 
+  /* ---------- Ses düğmesi ---------- */
+  const soundBtn = $("#soundBtn");
+  function renderSound(){
+    const on = Sound.isOn();
+    soundBtn.setAttribute("aria-pressed", String(on));
+    const label = T[lang][on ? "sound.on" : "sound.off"];
+    soundBtn.setAttribute("aria-label", label); soundBtn.title = label;
+  }
+  soundBtn.addEventListener("click", () => {
+    Sound.setOn(!Sound.isOn());
+    renderSound();
+    if (Sound.isOn()){ Sound.ensure(); setTimeout(() => Sound.play("pop", 1.1), 40); }
+  });
+
   /* ---------- E-posta ---------- */
   $("#mailLink").textContent = EMAIL;
   $("#mailLink").href = $("#mailBtn").href = "mailto:" + EMAIL;
+  $("#allWork").href = BEHANCE;
   const copyBtn = $("#copyBtn");
   copyBtn.addEventListener("click", async () => {
     let ok = false;
@@ -959,12 +1207,18 @@ ul,ol{padding:0;list-style:none}
   };
   tick(); setInterval(tick, 15000);
   const foot = $(".foot"), sleepers = $$(".sleepers .m");
-  let napTimer = 0;
-  const wake = () => { clearTimeout(napTimer); sleepers.forEach((s, i) => setTimeout(() => s.classList.add("awake"), i * 70)); queueLook(); };
-  const nap = () => { napTimer = setTimeout(() => sleepers.forEach(s => s.classList.remove("awake")), 900); };
+  let napTimer = 0, awake = false;
+  const wake = e => {
+    clearTimeout(napTimer);
+    if (!awake && (!e || e.pointerType === "mouse")) Sound.play("yawn", 1);
+    awake = true;
+    sleepers.forEach((s, i) => setTimeout(() => s.classList.add("awake"), i * 70));
+    queueLook();
+  };
+  const nap = () => { napTimer = setTimeout(() => { awake = false; sleepers.forEach(s => s.classList.remove("awake")); }, 900); };
   foot.addEventListener("pointerenter", wake);
   foot.addEventListener("pointerleave", nap);
-  foot.addEventListener("focusin", wake);
+  foot.addEventListener("focusin", () => wake());
   foot.addEventListener("focusout", nap);
 
   /* ---------- Dil ---------- */
@@ -972,11 +1226,13 @@ ul,ol{padding:0;list-style:none}
     lang = next;
     document.documentElement.lang = next;
     $$("[data-i18n]").forEach(el => { const v = T[next][el.dataset.i18n]; if (v != null) el.textContent = v; });
-    document.title = T[next]["meta.title"];
+    $$("[data-i18n-label]").forEach(el => { const v = T[next][el.dataset.i18nLabel]; if (v != null) el.setAttribute("aria-label", v); });
+    $("#carousel").setAttribute("aria-label", T[next]["car.label"]);
     $('meta[name="description"]').setAttribute("content", T[next]["meta.desc"]);
     $$(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === next)));
     $("#chapterList").innerHTML = CHAPTERS.map(c => `<li>${T[next]["ch." + c.key]}</li>`).join("");
     renderWorks();
+    renderSound();
     const k = chapterKey; chapterKey = ""; setChapter(k || "flash", true);
     tick();
     try { localStorage.setItem("lang", next); } catch {}
@@ -985,7 +1241,11 @@ ul,ol{padding:0;list-style:none}
   let saved = null;
   try { saved = localStorage.getItem("lang"); } catch {}
   setLang(saved || ((navigator.language || "tr").toLowerCase().startsWith("tr") ? "tr" : "en"));
+
+  buildPattern();
+  updateCarousel();
   scrub();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { curSlide = -1; updateCarousel(); });
 })();
 </script>
 </body>
