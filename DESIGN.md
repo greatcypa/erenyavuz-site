@@ -99,7 +99,7 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - **Daha fazlası için**: Video - Motion galerisinin altında, elle çizilmiş turkuaz çerçeveli büyük düğme; içinde
   kamera tutan karakter (üstüne gelince "Action!") ve elle çizilmiş ok. Tıklayınca Vimeo açılır.
   Başka bir işe eklemek için WORKS'te more: "adres" yazmak yeterli. Galerideki videolar yalnızca ekrandayken sessiz
-  oynar; 6 saniyeden uzun olanlarda oynatıcı kontrolleri (ses açma, tam ekran) çıkar. Her videonun bir kapak karesi var (N.poster.jpg);
+  oynar; 7,5 saniyeden uzun olanlarda oynatıcı kontrolleri (ses açma, tam ekran) çıkar. Her videonun bir kapak karesi var (N.poster.jpg);
   tarayıcı otomatik oynatmayı engellerse kapak karesi ve oynat düğmesi görünür. Kapak görseli kendi oranında, 14px köşe. Sürükleme, oklar, klavye,
   "01 / 08" sayacı. Kutucuğa tıklayınca sayfa değişmeden altta o işin galerisi açılır (masaüstünde 2 kolon,
   mobilde 1). Görseller `assets/work/<klasör>/1.jpg, 2.jpg, 3.jpg...` düzeninden otomatik okunur; 1 kapaktır.

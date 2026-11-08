@@ -1869,12 +1869,12 @@ ul,ol{padding:0;list-style:none}
   /* ---------- İşler: carousel (kapaklar) + tıklayınca altta açılan galeri ---------- */
   const WORK_DIR = "assets/work/";
   // Görsel değiştirince bu sayıyı bir artır: tarayıcıların eski kopyayı göstermesini önler
-  const MEDIA_V = "5";
+  const MEDIA_V = "6";
   const fresh = url => `${url}?v=${MEDIA_V}`;
   const track = $("#track"), count = $("#carCount"), prevBtn = $("#prevBtn"), nextBtn = $("#nextBtn");
   const detail = $("#detail"), dGrid = $("#detailGrid"), dTitle = $("#detailTitle"), dClose = $("#detailClose"), dMore = $("#detailMore");
 
-  // Galeri videoları yalnızca ekrandayken oynar; 6 saniyeden uzun (sesli) olanlarda oynatıcı kontrolleri çıkar.
+  // Galeri videoları yalnızca ekrandayken oynar; 7,5 saniyeden uzun (sesli) olanlarda oynatıcı kontrolleri çıkar.
   // Tarayıcı otomatik oynatmayı engellerse (ör. Safari / iPhone düşük güç modu) oynat düğmesi görünür.
   // Her videonun yanında aynı adlı bir kapak karesi durur: 3.mp4 -> 3.poster.jpg (yüklenene kadar görünür).
   const tryPlay = v => {
@@ -1891,7 +1891,8 @@ ul,ol{padding:0;list-style:none}
     v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "");
     if (gallery){
       v.poster = src.replace(/\.(mp4|webm)(\?|$)/, ".poster.jpg$2");
-      v.addEventListener("loadedmetadata", () => { if (v.duration > 6) v.controls = true; });
+      // 7.5 sn'den kısa döngüler (sessiz animasyonlar) GIF gibi kontrolsüz oynar
+      v.addEventListener("loadedmetadata", () => { if (v.duration > 7.5) v.controls = true; });
       if (vio) vio.observe(v); else { v.autoplay = true; v.controls = true; }
     } else v.autoplay = true;
     v.src = src; return v;
