@@ -526,12 +526,14 @@ ul,ol{padding:0;list-style:none}
 .detail-title{font-size:var(--t-h2);font-weight:500;letter-spacing:-.03em;line-height:1.02}
 .detail-close{flex:none;min-height:46px;padding:0 20px;border-radius:999px;border:1.5px solid var(--ink);font-size:16px;font-weight:600;transition:background .2s}
 .detail-close:hover{background:var(--mint)}
-.detail-grid{columns:2;column-gap:var(--s3);margin-top:var(--s4)}
-.detail-grid.one{columns:1;max-width:960px}
-.d-item{break-inside:avoid;margin:0 0 var(--s3);border-radius:14px;overflow:hidden;background:var(--mint);min-height:240px;opacity:0;transform:translateY(16px);transition:opacity .5s ease calc(var(--k) * 70ms),transform .7s var(--ease-out) calc(var(--k) * 70ms)}
+/* Galeri: iki sütun, görseller sırayla soldan sağa (1-2, 3-4...) dizilir */
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--s3);align-items:start;margin-top:var(--s4)}
+.detail-grid.one{grid-template-columns:1fr;max-width:960px}
+.d-col{min-width:0}
+.d-item{margin:0 0 var(--s3);border-radius:14px;overflow:hidden;background:var(--mint);min-height:240px;opacity:0;transform:translateY(16px);transition:opacity .5s ease calc(var(--k) * 70ms),transform .7s var(--ease-out) calc(var(--k) * 70ms)}
 .d-item.ok{min-height:0;opacity:1;transform:none}
 .d-item img,.d-item video{display:block;width:100%;height:auto}
-.d-note{color:var(--fog);padding:var(--s3) 0}
+.d-note{grid-column:1 / -1;color:var(--fog);padding:var(--s3) 0}
 .all-work{display:inline-block;margin-top:var(--s5)}
 
 /* ===== Hikâye (After Effects zaman çizelgesi) ===== */
@@ -629,7 +631,9 @@ ul,ol{padding:0;list-style:none}
   .cast .c6{--x:68%;--y:80%;--w:28vw}
   .carousel{--h:clamp(220px,62vw,420px)}
   .car-hint{display:none}
-  .detail-grid{columns:1}
+  .detail-grid{grid-template-columns:1fr}
+  .d-col{display:contents}
+  .d-item{order:var(--k)}
   .detail-head{flex-direction:column;align-items:flex-start}
   .steps{grid-template-columns:1fr;margin-top:var(--s5);row-gap:var(--s4)}
   .story{height:260vh}
@@ -1755,6 +1759,7 @@ ul,ol{padding:0;list-style:none}
     dGrid.innerHTML = "";
     if (!files.length){ dGrid.innerHTML = `<p class="d-note">${T[lang]["detail.empty"]}</p>`; return; }
     dGrid.classList.toggle("one", files.length === 1);
+    const cols = [0, 1].map(() => { const c = document.createElement("div"); c.className = "d-col"; dGrid.appendChild(c); return c; });
     files.forEach((file, k) => {
       const fig = document.createElement("figure");
       fig.className = "d-item"; fig.style.setProperty("--k", k);
@@ -1763,7 +1768,7 @@ ul,ol{padding:0;list-style:none}
       const done = () => fig.classList.add("ok");
       m.addEventListener(file.video ? "loadeddata" : "load", done);
       m.addEventListener("error", () => fig.remove());
-      fig.appendChild(m); dGrid.appendChild(fig);
+      fig.appendChild(m); cols[files.length === 1 ? 0 : k % 2].appendChild(fig);
       if (!file.video && m.complete && m.naturalWidth) done();
     });
   }
