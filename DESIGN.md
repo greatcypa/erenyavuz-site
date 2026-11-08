@@ -114,3 +114,12 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - `schema.org` JSON-LD: Person (knowsAbout + makesOffer ile kategoriler), WebSite ve 8 işin listesi.
 - Open Graph / Twitter paylaşım görseli: `assets/og.jpg` (1200×630, giriş ekranından).
 - `robots.txt` ve görsel kapakları da içeren `sitemap.xml`. Görsellerin alt metni: "<Kategori> – Eren Yavuz".
+
+## Ekran boyutları
+
+- Masaüstü ve yatay tablet: karakterler ve fotoğraf bir "sahne" içinde; sahne metin sütunuyla aynı genişlikte
+  (en fazla 1440px) ortalanır, konum ve boyutlar sahnenin yüzdesidir. Büyük ekranlarda da isimle hizalı kalır.
+- Telefon ve dik tablet: sahne ismin ve unvanın altına iner, kalan ekranı doldurur (telefonda 7, tablette 7 öğe,
+  farklı yerleşim). Hiçbir karakter yazının üstüne binmez.
+- Yatay telefon gibi alçak ekranlarda zaman çizelgesi sıkışık düzene geçer ve tek ekrana sığar.
+- Galeri 600px üstünde iki sütun, altında tek sütun. Süreç adımları 600-1100px arası iki sütun.
