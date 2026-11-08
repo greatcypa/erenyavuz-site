@@ -33,13 +33,15 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 
 ## Tipografi
 
-- Aile: **Bricolage Grotesque** (Google Fonts, değişken: `opsz 12–96`, `wght 200–800`).
+- Metin: **Bricolage Grotesque** (Google Fonts, değişken: `opsz 12–96`, `wght 300–800`).
   Türkçe karakterleri destekler. Yedek: Inter, system-ui.
-- Tek aile kullanılır. Kişilik ağırlık, boyut ve sıkı harf aralığıyla kurulur.
+- İsim: **Shantell Sans** (Google Fonts, doodle sanatçısı Shantell Martin'in el yazısından).
+  Sadece "Eren Yavuz" yazısında: `wght 800`, `INFM 100`, `BNCE` fareyle -70…70 arası oynar.
+  Başka hiçbir yerde kullanılmaz.
 
 | Rol                | Boyut                          | Ağırlık | Harf aralığı | Satır |
 |--------------------|--------------------------------|---------|--------------|-------|
-| İsim (hero)        | `clamp(64px, 15.2vw, 250px)`   | 600     | -0.045em     | 0.86  |
+| İsim (hero)        | `clamp(68px, 13vw, 230px)`     | 800     | -0.015em     | 0.92  |
 | Büyük cümle (CTA)  | `clamp(44px, 7vw, 112px)`      | 600     | -0.035em     | 0.95  |
 | Bölüm başlığı (h2) | `clamp(32px, 4.4vw, 60px)`     | 500     | -0.03em      | 1.02  |
 | İş başlığı         | `clamp(26px, 3.2vw, 44px)`     | 500     | -0.02em      | 1.1   |
@@ -69,6 +71,14 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
   Dosya yoksa turkuaz kil görünümlü yer tutucu çizilir.
 - **Zaman çizelgesi**: After Effects kompozisyonu gibi; katman adları solda, barlar ve
   keyframe elmasları sağda, turkuaz playhead kaydırmayla ilerler.
+- **Giriş deseni**: Giriş ekranını kaplayan açık turkuaz (`#A9DCD2`), 1.6px çizgili, döndürülmüş
+  küçük canavarlar. Etkileşimsiz. Üstünde 6 tam görünen, etkileşimli canavar asimetrik dağılır.
+- **Carousel**: Sabit yükseklik, oran işe göre (`4/3`, `16/9`, `3/4`...). 14px köşe, mint zemin,
+  boşken içinde canavar. Sürükleme, oklar, klavye, "01 / 08" sayacı. Altındaki liste içindekiler gibi çalışır.
+- **Sesler (foley)**: Web Audio ile üretilir, dosya yok. Her karakterin kendi sesi var
+  (taçlı: boing, antenli: bip-bop, gözlüklü: kayan ıslık, makaralı: projektör, klasik: kıkırdama,
+  el sallayan: "hii", uykucu: esneme). Fare karakterin üstüne gelince bir kez çalar, ayrılana kadar susar.
+  Tarayıcı kuralı gereği ziyaretçi sayfaya bir kez tıklamadan ses çıkmaz. Menüde ses aç/kapa düğmesi var.
 
 ## Yapma
 
