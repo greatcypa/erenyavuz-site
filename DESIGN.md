@@ -89,8 +89,8 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
   gözlük (siyah, yuvarlak, kalp, yıldız, vizör, inek gözlüğü), elindekiler (pizza, hamburger, direksiyon,
   oyuncak araba, çay bardağı, simit, dondurma, kalem, klaket, patlamış mısır),
   ekstralar (bıyık, papyon, allık).
-- **Carousel + galeri**: Her kutucuk bir iş; altında yalnızca kategorisi yazar (Product, Video - Motion - İllüstrasyon,
-  Key Visual, Kampanya, Ambalaj, Sosyal Medya, Print, Etkinlik). Galerideki videolar yalnızca ekrandayken sessiz
+- **Carousel + galeri**: Her kutucuk bir iş; altında yalnızca kategorisi yazar (Product - KV, Video - Motion - İllüstrasyon,
+  İnfografik, Kampanya, Ambalaj, Sosyal Medya, Print, Etkinlik). Galerideki videolar yalnızca ekrandayken sessiz
   oynar; 6 saniyeden uzun olanlarda oynatıcı kontrolleri (ses açma, tam ekran) çıkar. Kapak görseli kendi oranında, 14px köşe. Sürükleme, oklar, klavye,
   "01 / 08" sayacı. Kutucuğa tıklayınca sayfa değişmeden altta o işin galerisi açılır (masaüstünde 2 kolon,
   mobilde 1). Görseller `assets/work/<klasör>/1.jpg, 2.jpg, 3.jpg...` düzeninden otomatik okunur; 1 kapaktır.
@@ -110,8 +110,8 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 
 ## SEO
 
-- Başlık, açıklama ve anahtar kelimelerde kategoriler geçer: product, key visual, kampanya, ambalaj, motion,
-  sosyal medya, print, etkinlik (EN: campaign, packaging, social media, event).
+- Başlık, açıklama ve anahtar kelimelerde kategoriler geçer: product, key visual, video, motion, illüstrasyon,
+  infografik, kampanya, ambalaj, sosyal medya, print, etkinlik.
 - `schema.org` JSON-LD: Person (knowsAbout + makesOffer ile kategoriler), WebSite ve 8 işin listesi.
 - Open Graph / Twitter paylaşım görseli: `assets/og.jpg` (1200×630, giriş ekranından).
 - `robots.txt` ve görsel kapakları da içeren `sitemap.xml`. Görsellerin alt metni: "<Kategori> – Eren Yavuz".
