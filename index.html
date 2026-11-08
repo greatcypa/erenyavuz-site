@@ -44,7 +44,9 @@
     "addressCountry": "TR"
    },
    "sameAs": [
-    "https://www.behance.net/jakuperen"
+    "https://www.behance.net/jakuperen",
+    "https://vimeo.com/user16031546",
+    "https://www.instagram.com/jakuperen/"
    ],
    "knowsAbout": [
     "Product",
@@ -605,6 +607,7 @@ ul,ol{padding:0;list-style:none}
 .foot li a{text-decoration:none}
 .foot li a:hover{color:var(--monster-deep);text-decoration:underline;text-underline-offset:4px}
 .clock{font-size:28px;font-weight:500;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.date{margin-top:4px;font-size:var(--t-sm);color:var(--fog)}
 .foot-bottom{max-width:var(--max);margin:var(--s7) auto 0;display:flex;justify-content:space-between;gap:var(--s2);font-size:var(--t-sm);color:var(--fog)}
 .foot-bottom a{color:var(--ink);text-decoration:none}
 .foot-bottom a:hover{color:var(--monster-deep)}
@@ -832,8 +835,10 @@ ul,ol{padding:0;list-style:none}
     </ul></nav>
     <div><p class="foot-h" data-i18n="footer.elsewhere">Başka yerlerde</p><ul>
       <li><a href="https://www.behance.net/jakuperen" target="_blank" rel="noopener">Behance</a></li>
+      <li><a href="https://vimeo.com/user16031546" target="_blank" rel="noopener">Vimeo</a></li>
+      <li><a href="https://www.instagram.com/jakuperen/" target="_blank" rel="noopener">Instagram</a></li>
     </ul></div>
-    <div><p class="foot-h" data-i18n="footer.time">İstanbul'da saat</p><p class="clock" id="clock">--:--</p></div>
+    <div><p class="foot-h" data-i18n="footer.time">İstanbul</p><p class="clock" id="clock">--:--</p><p class="date" id="date"></p></div>
   </div>
   <div class="foot-bottom"><span>© 2026 Eren Yavuz</span><a href="#top" data-i18n="footer.top">Başa dön</a></div>
 </footer>
@@ -885,7 +890,7 @@ ul,ol{padding:0;list-style:none}
       "p5.t":"Teslim","p5.d":"Onaylanmış tasarımı talep edilen formatta hazırlarım.",
       "p6.t":"Kib","p6.d":"Bir sonraki projeye kadar kendime çok iyi bakarım.",
       "cta.l1":"Aklında bir fikir mi var?","cta.l2":"Birlikte gerçekleştirelim.","cta.mail":"E-posta yaz","cta.copy":"Adresi kopyala","cta.copied":"Kopyalandı",
-      "footer.elsewhere":"Başka yerlerde","footer.time":"İstanbul'da saat","footer.top":"Başa dön",
+      "footer.elsewhere":"Başka yerlerde","footer.time":"İstanbul","footer.top":"Başa dön",
       "meta.desc":"Eren Yavuz, İstanbul'da grafik ve motion tasarımcı, art director: product, key visual, kampanya, ambalaj, motion, sosyal medya, print ve etkinlik tasarımı."
     },
     en:{
@@ -908,7 +913,7 @@ ul,ol{padding:0;list-style:none}
       "p5.t":"Delivery","p5.d":"I prepare the approved design in the formats you need.",
       "p6.t":"Self-care","p6.d":"Until the next project, I take very good care of myself.",
       "cta.l1":"Got an idea?","cta.l2":"Let's make it happen.","cta.mail":"Write an email","cta.copy":"Copy address","cta.copied":"Copied",
-      "footer.elsewhere":"Elsewhere","footer.time":"Time in Istanbul","footer.top":"Back to top",
+      "footer.elsewhere":"Elsewhere","footer.time":"Istanbul","footer.top":"Back to top",
       "meta.desc":"Eren Yavuz is an Istanbul-based graphic and motion designer and art director: product, key visual, campaign, packaging, motion, social media, print and event design."
     }
   };
@@ -1443,7 +1448,7 @@ ul,ol{padding:0;list-style:none}
       case "bowtie": return { front:G(100, cy + ry * .8, k, r()*10 - 5, L("M-16 -9L-2 0L-16 9Z") + L("M16 -9L2 0L16 9Z") + C(0, 0, 4, "fl")) };
       case "blush": { const y = ey + er + 7; return { front:L(`M${f(100 - ex - 10)} ${f(y + 3)}l4 -5m3 5l4 -5m3 5l4 -5M${f(100 + ex - 2)} ${f(y + 1)}l4 -5m3 5l4 -5m3 5l4 -5`, OPEN) }; }
       case "zzz": return { front:L(`M${f(100 + rx*.6)} ${f(M.ht + 8)}h12l-12 13h12`, OPEN) + L(`M${f(100 + rx*.6 + 18)} ${f(M.ht - 14)}h8l-8 9h8`, OPEN) };
-      case "wave": return { front:`<g class="arm" style="transform-origin:${f(100 + rx*.9)}px ${f(cy + ry*.15)}px">` + L(`M${f(100 + rx*.9)} ${f(cy + ry*.15)}Q${f(100 + rx*1.2)} ${f(cy - ry*.12)} ${f(100 + rx*1.14)} ${f(cy - ry*.48)}`, OPEN) + C(100 + rx*1.14, cy - ry*.58, 9) + `</g>` + L(`M${f(100 - rx*.92)} ${f(cy + ry*.2)}Q${f(100 - rx*1.12)} ${f(cy + ry*.36)} ${f(100 - rx*1.02)} ${f(cy + ry*.58)}`, OPEN),
+      case "wave": return { front:`<g class="arm" style="transform-origin:${f(100 + rx*.9)}px ${f(cy + ry*.15)}px">` + L(`M${f(100 + rx*.9)} ${f(cy + ry*.15)}Q${f(100 + rx*1.2)} ${f(cy - ry*.12)} ${f(100 + rx*1.14)} ${f(cy - ry*.48)}`, OPEN) + C(100 + rx*1.14, cy - ry*.58, 9) + `</g>` + L(`M${f(100 - rx*.92)} ${f(cy + ry*.2)}Q${f(100 - rx*1.12)} ${f(cy + ry*.36)} ${f(100 - rx*1.02)} ${f(cy + ry*.58)}`, OPEN) + C(100 - rx*1.03, cy + ry*.68, 9),
         box:[100 - rx*1.14 - 2, cy - ry*.58 - 10, 100 + rx*1.14 + 10, cy + ry] };
       default: return {};
     }
@@ -1989,7 +1994,9 @@ ul,ol{padding:0;list-style:none}
   /* ---------- Footer: saat ve uyuyan canavarlar ---------- */
   const clock = $("#clock");
   const tick = () => {
-    try { clock.textContent = new Intl.DateTimeFormat(lang === "tr" ? "tr-TR" : "en-GB", { timeZone:"Europe/Istanbul", hour:"2-digit", minute:"2-digit" }).format(new Date()); } catch {}
+    const loc = lang === "tr" ? "tr-TR" : "en-GB", now = new Date();
+    try { clock.textContent = new Intl.DateTimeFormat(loc, { timeZone:"Europe/Istanbul", hour:"2-digit", minute:"2-digit" }).format(now); } catch {}
+    try { $("#date").textContent = new Intl.DateTimeFormat(loc, { timeZone:"Europe/Istanbul", weekday:"long", day:"numeric", month:"long", year:"numeric" }).format(now); } catch {}
   };
   tick(); setInterval(tick, 15000);
   const foot = $(".foot"), sleepers = $$(".sleepers .m");
