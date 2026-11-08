@@ -606,6 +606,20 @@ ul,ol{padding:0;list-style:none}
 .d-item.ok{min-height:0;opacity:1;transform:none}
 .d-item img,.d-item video{display:block;width:100%;height:auto;border-radius:var(--rad)}
 .d-note{grid-column:1 / -1;color:var(--fog);padding:var(--s3) 0}
+/* Daha fazlası için: karakterlerle aynı elle çizilmiş turkuaz çizgi */
+.more-cta{position:relative;isolation:isolate;display:flex;align-items:center;gap:var(--s4);margin-top:var(--s5);padding:var(--s3) var(--s5) var(--s3) var(--s4);color:var(--ink);text-decoration:none}
+.more-cta[hidden]{display:none}
+.more-frame{position:absolute;inset:0;z-index:-1;width:100%;height:100%;overflow:visible}
+.more-frame path{fill:var(--paper);stroke:var(--monster);stroke-width:3.4;stroke-linejoin:round;vector-effect:non-scaling-stroke;transition:fill .25s}
+.more-cta:hover .more-frame path,.more-cta:focus-visible .more-frame path{fill:var(--mint)}
+.more-cta:focus-visible{outline-offset:6px;border-radius:18px}
+.more-m{flex:none;width:clamp(96px,11vw,150px)}
+.more-text{flex:1;display:flex;flex-direction:column;gap:6px;min-width:0}
+.more-t{font-size:var(--t-h2);font-weight:600;letter-spacing:-.03em;line-height:1}
+.more-s{font-size:var(--t-lead);font-weight:500;color:var(--monster-deep)}
+.more-arrow{flex:none;width:clamp(64px,8vw,120px);overflow:visible;transition:transform .4s var(--ease-out)}
+.more-arrow path{fill:none;stroke:var(--monster);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.more-cta:hover .more-arrow{transform:translateX(12px)}
 .all-work{display:inline-block;margin-top:var(--s5)}
 
 /* ===== Hikâye (After Effects zaman çizelgesi) ===== */
@@ -756,6 +770,11 @@ ul,ol{padding:0;list-style:none}
   .steps{grid-template-columns:1fr;row-gap:var(--s4)}
   .detail-grid{grid-template-columns:1fr}
   .d-col{display:contents}
+  .more-cta{gap:var(--s2);padding:var(--s2) var(--s3) var(--s2) var(--s2)}
+  .more-m{width:76px}
+  .more-arrow{width:40px}
+  .more-t{font-size:clamp(22px,6.6vw,30px)}
+  .more-s{font-size:17px}
   .d-item{order:var(--k);--rad:14px}
 }
 @media (max-width:420px){
@@ -877,6 +896,13 @@ ul,ol{padding:0;list-style:none}
             <button type="button" class="detail-close" id="detailClose" data-i18n="detail.close">Kapat</button>
           </div>
           <div class="detail-grid" id="detailGrid" aria-live="polite"></div>
+          <!-- "Daha fazlası için" çağrısı: WORKS'te more alanı olan işlerde galerinin altında görünür -->
+          <a class="more-cta" id="detailMore" href="https://vimeo.com/user16031546" target="_blank" rel="noopener" hidden>
+            <svg class="more-frame" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g filter="url(#boil)"><path d="M30 9C270 3 735 14 970 7C989 7 994 21 993 40C996 88 988 138 992 166C993 186 983 193 965 192C700 197 300 188 33 194C14 194 7 183 8 163C4 120 12 70 7 33C7 17 14 10 30 9Z"/></g></svg>
+            <span class="m more-m" data-m="camcorder" data-seed="2" aria-hidden="true"></span>
+            <span class="more-text"><span class="more-t" data-i18n="more.t">Daha fazlası için</span><span class="more-s" data-i18n="more.s">Vimeo'da izle</span></span>
+            <svg class="more-arrow" viewBox="0 0 120 64" aria-hidden="true" focusable="false"><g filter="url(#boil)"><path d="M6 36C30 30 62 27 104 32"/><path d="M82 12C92 20 100 26 108 32C100 40 92 47 84 55"/></g></svg>
+          </a>
         </div>
         <a class="link all-work" id="allWork" href="https://www.behance.net/jakuperen" target="_blank" rel="noopener" data-i18n="work.all">Tüm işler Behance'te</a>
       </div>
@@ -989,16 +1015,18 @@ ul,ol{padding:0;list-style:none}
      ========================================================= */
   const EMAIL = "hello@erenyavuz.com";
   const BEHANCE = "https://www.behance.net/jakuperen";
+  const VIMEO = "https://vimeo.com/user16031546";
 
   // İşler: her kutucuk assets/work/ altındaki bir klasördür.
   //   1.jpg            -> kapak (carousel'de görünen)
   //   2.jpg, 3.jpg ... -> kutucuğa tıklayınca altta açılan görseller (jpg, png, webp ya da mp4)
   // Yeni kutucuk: yeni klasör aç ve buraya bir satır ekle. Sıra buradaki sırayla aynıdır.
   //   k = kutucuğun altında yazan kategori (TR / EN)
+  //   more  = (isteğe bağlı) galerinin altındaki "Daha fazlası için" düğmesinin gideceği adres
   //   cover = (isteğe bağlı) carousel'de 1.jpg yerine gösterilecek kapak dosyası; galeri yine 1'den başlar
   const WORKS = [
     { folder:"01-peain",            k:{tr:"Product - KV", en:"Product - KV"} },
-    { folder:"05-clay-storyboard",  k:{tr:"Video - Motion", en:"Video - Motion"} },
+    { folder:"05-clay-storyboard",  k:{tr:"Video - Motion", en:"Video - Motion"}, more:VIMEO },
     { folder:"10-illustrasyon",     k:{tr:"İllüstrasyon", en:"Illustration"}, cover:"kapak.jpg" },
     { folder:"09-infografik",       k:{tr:"İnfografik",   en:"Infographic"} },
     { folder:"03-kendine-iyi-bak",  k:{tr:"Kampanya",     en:"Campaign"} },
@@ -1013,7 +1041,7 @@ ul,ol{padding:0;list-style:none}
       "skip":"İçeriğe geç",
       "nav.work":"İşler","nav.about":"Hakkımda","nav.contact":"İletişim","nav.menu":"Menü","nav.close":"Kapat",
       "sound.on":"Sesi kapat","sound.off":"Sesi aç",
-      "work.label":"İşler","work.all":"Tüm işler Behance'te","car.prev":"Önceki iş","car.next":"Sonraki iş","car.label":"Seçili işler","car.hint":"Ayrıntılar için bir işe tıkla.","detail.close":"Kapat","detail.loading":"Görseller yükleniyor…","detail.empty":"Bu işin görselleri yakında burada.",
+      "work.label":"İşler","work.all":"Tüm işler Behance'te","car.prev":"Önceki iş","car.next":"Sonraki iş","car.label":"Seçili işler","car.hint":"Ayrıntılar için bir işe tıkla.","detail.close":"Kapat","detail.loading":"Görseller yükleniyor…","detail.empty":"Bu işin görselleri yakında burada.","more.t":"Daha fazlası için","more.s":"Vimeo'da izle",
       "story.title":"15 yıldır tasarlıyorum.",
       "layer.game":"Oyun","layer.video":"Video ve Motion","layer.brand":"Basılı ve dijital","layer.corp":"Art direction","layer.ai":"AI",
       "ch.game":"Tarayıcı tabanlı oyun tasarımları",
@@ -1044,7 +1072,7 @@ ul,ol{padding:0;list-style:none}
       "skip":"Skip to content",
       "nav.work":"Work","nav.about":"About","nav.contact":"Contact","nav.menu":"Menu","nav.close":"Close",
       "sound.on":"Mute sounds","sound.off":"Turn sounds on",
-      "work.label":"Work","work.all":"All work on Behance","car.prev":"Previous project","car.next":"Next project","car.label":"Selected work","car.hint":"Click a project to see more.","detail.close":"Close","detail.loading":"Loading images…","detail.empty":"Images for this project are coming soon.",
+      "work.label":"Work","work.all":"All work on Behance","car.prev":"Previous project","car.next":"Next project","car.label":"Selected work","car.hint":"Click a project to see more.","detail.close":"Close","detail.loading":"Loading images…","detail.empty":"Images for this project are coming soon.","more.t":"Want more?","more.s":"Watch on Vimeo",
       "story.title":"Designing for 15 years.",
       "layer.game":"Games","layer.video":"Video & Motion","layer.brand":"Print and digital","layer.corp":"Art direction","layer.ai":"AI",
       "ch.game":"Browser-based game design",
@@ -1841,10 +1869,10 @@ ul,ol{padding:0;list-style:none}
   /* ---------- İşler: carousel (kapaklar) + tıklayınca altta açılan galeri ---------- */
   const WORK_DIR = "assets/work/";
   // Görsel değiştirince bu sayıyı bir artır: tarayıcıların eski kopyayı göstermesini önler
-  const MEDIA_V = "4";
+  const MEDIA_V = "5";
   const fresh = url => `${url}?v=${MEDIA_V}`;
   const track = $("#track"), count = $("#carCount"), prevBtn = $("#prevBtn"), nextBtn = $("#nextBtn");
-  const detail = $("#detail"), dGrid = $("#detailGrid"), dTitle = $("#detailTitle"), dClose = $("#detailClose");
+  const detail = $("#detail"), dGrid = $("#detailGrid"), dTitle = $("#detailTitle"), dClose = $("#detailClose"), dMore = $("#detailMore");
 
   // Galeri videoları yalnızca ekrandayken oynar; 6 saniyeden uzun (sesli) olanlarda oynatıcı kontrolleri çıkar.
   // Tarayıcı otomatik oynatmayı engellerse (ör. Safari / iPhone düşük güç modu) oynat düğmesi görünür.
@@ -1933,6 +1961,7 @@ ul,ol{padding:0;list-style:none}
     slides.forEach((s, j) => { s.classList.toggle("sel", j === i); $(".media", s).setAttribute("aria-expanded", String(j === i)); });
     dTitle.textContent = w.k[lang];
     detail.hidden = false;
+    dMore.hidden = !w.more; if (w.more) dMore.href = w.more;
     dGrid.className = "detail-grid";
     clearGrid(); dGrid.innerHTML = `<p class="d-note">${T[lang]["detail.loading"]}</p>`;
     if (scroll) requestAnimationFrame(() => detail.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block:"start" }));
@@ -1967,7 +1996,7 @@ ul,ol{padding:0;list-style:none}
   }
   function closeWork(){
     openIdx = -1; openToken++;
-    detail.hidden = true; clearGrid();
+    detail.hidden = true; dMore.hidden = true; clearGrid();
     slides.forEach(s => { s.classList.remove("sel"); $(".media", s).setAttribute("aria-expanded", "false"); });
     try { history.replaceState(null, "", location.pathname + location.search); } catch {}
   }
