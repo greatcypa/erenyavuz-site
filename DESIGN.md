@@ -68,8 +68,10 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - **Buton**: hap şekli (`border-radius: 999px`), 16×26px iç boşluk.
   Birincil siyah dolgu, ikincil 1.5px siyah kontur. Metin ne olacağını söyler ("E-posta yaz").
 - **İş satırı**: başlık solda, tür sağda, üstte 1px ayırıcı. Masaüstünde imleci izleyen önizleme.
-- **Zaman çizelgesi**: After Effects kompozisyonu gibi; katman adları solda, barlar ve
-  keyframe elmasları sağda, turkuaz playhead kaydırmayla ilerler.
+- **Zaman çizelgesi**: After Effects kompozisyonu gibi; katman adları solda (Oyun, Video ve Motion,
+  Basılı ve dijital, Art direction, AI), barlar ve keyframe elmasları sağda. Cetvel 2011-2027 (1 yıl = 1/16).
+  Beş keyframe: 2011, 2013, 2017, 2021, 2026. Kaydırma beş eşit parçaya bölünür; turkuaz playhead her
+  keyframe'de biraz bekler, o yılın cümlesi altta yılıyla birlikte görünür, sonra bir sonrakine kayar.
 - **Giriş kalabalığı**: Giriş ekranını boşluksuz dolduran, açık turkuaz (`#A9DCD2`), 1.5px çizgili canavarlar.
   Hiçbiri kenardan ya da menünün altından kesilmez; büyükten küçüğe boşlukları doldurarak yerleşir.
   Etkileşimsiz. Üstünde 8 (mobilde 6) tam görünen, etkileşimli canavar asimetrik dağılır.
@@ -85,13 +87,15 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
   gözlük (siyah, yuvarlak, kalp, yıldız, vizör, inek gözlüğü), elindekiler (pizza, hamburger, direksiyon,
   oyuncak araba, çay bardağı, simit, dondurma, kalem, klaket, patlamış mısır),
   ekstralar (bıyık, papyon, allık).
-- **Carousel + galeri**: Her kutucuk bir iş; kapak görseli kendi oranında, 14px köşe. Sürükleme, oklar, klavye,
+- **Carousel + galeri**: Her kutucuk bir iş; altında yalnızca kategorisi yazar (Product, Key Visual, Kampanya,
+  Ambalaj, Motion, Sosyal Medya, Print, Etkinlik). Kapak görseli kendi oranında, 14px köşe. Sürükleme, oklar, klavye,
   "01 / 08" sayacı. Kutucuğa tıklayınca sayfa değişmeden altta o işin galerisi açılır (masaüstünde 2 kolon,
   mobilde 1). Görseller `assets/work/<klasör>/1.jpg, 2.jpg, 3.jpg...` düzeninden otomatik okunur; 1 kapaktır.
-- **Ses**: Tek ses var: minik, tiz, sevimli bir "Hi!" (minyon tarzı). Web Audio ile ağız/gırtlak benzeri
-  filtrelerle üretilir (formant sentezi), dosya yok. Her karakterin ses inceliği biraz farklı.
-  Fare karakterin üstüne gelince bir kez "Hi!" der, ayrılana kadar susar. Tıklayınca da der;
-  footer'daki uykucular uyanınca daha kalın bir "Hi".
+- **Sesler**: Dosya yok, hepsi Web Audio ile tarayıcıda üretilir. Çoğu karakter minik, tiz, sevimli bir
+  "Hi!" der (minyon tarzı, formant sentezi; ses inceliği karaktere göre değişir). Kameralı aynı sesle "Action!" der,
+  gitarist muzip bir akor çalar (Karplus-Strong tel sentezi), hamburgerci ve pizzacı ısırıp çıtır çıtır çiğner,
+  trompetçi kısa bir "ta-ra-taa!" çalar. Fare karakterin üstüne gelince bir kez çalar, ayrılana kadar susar.
+  Tıklayınca da çalar; footer'daki uykucular uyanınca daha kalın bir "Hi".
   Tarayıcı kuralı gereği ziyaretçi sayfaya bir kez tıklamadan ses çıkmaz. Menüde ses aç/kapa düğmesi var.
 
 ## Yapma
@@ -100,3 +104,11 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - Her bölüme ayrı ayrı "aşağıdan kayarak gelme" animasyonu.
 - Buton ve link metinlerine `→` eklemek.
 - Canavarları başka renge boyamak ya da dolgulu çizmek.
+
+## SEO
+
+- Başlık, açıklama ve anahtar kelimelerde kategoriler geçer: product, key visual, kampanya, ambalaj, motion,
+  sosyal medya, print, etkinlik (EN: campaign, packaging, social media, event).
+- `schema.org` JSON-LD: Person (knowsAbout + makesOffer ile kategoriler), WebSite ve 8 işin listesi.
+- Open Graph / Twitter paylaşım görseli: `assets/og.jpg` (1200×630, giriş ekranından).
+- `robots.txt` ve görsel kapakları da içeren `sitemap.xml`. Görsellerin alt metni: "<Kategori> – Eren Yavuz".
