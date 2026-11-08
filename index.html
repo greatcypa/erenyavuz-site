@@ -625,7 +625,6 @@ ul,ol{padding:0;list-style:none}
 .more-arrow{flex:none;width:clamp(64px,8vw,120px);overflow:visible;transition:transform .4s var(--ease-out)}
 .more-arrow path{fill:none;stroke:var(--monster);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
 .more-cta:hover .more-arrow{transform:translateX(12px)}
-.all-work{display:inline-block;margin-top:var(--s5)}
 
 /* ===== Hikâye (After Effects zaman çizelgesi) ===== */
 .story{position:relative;height:300vh;scroll-margin-top:0}
@@ -911,7 +910,6 @@ ul,ol{padding:0;list-style:none}
             <svg class="more-arrow" viewBox="0 0 120 64" aria-hidden="true" focusable="false"><g filter="url(#boil)"><path d="M6 36C30 30 62 27 104 32"/><path d="M82 12C92 20 100 26 108 32C100 40 92 47 84 55"/></g></svg>
           </a>
         </div>
-        <a class="link all-work" id="allWork" href="https://www.behance.net/jakuperen" target="_blank" rel="noopener" data-i18n="work.all">Tüm işler Behance'te</a>
       </div>
     </div>
   </section>
@@ -1048,7 +1046,7 @@ ul,ol{padding:0;list-style:none}
       "skip":"İçeriğe geç",
       "nav.work":"İşler","nav.about":"Hakkımda","nav.contact":"İletişim","nav.menu":"Menü","nav.close":"Kapat",
       "sound.on":"Sesi kapat","sound.off":"Sesi aç","sound.hint":"Sesleri duymak için bir kez tıkla",
-      "work.label":"İşler","work.all":"Tüm işler Behance'te","car.prev":"Önceki iş","car.next":"Sonraki iş","car.label":"Seçili işler","car.hint":"Ayrıntılar için bir işe tıkla.","detail.close":"Kapat","detail.loading":"Görseller yükleniyor…","detail.empty":"Bu işin görselleri yakında burada.","more.t":"Daha fazlası için","more.s":"Vimeo'da izle",
+      "work.label":"İşler","car.prev":"Önceki iş","car.next":"Sonraki iş","car.label":"Seçili işler","car.hint":"Ayrıntılar için bir işe tıkla.","detail.close":"Kapat","detail.loading":"Görseller yükleniyor…","detail.empty":"Bu işin görselleri yakında burada.","more.t":"Daha fazlası için","more.s":"Vimeo'da izle",
       "story.title":"15 yıldır tasarlıyorum.",
       "layer.game":"Oyun","layer.video":"Video ve Motion","layer.brand":"Basılı ve dijital","layer.corp":"Art direction","layer.ai":"AI",
       "ch.game":"Tarayıcı tabanlı oyun tasarımları",
@@ -1079,7 +1077,7 @@ ul,ol{padding:0;list-style:none}
       "skip":"Skip to content",
       "nav.work":"Work","nav.about":"About","nav.contact":"Contact","nav.menu":"Menu","nav.close":"Close",
       "sound.on":"Mute sounds","sound.off":"Turn sounds on","sound.hint":"Click once to hear them",
-      "work.label":"Work","work.all":"All work on Behance","car.prev":"Previous project","car.next":"Next project","car.label":"Selected work","car.hint":"Click a project to see more.","detail.close":"Close","detail.loading":"Loading images…","detail.empty":"Images for this project are coming soon.","more.t":"Want more?","more.s":"Watch on Vimeo",
+      "work.label":"Work","car.prev":"Previous project","car.next":"Next project","car.label":"Selected work","car.hint":"Click a project to see more.","detail.close":"Close","detail.loading":"Loading images…","detail.empty":"Images for this project are coming soon.","more.t":"Want more?","more.s":"Watch on Vimeo",
       "story.title":"Designing for 15 years.",
       "layer.game":"Games","layer.video":"Video & Motion","layer.brand":"Print and digital","layer.corp":"Art direction","layer.ai":"AI",
       "ch.game":"Browser-based game design",
@@ -2258,7 +2256,6 @@ ul,ol{padding:0;list-style:none}
   /* ---------- E-posta ---------- */
   $("#mailLink").textContent = EMAIL;
   $("#mailLink").href = $("#mailBtn").href = "mailto:" + EMAIL;
-  $("#allWork").href = BEHANCE;
   const copyBtn = $("#copyBtn");
   copyBtn.addEventListener("click", async () => {
     let ok = false;
