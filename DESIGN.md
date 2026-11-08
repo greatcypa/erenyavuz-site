@@ -35,13 +35,13 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 
 - Metin: **Bricolage Grotesque** (Google Fonts, değişken: `opsz 12–96`, `wght 300–800`).
   Türkçe karakterleri destekler. Yedek: Inter, system-ui.
-- İsim: **Shantell Sans** (Google Fonts, doodle sanatçısı Shantell Martin'in el yazısından).
-  Sadece "Eren Yavuz" yazısında: `wght 800`, `INFM 100`, `BNCE` fareyle -70…70 arası oynar.
-  Başka hiçbir yerde kullanılmaz.
+- İsim: **Happy Doodle** (Eren'in seçtiği font, `assets/fonts/happy-doodle.woff`, sadece Latin harfler).
+  Sadece "Eren Yavuz" yazısında kullanılır (girişte ve footer'da). Türkçe ğ, ı, ş, İ harfleri yok,
+  bu yüzden başka metinde kullanılmaz. Fare hareketiyle harfler çok hafif (±1.4°, ±2px) ve yumuşak kıpırdar.
 
 | Rol                | Boyut                          | Ağırlık | Harf aralığı | Satır |
 |--------------------|--------------------------------|---------|--------------|-------|
-| İsim (hero)        | `clamp(68px, 13vw, 230px)`     | 800     | -0.015em     | 0.92  |
+| İsim (hero)        | `clamp(84px, 19vw, 330px)`     | 400     | 0            | 0.9   |
 | Büyük cümle (CTA)  | `clamp(44px, 7vw, 112px)`      | 600     | -0.035em     | 0.95  |
 | Bölüm başlığı (h2) | `clamp(32px, 4.4vw, 60px)`     | 500     | -0.03em      | 1.02  |
 | İş başlığı         | `clamp(26px, 3.2vw, 44px)`     | 500     | -0.02em      | 1.1   |
@@ -67,17 +67,23 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - **Buton**: hap şekli (`border-radius: 999px`), 16×26px iç boşluk.
   Birincil siyah dolgu, ikincil 1.5px siyah kontur. Metin ne olacağını söyler ("E-posta yaz").
 - **İş satırı**: başlık solda, tür sağda, üstte 1px ayırıcı. Masaüstünde imleci izleyen önizleme.
-- **3D ikon**: hizmetler bölümünde, 112px. Kaynak 3dicons (CC0), `assets/3d/` klasörüne PNG.
-  Dosya yoksa turkuaz kil görünümlü yer tutucu çizilir.
 - **Zaman çizelgesi**: After Effects kompozisyonu gibi; katman adları solda, barlar ve
   keyframe elmasları sağda, turkuaz playhead kaydırmayla ilerler.
-- **Giriş deseni**: Giriş ekranını kaplayan açık turkuaz (`#A9DCD2`), 1.6px çizgili, döndürülmüş
-  küçük canavarlar. Etkileşimsiz. Üstünde 6 tam görünen, etkileşimli canavar asimetrik dağılır.
+- **Giriş kalabalığı**: Giriş ekranını boşluksuz dolduran, açık turkuaz (`#A9DCD2`), 1.5px çizgili canavarlar.
+  Hiçbiri kenardan ya da menünün altından kesilmez; büyükten küçüğe boşlukları doldurarak yerleşir.
+  Etkileşimsiz. Üstünde 6 tam görünen, etkileşimli canavar asimetrik dağılır.
+- **Canavar parçaları**: gövde (yuvarlak, şişman, zayıf, minik, fasulye), gözler (iki, kocaman, tek göz,
+  göz kırpan, mutlu, üç göz, uykulu), ağız (sırıtma, gülümseme, dil, tavşan dişi, ıslık, çiğneme...),
+  başlık (diken, anten, kep, bere, silindir, parti şapkası, taç, bandana, kulaklık, çiçek),
+  gözlük (siyah, yuvarlak, kalp, yıldız, vizör, inek gözlüğü), elindekiler (pizza, hamburger, direksiyon,
+  oyuncak araba, çay bardağı, simit, dondurma, kalem, klaket, patlamış mısır, film makarası),
+  ekstralar (bıyık, papyon, allık).
 - **Carousel**: Sabit yükseklik, oran işe göre (`4/3`, `16/9`, `3/4`...). 14px köşe, mint zemin,
   boşken içinde canavar. Sürükleme, oklar, klavye, "01 / 08" sayacı. Altındaki liste içindekiler gibi çalışır.
-- **Sesler (foley)**: Web Audio ile üretilir, dosya yok. Her karakterin kendi sesi var
-  (taçlı: boing, antenli: bip-bop, gözlüklü: kayan ıslık, makaralı: projektör, klasik: kıkırdama,
-  el sallayan: "hii", uykucu: esneme). Fare karakterin üstüne gelince bir kez çalar, ayrılana kadar susar.
+- **Sesler (foley)**: Web Audio ile ağız/gırtlak benzeri filtrelerle üretilir (formant sentezi), dosya yok.
+  Her karakterin kendi "sesi" var: taçlı "hey-ya!", gözlüklü "yeah~", makaralı "ba-di-ba-du",
+  antenli "uu-ii?", hamburgerli "nom nom", parti şapkalı "yip!", klasik kıkırdama, el sallayan "hii!",
+  uykucular esneme, tıklayınca "uf!". Fare karakterin üstüne gelince bir kez çalar, ayrılana kadar susar.
   Tarayıcı kuralı gereği ziyaretçi sayfaya bir kez tıklamadan ses çıkmaz. Menüde ses aç/kapa düğmesi var.
 
 ## Yapma
