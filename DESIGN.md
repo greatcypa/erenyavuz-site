@@ -89,8 +89,9 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
   gözlük (siyah, yuvarlak, kalp, yıldız, vizör, inek gözlüğü), elindekiler (pizza, hamburger, direksiyon,
   oyuncak araba, çay bardağı, simit, dondurma, kalem, klaket, patlamış mısır),
   ekstralar (bıyık, papyon, allık).
-- **Carousel + galeri**: Her kutucuk bir iş; altında yalnızca kategorisi yazar (Product, Key Visual, Kampanya,
-  Ambalaj, Motion, Sosyal Medya, Print, Etkinlik). Kapak görseli kendi oranında, 14px köşe. Sürükleme, oklar, klavye,
+- **Carousel + galeri**: Her kutucuk bir iş; altında yalnızca kategorisi yazar (Product, Video - Motion - İllüstrasyon,
+  Key Visual, Kampanya, Ambalaj, Sosyal Medya, Print, Etkinlik). Galerideki videolar yalnızca ekrandayken sessiz
+  oynar; 6 saniyeden uzun olanlarda oynatıcı kontrolleri (ses açma, tam ekran) çıkar. Kapak görseli kendi oranında, 14px köşe. Sürükleme, oklar, klavye,
   "01 / 08" sayacı. Kutucuğa tıklayınca sayfa değişmeden altta o işin galerisi açılır (masaüstünde 2 kolon,
   mobilde 1). Görseller `assets/work/<klasör>/1.jpg, 2.jpg, 3.jpg...` düzeninden otomatik okunur; 1 kapaktır.
 - **Sesler**: Dosya yok, hepsi Web Audio ile tarayıcıda üretilir. Çoğu karakter minik, tiz, sevimli bir
