@@ -108,7 +108,8 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
   gitarist muzip bir akor çalar (Karplus-Strong tel sentezi), hamburgerci ve pizzacı ısırıp çıtır çıtır çiğner,
   trompetçi kısa bir "ta-ra-taa!" çalar. Fare karakterin üstüne gelince bir kez çalar, ayrılana kadar susar.
   Tıklayınca da çalar; footer'daki uykucular uyanınca daha kalın bir "Hi".
-  Tarayıcı kuralı gereği ziyaretçi sayfaya bir kez tıklamadan ses çıkmaz. Menüde ses aç/kapa düğmesi var.
+  Tarayıcı kuralı gereği ziyaretçi sayfaya bir kez tıklamadan (ya da dokunmadan) ses çıkmaz; tıklamadan bir karakterin
+  üstüne gelinirse imlecin yanında "Sesleri duymak için bir kez tıkla" ipucu görünür. Menüde ses aç/kapa düğmesi var.
 
 ## Yapma
 

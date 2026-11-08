@@ -482,6 +482,11 @@ ul,ol{padding:0;list-style:none}
 .sound-btn:hover{background:var(--mint)}
 .sound-btn svg{width:26px;height:26px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .sound-btn .slash{display:none}
+/* "Sesleri duymak için bir kez tıkla" ipucu: imlecin yanında kısa süre görünür */
+.snd-hint{position:fixed;z-index:90;display:flex;align-items:center;gap:8px;padding:8px 14px 8px 10px;border:2px solid var(--monster);border-radius:999px;background:var(--paper);color:var(--ink);font-size:15px;font-weight:500;line-height:1.2;white-space:nowrap;box-shadow:0 6px 20px rgba(0,0,0,.08);pointer-events:none;opacity:0;transform:translateY(4px) scale(.96);transition:opacity .2s,transform .25s var(--ease-out)}
+.snd-hint.show{opacity:1;transform:none}
+.snd-hint[hidden]{display:none}
+.snd-hint svg{width:22px;height:22px;flex:none;fill:none;stroke:var(--monster-deep);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .sound-btn[aria-pressed="false"] .waves{display:none}
 .sound-btn[aria-pressed="false"] .slash{display:inline}
 .menu-btn{display:none;font-weight:500;font-size:17px;padding:8px 0}
@@ -817,6 +822,8 @@ ul,ol{padding:0;list-style:none}
   </filter>
 </svg>
 
+<div class="snd-hint" id="sndHint" role="status" hidden><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 12.5h5.5L18 6v20l-7.5-6.5H5z"/><path d="M22 11.5q3 4.5 0 9"/><path d="M25.5 8q5.5 8 0 16"/></svg><span data-i18n="sound.hint">Sesleri duymak için bir kez tıkla</span></div>
+
 <header class="nav" id="nav">
   <a class="brand" href="#top" aria-label="Eren Yavuz"><span class="m" data-m="classic" data-seed="3"></span><span>Eren Yavuz</span></a>
   <nav class="nav-links" aria-label="Ana menü">
@@ -1040,7 +1047,7 @@ ul,ol{padding:0;list-style:none}
     tr:{
       "skip":"İçeriğe geç",
       "nav.work":"İşler","nav.about":"Hakkımda","nav.contact":"İletişim","nav.menu":"Menü","nav.close":"Kapat",
-      "sound.on":"Sesi kapat","sound.off":"Sesi aç",
+      "sound.on":"Sesi kapat","sound.off":"Sesi aç","sound.hint":"Sesleri duymak için bir kez tıkla",
       "work.label":"İşler","work.all":"Tüm işler Behance'te","car.prev":"Önceki iş","car.next":"Sonraki iş","car.label":"Seçili işler","car.hint":"Ayrıntılar için bir işe tıkla.","detail.close":"Kapat","detail.loading":"Görseller yükleniyor…","detail.empty":"Bu işin görselleri yakında burada.","more.t":"Daha fazlası için","more.s":"Vimeo'da izle",
       "story.title":"15 yıldır tasarlıyorum.",
       "layer.game":"Oyun","layer.video":"Video ve Motion","layer.brand":"Basılı ve dijital","layer.corp":"Art direction","layer.ai":"AI",
@@ -1071,7 +1078,7 @@ ul,ol{padding:0;list-style:none}
     en:{
       "skip":"Skip to content",
       "nav.work":"Work","nav.about":"About","nav.contact":"Contact","nav.menu":"Menu","nav.close":"Close",
-      "sound.on":"Mute sounds","sound.off":"Turn sounds on",
+      "sound.on":"Mute sounds","sound.off":"Turn sounds on","sound.hint":"Click once to hear them",
       "work.label":"Work","work.all":"All work on Behance","car.prev":"Previous project","car.next":"Next project","car.label":"Selected work","car.hint":"Click a project to see more.","detail.close":"Close","detail.loading":"Loading images…","detail.empty":"Images for this project are coming soon.","more.t":"Want more?","more.s":"Watch on Vimeo",
       "story.title":"Designing for 15 years.",
       "layer.game":"Games","layer.video":"Video & Motion","layer.brand":"Print and digital","layer.corp":"Art direction","layer.ai":"AI",
@@ -1296,7 +1303,7 @@ ul,ol{padding:0;list-style:none}
   const makeSound = (c, d, nb, t, name, pitch) => VOICES[name] ? speak(c, d, nb, t, name, pitch) : SFX[name] ? SFX[name](c, d, nb, t, pitch) : 0;
 
   const Sound = (() => {
-    let ctx = null, master = null, last = 0, noiseBuf = null;
+    let ctx = null, master = null, last = -1, noiseBuf = null; // last=-1: yeni bağlamın ilk sesi (currentTime≈0) yutulmasın
     let on = true;
     try { on = localStorage.getItem("sound") !== "off"; } catch {}
     function ensure(){
@@ -1312,10 +1319,41 @@ ul,ol{padding:0;list-style:none}
       if (ctx.state === "suspended") ctx.resume().catch(() => {});
       return ctx;
     }
-    // Tarayıcılar sesi ancak ilk tıklama/dokunuştan sonra açar
-    ["pointerdown","keydown","touchstart"].forEach(ev => addEventListener(ev, () => ensure(), { capture:true, passive:true }));
-    function play(name, pitch=1){
-      if (!on || !ctx || ctx.state !== "running") return;
+    // Tarayıcılar sesi ancak ilk tıklama/dokunuş/tuştan sonra açar (fareyi gezdirmek yetmez).
+    // Safari ve iPhone için birkaç farklı olayda da kilidi açmayı deneriz.
+    let activated = false;
+    const unlock = () => { activated = true; ensure(); hideHint(); };
+    ["pointerdown","pointerup","mousedown","keydown","touchstart","touchend","click"].forEach(ev => addEventListener(ev, unlock, { capture:true, passive:true }));
+    // Henüz tıklanmamışken bir karakterin üstüne gelinirse küçük bir ipucu gösterilir
+    let hintEl = null, hintT = 0, hintAt = 0, hx = 0, hy = 0;
+    addEventListener("pointermove", e => { hx = e.clientX; hy = e.clientY; }, { passive:true });
+    function showHint(){
+      const now = performance.now();
+      if (activated || now - hintAt < 1500) return;
+      hintAt = now;
+      hintEl = hintEl || document.getElementById("sndHint");
+      if (!hintEl) return;
+      hintEl.hidden = false;
+      const w = hintEl.offsetWidth, h = hintEl.offsetHeight;
+      hintEl.style.left = Math.max(8, Math.min(innerWidth - w - 8, hx + 16)) + "px";
+      hintEl.style.top = Math.max(8, Math.min(innerHeight - h - 8, hy + 20)) + "px";
+      requestAnimationFrame(() => hintEl.classList.add("show"));
+      clearTimeout(hintT); hintT = setTimeout(hideHint, 2600);
+    }
+    function hideHint(){
+      if (!hintEl) return;
+      hintEl.classList.remove("show");
+      clearTimeout(hintT); hintT = setTimeout(() => { if (hintEl) hintEl.hidden = true; }, 250);
+    }
+    function play(name, pitch=1, retry=false){
+      if (!on) return;
+      if (!activated){ showHint(); return; }
+      if (!ensure()) return;
+      if (ctx.state !== "running"){
+        // ilk dokunuşta bağlam henüz açılıyor olabilir: açılınca hemen çal
+        if (!retry){ const t0 = performance.now(); ctx.resume().then(() => { if (performance.now() - t0 < 500) play(name, pitch, true); }).catch(() => {}); }
+        return;
+      }
       const now = ctx.currentTime;
       if (now - last < .12) return;
       last = now;
