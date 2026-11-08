@@ -1734,6 +1734,9 @@ ul,ol{padding:0;list-style:none}
 
   /* ---------- İşler: carousel (kapaklar) + tıklayınca altta açılan galeri ---------- */
   const WORK_DIR = "assets/work/";
+  // Görsel değiştirince bu sayıyı bir artır: tarayıcıların eski kopyayı göstermesini önler
+  const MEDIA_V = "2";
+  const fresh = url => `${url}?v=${MEDIA_V}`;
   const track = $("#track"), count = $("#carCount"), prevBtn = $("#prevBtn"), nextBtn = $("#nextBtn");
   const detail = $("#detail"), dGrid = $("#detailGrid"), dTitle = $("#detailTitle"), dClose = $("#detailClose");
 
@@ -1795,17 +1798,17 @@ ul,ol{padding:0;list-style:none}
       img.onload = () => setRatio(img.naturalWidth, img.naturalHeight);
       img.onerror = async () => {
         img.remove();
-        if (src.endsWith("/1.jpg")){
+        if (src.includes("/1.jpg")){
           const f = await findFile(w.folder, 1);
           if (!f) return;
           if (f.video){ const v = makeVideo(f.url); v.addEventListener("loadedmetadata", () => setRatio(v.videoWidth, v.videoHeight)); media.appendChild(v); }
-          else showImg(f.url);
+          else showImg(fresh(f.url));
         }
       };
       img.src = src;
       media.appendChild(img);
     };
-    showImg(`${WORK_DIR}${w.folder}/1.jpg`);
+    showImg(fresh(`${WORK_DIR}${w.folder}/1.jpg`));
     media.addEventListener("click", () => toggleWork(i));
     track.appendChild(fig);
   });
@@ -1830,8 +1833,8 @@ ul,ol{padding:0;list-style:none}
     files.forEach((file, k) => {
       const fig = document.createElement("figure");
       fig.className = "d-item"; fig.style.setProperty("--k", k);
-      const m = file.video ? makeVideo(file.url, true) : new Image();
-      if (!file.video){ m.alt = `${w.k[lang]} – Eren Yavuz, ${k + 1}`; m.decoding = "async"; m.loading = k < 4 ? "eager" : "lazy"; m.src = file.url; }
+      const m = file.video ? makeVideo(fresh(file.url), true) : new Image();
+      if (!file.video){ m.alt = `${w.k[lang]} – Eren Yavuz, ${k + 1}`; m.decoding = "async"; m.loading = k < 4 ? "eager" : "lazy"; m.src = fresh(file.url); }
       const done = () => fig.classList.add("ok");
       m.addEventListener(file.video ? "loadeddata" : "load", done);
       m.addEventListener("error", () => fig.remove());
