@@ -75,6 +75,8 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - **Giriş kalabalığı**: Giriş ekranını boşluksuz dolduran, açık turkuaz (`#A9DCD2`), 1.5px çizgili canavarlar.
   Hiçbiri kenardan ya da menünün altından kesilmez; büyükten küçüğe boşlukları doldurarak yerleşir.
   Etkileşimsiz. Üstünde 8 (mobilde 6) tam görünen, etkileşimli canavar asimetrik dağılır.
+- **Profil fotoğrafı**: Girişte sol tarafta, karakterlerin kafasıyla aynı boyda yuvarlak fotoğraf (`assets/eren.jpg`,
+  480×480). Çevresinde karakterlerle aynı turkuaz, elle çizilmiş ve titreşen halka; kamera tutan karakter hemen altında.
 - **Hareketli karakterler (GIF gibi)**: 2-5 karelik, adım adım değişen döngüler; ara geçiş yok.
   Hamburger yiyen ve pizza yiyen (ağız açar, ısırır, çiğner, kırıntı döker; 5 kare, 1.1 sn),
   trompetçi (gözler kapalı, yanaklar şişik, notalar yükselir; 3 kare, 0.75 sn),
