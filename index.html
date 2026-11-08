@@ -78,7 +78,18 @@ ul,ol{padding:0;list-style:none}
 .mon .glint,.pattern .glint{fill:var(--paper)}
 .mon .eye{transform-box:fill-box;transform-origin:center;transition:transform .07s ease}
 .m.blink .eye{transform:scaleY(.08)}
-.mon .reel{transform-box:fill-box;transform-origin:center;animation:spin 7s linear infinite}
+.m.blink .eye.lens{transform:none}
+/* GIF gibi kare kare animasyon: her karede bir .fr görünür */
+.frames .fr{visibility:hidden}
+.frames .fr:first-child{visibility:visible}
+.m.play .frames .fr{animation:fr4 var(--cyc) steps(1,end) infinite;animation-delay:calc(var(--i) * var(--cyc) / var(--n))}
+.m.play .frames[data-n="2"] .fr{animation-name:fr2}
+.m.play .frames[data-n="3"] .fr{animation-name:fr3}
+.m.play .frames[data-n="5"] .fr{animation-name:fr5}
+@keyframes fr2{0%{visibility:visible}50%,100%{visibility:hidden}}
+@keyframes fr3{0%{visibility:visible}33.333%,100%{visibility:hidden}}
+@keyframes fr4{0%{visibility:visible}25%,100%{visibility:hidden}}
+@keyframes fr5{0%{visibility:visible}20%,100%{visibility:hidden}}
 .mon .arm{transform-box:view-box}
 .m.waving .arm{animation:wave .55s ease-in-out 4}
 .wake{display:none}
@@ -86,7 +97,6 @@ ul,ol{padding:0;list-style:none}
 .m.awake .sleep{display:none}
 .m:hover .mon,.m.boing .mon{animation:squash .6s var(--ease-out)}
 @keyframes squash{0%{transform:scale(1,1)}22%{transform:scale(1.07,.9)}48%{transform:scale(.95,1.07)}72%{transform:scale(1.02,.98)}100%{transform:scale(1,1)}}
-@keyframes spin{to{transform:rotate(360deg)}}
 @keyframes wave{0%,100%{transform:rotate(0)}35%{transform:rotate(-16deg)}70%{transform:rotate(9deg)}}
 
 /* Arka plan kalabalığı: ince, açık, etkileşimsiz */
@@ -161,12 +171,14 @@ ul,ol{padding:0;list-style:none}
 }
 .cast{position:absolute;inset:0;z-index:2;pointer-events:none}
 .cast .m{position:absolute;left:var(--x);top:var(--y);width:var(--w)}
-.cast .c1{--x:83%;--y:11%;--w:min(11vw,22vh)}
-.cast .c2{--x:61%;--y:44%;--w:min(14vw,27vh)}
-.cast .c3{--x:5%; --y:59%;--w:min(15vw,29vh)}
-.cast .c4{--x:31%;--y:67%;--w:min(11vw,22vh)}
-.cast .c5{--x:80%;--y:59%;--w:min(14vw,27vh)}
-.cast .c6{--x:48%;--y:79%;--w:min(9vw,16vh)}
+.cast .c1{--x:84%;--y:10%;--w:min(10vw,20vh)}
+.cast .c2{--x:57%;--y:45%;--w:min(15vw,28vh)}
+.cast .c3{--x:82%;--y:39%;--w:min(12vw,23vh)}
+.cast .c4{--x:4%; --y:55%;--w:min(15vw,29vh)}
+.cast .c5{--x:24%;--y:60%;--w:min(15vw,30vh)}
+.cast .c6{--x:79%;--y:66%;--w:min(14vw,27vh)}
+.cast .c7{--x:43%;--y:70%;--w:min(13vw,25vh)}
+.cast .c8{--x:63%;--y:82%;--w:min(8vw,15vh)}
 
 /* ===== İşler: carousel (kapaklar) + altta açılan galeri ===== */
 .carousel{
@@ -301,12 +313,13 @@ ul,ol{padding:0;list-style:none}
   .sec-label{padding:0 0 var(--s3)}
   .name{font-size:clamp(84px,40vw,200px);line-height:.86}
   .name .w{display:block}
-  .cast .c1{--x:60%;--y:50%;--w:30vw}
-  .cast .c2{--x:4%; --y:57%;--w:34vw}
-  .cast .c3{--x:44%;--y:66%;--w:37vw}
-  .cast .c4{--x:3%; --y:78%;--w:27vw}
-  .cast .c5{--x:70%;--y:79%;--w:27vw}
-  .cast .c6{display:none}
+  .cast .c1,.cast .c8{display:none}
+  .cast .c3{--x:64%;--y:50.5%;--w:27vw}
+  .cast .c4{--x:3%; --y:52%;--w:32vw}
+  .cast .c2{--x:37%;--y:62.5%;--w:34vw}
+  .cast .c5{--x:2%; --y:71%;--w:34vw}
+  .cast .c6{--x:68%;--y:79%;--w:29vw}
+  .cast .c7{--x:37%;--y:80%;--w:30vw}
   .carousel{--h:clamp(220px,62vw,420px)}
   .slide figcaption{flex-direction:column;gap:2px}
   .car-hint{display:none}
@@ -332,7 +345,7 @@ ul,ol{padding:0;list-style:none}
   .mon .ln{transition:none;stroke-dashoffset:0}
   .mon .fl{transition:none;opacity:1}
   .pattern .pg{transition:none;opacity:1;transform:none}
-  .mon .reel,.m.waving .arm,.m:hover .mon,.m.boing .mon{animation:none}
+  .m.waving .arm,.m:hover .mon,.m.boing .mon,.m.play .frames .fr{animation:none}
   .nav,.chapter{transition:none}
   .d-item{transition:none;opacity:1;transform:none}
 }
@@ -350,7 +363,7 @@ ul,ol{padding:0;list-style:none}
 </svg>
 
 <header class="nav" id="nav">
-  <a class="brand" href="#top" aria-label="Eren Yavuz"><span class="m" data-m="classic" data-v="hm" data-seed="3"></span><span>Eren Yavuz</span></a>
+  <a class="brand" href="#top" aria-label="Eren Yavuz"><span class="m" data-m="classic" data-seed="3"></span><span>Eren Yavuz</span></a>
   <nav class="nav-links" aria-label="Ana menü">
     <a href="#work" data-i18n="nav.work">İşler</a>
     <a href="#about" data-i18n="nav.about">Hakkımda</a>
@@ -386,12 +399,14 @@ ul,ol{padding:0;list-style:none}
   <section class="hero" id="hero" aria-labelledby="name">
     <svg class="pattern" id="pattern" aria-hidden="true" focusable="false"></svg>
     <div class="cast" aria-hidden="true">
-      <span class="m c1" data-m="crown"   data-v="hey"    data-seed="4"></span>
-      <span class="m c2" data-m="glasses" data-v="yeah"   data-seed="7"></span>
-      <span class="m c3" data-m="reel"    data-v="babble" data-seed="2"></span>
-      <span class="m c4" data-m="antenna" data-v="ooee"   data-seed="11"></span>
-      <span class="m c5" data-m="burger"  data-v="nomnom" data-seed="9"></span>
-      <span class="m c6" data-m="party"   data-v="yip"    data-seed="15"></span>
+      <span class="m c1" data-m="crown"     data-seed="4"></span>
+      <span class="m c2" data-m="trumpet"   data-seed="12"></span>
+      <span class="m c3" data-m="glasses"   data-seed="7"></span>
+      <span class="m c4" data-m="camcorder" data-seed="2"></span>
+      <span class="m c5" data-m="guitar"    data-seed="11"></span>
+      <span class="m c6" data-m="burger"    data-seed="9"></span>
+      <span class="m c7" data-m="pizza"     data-seed="5"></span>
+      <span class="m c8" data-m="party"     data-seed="15"></span>
     </div>
     <div class="hero-text">
       <h1 class="name" id="name" aria-label="Eren Yavuz"><span class="w">Eren</span> <span class="w">Yavuz</span></h1>
@@ -480,7 +495,7 @@ ul,ol{padding:0;list-style:none}
         <button type="button" class="btn btn--line" id="copyBtn" data-i18n="cta.copy">Adresi kopyala</button>
       </div>
     </div>
-    <span class="m cta-m" data-m="wave" data-v="hii" data-seed="21" aria-hidden="true"></span>
+    <span class="m cta-m" data-m="wave" data-seed="21" aria-hidden="true"></span>
   </section>
 </main>
 
@@ -596,24 +611,15 @@ ul,ol{padding:0;list-style:none}
   let lang = "tr";
 
   /* =========================================================
-     SESLER: karakterlerin kendi "sesleri" (formant sentezi).
-     Ses dosyası yok; ağız/gırtlak benzeri filtrelerle kısa,
-     anlamsız ama sevimli konuşmalar üretilir.
+     SES: tüm karakterler minik, tiz, sevimli bir "Hi!" der.
+     Ses dosyası yok; ağız/gırtlak benzeri filtrelerle (formant
+     sentezi) üretilir. "h" nefesi + "a"dan "i"ye kayan ünlü.
      ========================================================= */
   const FORM = { a:[800,1150,2800], e:[480,1850,2550], i:[310,2250,2950], o:[500,850,2450], u:[340,720,2350], m:[260,1050,2250] };
   const FGAIN = { m:[1,.1,.04] };
   const VOICES = {
-    hey:    { base:300, shift:1.25, syl:[{c:"h",v:"e",d:.1,p:[1,1.15]},{c:"y",v:"a",d:.17,p:[1.3,1.02]}] },
-    yeah:   { vol:1.25, base:165, shift:1.05, vib:.015, syl:[{c:"y",v:"e",d:.13,p:[1.05,1]},{v:"a",d:.26,p:[1,.8],g:0}] },
-    babble: { vol:1.2, base:270, shift:1.2, syl:[{c:"b",v:"a",d:.07,p:[1.05,1]},{c:"d",v:"i",d:.06,p:[1.15,1.1]},{c:"b",v:"a",d:.07,p:[1,.95]},{c:"d",v:"u",d:.1,p:[1.05,.88]}] },
-    ooee:   { base:290, shift:1.3, vib:.035, vibRate:8, syl:[{v:"u",d:.15,p:[.95,1]},{c:"y",v:"i",d:.22,p:[1.1,1.55],g:0}] },
-    giggle: { base:360, shift:1.3, breath:.22, syl:[{c:"h",v:"i",d:.06,p:[1.3,1.25]},{c:"h",v:"i",d:.06,p:[1.2,1.15]},{c:"h",v:"i",d:.06,p:[1.12,1.05]},{c:"h",v:"e",d:.08,p:[1.05,.95]}] },
-    nomnom: { base:230, shift:1.1, syl:[{c:"n",v:"o",d:.11,p:[1,1.05]},{v:"m",d:.05,g:.01},{c:"n",v:"o",d:.12,p:[1.05,.95]},{v:"m",d:.09,p:[.95,.9]}] },
-    yip:    { vol:1.15, base:480, shift:1.45, syl:[{c:"y",v:"i",d:.09,p:[1.2,1.5]},{v:"e",d:.05,p:[1.5,1.3],g:0}] },
-    hii:    { base:300, shift:1.25, syl:[{c:"h",v:"a",d:.07,p:[1,1.15]},{v:"i",d:.27,p:[1.2,1.42],g:0}] },
-    yawn:   { base:190, shift:1.1, breath:.25, syl:[{c:"h",v:"a",d:.42,p:[1.15,.78]},{v:"o",d:.12,p:[.78,.72],g:0},{v:"m",d:.2,p:[.72,.68],g:0}] },
-    oof:    { vol:1.7, base:260, shift:1.2, syl:[{c:"h",v:"u",d:.11,p:[1.15,.85]}] },
-    hm:     { base:280, shift:1.2, syl:[{v:"m",d:.09},{v:"e",d:.11,p:[1,1.3],g:0}] },
+    hi: { vol:1.1, base:385, shift:1.4, lp:5200, vib:.045, vibRate:7.5, breath:.08,
+          syl:[{c:"h",v:"a",d:.075,p:[1,1.17],hold:true},{v:"i",d:.2,p:[1.21,1.06],g:0,gl:.07}] },
   };
   const VOICE_GAIN = 1.6;
 
@@ -626,7 +632,7 @@ ul,ol{padding:0;list-style:none}
     const V = VOICES[name]; if (!V) return 0;
     const base = V.base * pitch, shift = V.shift * (.96 + (pitch - 1) * .5);
     const src = c.createOscillator(); src.type = "sawtooth";
-    const pre = c.createBiquadFilter(); pre.type = "lowpass"; pre.frequency.value = 3600; pre.Q.value = .4;
+    const pre = c.createBiquadFilter(); pre.type = "lowpass"; pre.frequency.value = V.lp || 3600; pre.Q.value = .4;
     const breath = c.createBufferSource(); breath.buffer = noiseBuf; breath.loop = true;
     const bg = c.createGain(); bg.gain.value = V.breath ?? .06;
     src.connect(pre); breath.connect(bg); bg.connect(pre);
@@ -659,7 +665,7 @@ ul,ol{padding:0;list-style:none}
       }
       if (s.c === "y"){ F.forEach((f, k) => f.bp.frequency.setValueAtTime(FORM.i[k] * shift, on)); }
       if (s.c === "n"){ F.forEach((f, k) => { f.bp.frequency.setValueAtTime(FORM.m[k] * shift, on); f.g.gain.setValueAtTime(FGAIN.m[k], on); }); }
-      const glide = (s.c === "y" || s.c === "n") ? .05 : .012;
+      const glide = s.gl ?? ((s.c === "y" || s.c === "n") ? .05 : .012);
       const startF = (s.c === "b" || s.c === "d") ? p0 * .88 : p0;
       src.frequency.setValueAtTime(startF, on);
       src.frequency.linearRampToValueAtTime(p0, on + .02);
@@ -669,7 +675,7 @@ ul,ol{padding:0;list-style:none}
         f.g.gain.setTargetAtTime(vg[k], on + (s.c === "n" ? .04 : 0), .012);
       });
       env.gain.setTargetAtTime(1, on, (s.c === "b" || s.c === "d") ? .004 : .012);
-      env.gain.setTargetAtTime(.0001, on + s.d - .012, .018);
+      if (!s.hold) env.gain.setTargetAtTime(.0001, on + s.d - .012, .018);
       time = on + s.d + (s.g ?? .035);
     }
     const end = time + .15;
@@ -879,7 +885,7 @@ ul,ol{padding:0;list-style:none}
     }
   }
 
-  /* --- Ellerindekiler: pizza, hamburger, direksiyon, oyuncak araba, çay bardağı, simit, dondurma, kalem, klaket, patlamış mısır, film makarası --- */
+  /* --- Ellerindekiler: pizza, hamburger, direksiyon, oyuncak araba, çay bardağı, simit, dondurma, kalem, klaket, patlamış mısır --- */
   const hand = (x, y, s=8) => C(x, y, s);
   const PROPS = {
     pizza:    { at:M => [100 + M.mw * .55, M.my + 8], s:.95, box:[-2,-22,60,22], d: L("M0 0L46 -18Q54 -1 46 16Z") + L("M41 -15Q48 -1 41 13", OPEN) + C(22,-3,4,"fl") + C(33,5,3.5,"fl") + C(34,-9,3,"fl") + hand(50, 4), mouth:"chew" },
@@ -892,14 +898,116 @@ ul,ol{padding:0;list-style:none}
     pencil:   { at:M => [100 + M.rx * .72, M.cy + M.ry * .28], s:.8, rot:25, box:[-12,-46,12,46], d: L("M-6 -38H6V24L0 38L-6 24Z") + L("M-6 24H6M-6 -30H6", OPEN) + P("M-2 33L0 38L2 33Z") + hand(0, 8) },
     clap:     { at:M => [100 + M.rx * .6, M.cy + M.ry * .45], s:.85, box:[-38,-30,30,28], d: L("M-26 -4H26V24H-26Z") + L("M-27 -6L24 -20L26 -12L-25 2Z") + P("M-18 -8.4l7 -1.9l3 7.6l-7 1.9ZM-2 -12.8l7 -1.9l3 7.6l-7 1.9ZM14 -17.2l7 -1.9l3 7.6l-7 1.9Z") + L("M-18 8H18M-18 16H8", OPEN) + hand(-30, 14) },
     popcorn:  { at:M => [100 + M.rx * .62, M.cy + M.ry * .45], s:.85, box:[-28,-30,20,30], d: L("M-16 -6L-12 26H12L16 -6Z") + L("M-6 -6L-5 26M6 -6L5 26", OPEN) + C(-10,-10,6) + C(10,-10,6) + C(0,-14,7) + C(-4,-22,6) + C(7,-21,5) + hand(-19, 10) },
-    reel:     { at:M => [100 + M.rx * .65, M.cy + M.ry * .55], s:1, box:[-32,-32,32,32], d: `<g class="reel">` + C(0,0,30) + [0,1,2,3,4].map(i => { const a = i/5*Math.PI*2 - Math.PI/2; return C(Math.cos(a) * 16, Math.sin(a) * 16, 6); }).join("") + C(0,0,4.5) + `</g>` },
   };
   function propPart(type, r, M){
     const p = PROPS[type]; if (!p) return {};
-    const [x, y] = p.at(M), s = p.s * M.k * (type === "reel" ? 1 : 1), rot = (p.rot || 0) + (r()*8 - 4);
+    const [x, y] = p.at(M), s = p.s * M.k, rot = (p.rot || 0) + (r()*8 - 4);
     const b = p.box;
     return { front:G(x, y, s, rot, p.d), box:[x + b[0]*s - 4, y + b[1]*s - 4, x + b[2]*s + 4, y + b[3]*s + 4] };
   }
+
+  /* --- Hareketli karakterler: GIF gibi 2-5 karelik döngüler ---
+     Her biri { face?, mid?, frames:[...], over?, cyc (sn), box } döndürür.
+     Arka plandaki kalabalıkta yalnızca ilk kare (durağan) çizilir. */
+  function tbox(x, y, s, rot, b){
+    const a = rot * Math.PI / 180, c = Math.cos(a), si = Math.sin(a), xs = [], ys = [];
+    [[b[0],b[1]],[b[2],b[1]],[b[0],b[3]],[b[2],b[3]]].forEach(([px, py]) => { xs.push(x + s * (px * c - py * si)); ys.push(y + s * (px * si + py * c)); });
+    return [Math.min(...xs) - 3, Math.min(...ys) - 3, Math.max(...xs) + 3, Math.max(...ys) + 3];
+  }
+  const ubox = (...bs) => bs.reduce((a, b) => [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[2], b[2]), Math.max(a[3], b[3])]);
+  const NOTE1 = P("M-4.6 0a4.6 3.4 0 1 0 9.2 0a4.6 3.4 0 1 0 -9.2 0Z") + L("M4.2 -.8V-16q6 2.5 7.5 8", OPEN);
+  const NOTE2 = P("M-4.4 0a4.4 3.3 0 1 0 8.8 0a4.4 3.3 0 1 0 -8.8 0ZM8.8 -3a4.4 3.3 0 1 0 8.8 0a4.4 3.3 0 1 0 -8.8 0Z") + L("M4 -.8V-16.5M17.2 -3.8V-19.5", OPEN) + P("M2.4 -17.6L18.8 -21.4V-17.4L2.4 -13.6Z");
+  // Kocaman açık ağız: koyu iç + beyaz dil
+  const bigMouth = (M, rx, ry, dy=2) => { const y = M.my + dy;
+    return P(`M${f(100 - rx)} ${f(y)}a${rx} ${ry} 0 1 0 ${2 * rx} 0a${rx} ${ry} 0 1 0 ${-2 * rx} 0Z`)
+      + `<ellipse class="glint" cx="100" cy="${f(y + ry * .5)}" rx="${f(rx * .56)}" ry="${f(ry * .3)}"/>`; };
+  const chewMouth = (M, alt) => { const { my, mw } = M, w = mw * .32;
+    return alt ? L(`M${f(100 - w * 1.4)} ${f(my + 7)}q${f(w * .7)} 6 ${f(w * 1.4)} 0t${f(w * 1.4)} 0`, OPEN)
+               : L(`M${f(100 - w * 1.5)} ${f(my + 5)}q${f(w * .5)} -6 ${f(w)} 0t${f(w)} 0t${f(w)} 0`, OPEN); };
+  const cheeks = M => { const x = M.mw * .8, y = M.my;
+    return L(`M${f(100 - x)} ${f(y - 7)}q-8 8 0 16`, OPEN) + L(`M${f(100 + x)} ${f(y - 7)}q8 8 0 16`, OPEN); };
+  const crumbs = pts => pts.map(([x, y, rr]) => C(x, y, rr || 1.8, "fl")).join("");
+  const BURGER = bit => L("M-24 12h48q0 10 -10 10h-28q-10 0 -10 -10Z") + P("M-26 2h52v7q0 3 -3 3h-46q-3 0 -3 -3Z") + L("M-27 1q4.5 -5 9 0t9 0t9 0t9 0t9 0t9 0", OPEN)
+    + (bit ? L("M-24 -2Q-24 -24 -11 -25.5Q-12.5 -18 -5.5 -17Q0 -12.5 5.5 -17Q12.5 -18 11 -25.5Q24 -24 24 -2Z") + L("M-18 -10l3 -2M13 -9l3 -2", OPEN)
+           : L("M-24 -2Q-24 -26 0 -26Q24 -26 24 -2Z") + L("M-10 -16l3 -2M2 -19l3 -2M12 -14l3 -2", OPEN))
+    + C(-29, 8, 8) + C(29, 8, 8);
+  const SLICE = bit => (bit ? L("M12 -4.7L46 -18Q54 -1 46 16L12 4.2Q17 2.5 13 0Q17 -2.5 12 -4.7Z") : L("M0 0L46 -18Q54 -1 46 16Z"))
+    + L("M41 -15Q48 -1 41 13", OPEN) + C(22, -3, 4, "fl") + C(33, 5, 3.5, "fl") + C(34, -9, 3, "fl") + C(50, 4, 8);
+  const TRUMPET = L("M17 3.4V11Q17 17 23 17H44Q50 17 50 11V3.4", OPEN)
+    + L("M7 -3.4H54V3.4H7Z")
+    + L("M23 -3.4V-14H30V-3.4") + L("M32 -3.4V-14H39V-3.4") + L("M41 -3.4V-14H48V-3.4") + P("M22 -17.5h9v3.5h-9ZM31 -17.5h9v3.5h-9ZM40 -17.5h9v3.5h-9Z")
+    + L("M53 -3.4Q66 -4 75 -16L80 -19V19L75 16Q66 4 53 3.4Z") + L("M80 -19Q85.5 0 80 19", OPEN)
+    + L("M-3 -4.5L8 -2.4V2.4L-3 4.5Z")
+    + C(36, 11, 8.5);
+  const GUITAR = still => L("M-31 0C-31 -14 -21 -23 -8 -23C3 -23 8 -14 14 -14C19 -14 22 -17 30 -17C39 -17 47 -10 47 0C47 10 39 17 30 17C22 17 19 14 14 14C8 14 3 23 -8 23C-21 23 -31 14 -31 0Z")
+    + C(24, 0, 8, "ln" + OPEN) + C(24, 0, 5.5, "fl") + P("M-20 -7.5h4.5v15h-4.5Z")
+    + L("M45 -4.5H98V4.5H45Z") + L("M62 -4.5V4.5M76 -4.5V4.5M88 -4.5V4.5", OPEN)
+    + L("M97 -5.5L111 -7.5Q115 -7.5 115 -3.5V3.5Q115 7.5 111 7.5L97 5.5Z")
+    + C(102, -8.6, 1.9, "fl") + C(109, -9.4, 1.9, "fl") + C(102, 8.6, 1.9, "fl") + C(109, 9.4, 1.9, "fl")
+    + (still ? "" : `<path class="ln open-line" pathLength="1" style="stroke-width:1.1" d="M-17 -2H98M-17 2H98"/>`);
+  const CAMCORDER = L("M-22 -19V-28Q-22 -33 -17 -33H15Q20 -33 20 -28V-19H14V-25.5Q14 -27 12.5 -27H-14.5Q-16 -27 -16 -25.5V-19Z")
+    + L("M29 -14L52 -21V17L29 12Z") + P("M33 -10.5L48.5 -15.5V12L33 8.8Z")
+    + `<path class="glint" d="M36.5 -5l8 -2.6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>`
+    + L("M-24 -20H22Q30 -20 30 -12V12Q30 20 22 20H-24Q-30 20 -30 12V-12Q-30 -20 -24 -20Z")
+    + L("M12 13H24", OPEN) + C(-6, 1, 16);
+
+  const ANIM = {
+    // Hamburger yiyen: ağzını açar, ısırır, iki kare çiğner
+    burger(r, M){
+      const N = { ...M, ey:M.ey - 8, my:M.my - 6 }, { my, mw } = N, s = M.k * .92, low = my + 30, bite = my + 16;
+      const at = (y, bit) => G(100, y, s, 0, BURGER(bit));
+      const open = bigMouth(N, 16, 12, 2);
+      const chewA = chewMouth(N, false) + cheeks(N) + at(low + 1, true) + crumbs([[100 - mw * .95, my + 20, 2], [100 + mw * .92, my + 15, 1.7], [100 + mw * .66, my + 27, 1.6]]);
+      const chewB = chewMouth(N, true) + cheeks(N) + at(low + 2, true) + crumbs([[100 - mw * 1.02, my + 30, 1.8], [100 + mw * 1, my + 26, 1.6], [100 - mw * .55, my + 14, 1.6]]);
+      return { face:eyesPart("big", r, N), frames:[open + at(low, false), open + at(bite, false), chewA, chewB, chewA], cyc:1.1,
+        box:ubox(tbox(100, bite, s, 0, [-38, -27, 38, 23]), tbox(100, low + 2, s, 0, [-38, -27, 38, 23]), [100 - mw * 1.1, my - 12, 100 + mw * 1.1, my + 34]) };
+    },
+    // Pizza yiyen: dilimi ağzına götürür, ısırır, çiğner
+    pizza(r, M){
+      const { my, mw } = M, s = M.k * 1.22, xo = 100 + mw * .7, yo = my + 9;
+      const at = (x, y, rot, bit) => G(x, y, s, rot, SLICE(bit));
+      const open = bigMouth(M, 13, 12, 2);
+      const chewA = chewMouth(M, false) + cheeks(M) + at(xo, yo + 1, -10, true) + crumbs([[100 - mw * .9, my + 18, 2], [100 + mw * .3, my + 22, 1.6], [100 - mw * .3, my + 27, 1.5]]);
+      const chewB = chewMouth(M, true) + cheeks(M) + at(xo, yo + 2, -12, true) + crumbs([[100 - mw * .95, my + 29, 1.8], [100 + mw * .25, my + 31, 1.6], [100 - mw * .1, my + 18, 1.5]]);
+      return { frames:[open + at(xo, yo, -8, false), open + at(103, my + 6, -4, false), chewA, chewB, chewA], cyc:1.25,
+        box:ubox(tbox(xo, yo, s, -12, [-2, -22, 60, 22]), tbox(103, my + 6, s, -4, [-2, -22, 60, 22]), [100 - mw * 1.1, my - 12, 100 + mw, my + 34]) };
+    },
+    // Trompetçi: gözler kapalı, yanaklar şişik, notalar yükselir
+    trumpet(r, M){
+      const { my, mw, ex, ey, er, k } = M, s = k * 1.05, X = 102, Y = my + 5;
+      const arc = (x, y, sz) => L(`M${f(x - sz)} ${f(y + 2)}q${f(sz)} ${f(-sz * 1.1)} ${f(sz * 2)} 0`, OPEN);
+      const cheek = (x, rr) => C(x, my + 3, rr) + L(`M${f(x - rr * .5)} ${f(my + 7)}l3 -4m3 4l3 -4`, OPEN);
+      const face = arc(100 - ex, ey, er) + arc(100 + ex, ey - 2, er * .95) + cheek(100 - 5 - mw * .45, mw * .45) + cheek(100 + 5 + mw * .42, mw * .42) + C(100, my + 5, 5.5);
+      const a = -18 * Math.PI / 180, bx = X + s * 82 * Math.cos(a), by = Y + s * 82 * Math.sin(a);
+      const ns = k * 1.1, pos = [[bx - 9, by - 24], [bx - 2, by - 46], [bx - 12, by - 68]];
+      const n1 = i => G(pos[i][0], pos[i][1], ns, -10, NOTE1), n2 = i => G(pos[i][0] - 5, pos[i][1], ns * .9, -10, NOTE2);
+      const blast = [-1, 0, 1].map(j => {
+        const ang = a + j * .55, ox = bx - Math.sin(a) * j * 15 * s + Math.cos(ang) * 6, oy = by + Math.cos(a) * j * 15 * s + Math.sin(ang) * 6;
+        return L(`M${f(ox)} ${f(oy)}l${f(Math.cos(ang) * 8)} ${f(Math.sin(ang) * 8)}`, OPEN);
+      }).join("");
+      const horn = rot => G(X, Y, s, rot, TRUMPET);
+      return { face, frames:[horn(-18) + n1(0) + n2(2) + blast, horn(-23) + n1(1) + n2(0), horn(-18) + n1(2) + n2(1) + blast], cyc:.75,
+        box:ubox(tbox(X, Y, s, -23, [-4, -20, 86, 20]), tbox(X, Y, s, -18, [-4, -20, 96, 20]), [pos[2][0] - 12, pos[2][1] - 22 * ns, pos[1][0] + 14 * ns, pos[0][1] + 6]) };
+    },
+    // Gitarist: gitar çapraz, sağ el tellere vurur
+    guitar(r, M, still){
+      const { cy, ry, rx, k } = M, s = k * 1.12, gx = 100 - rx * .3, gy = cy + ry * .72, rot = -26;
+      const at = inner => G(gx, gy, s, rot, inner);
+      const strum = [-20, -5, 11, -5].map((y, i) => at(C(4, y, 10.5) + (i === 2 ? L("M-7 -7q11 -4.5 22 0M-3 -13q7 -3 14 0", OPEN) : "")));
+      return { face:eyesPart("two", r, M) + mouthPart("smile", r, M), mid:at(GUITAR(still)), frames:strum, over:at(C(86, -1, 9.5)), cyc:.56,
+        box:tbox(gx, gy, s, rot, [-33, -32, 116, 25]) };
+    },
+    // Eski tip el kamerasıyla çekim: tek göz bakar, objektif fareyi izler, REC ışığı yanıp söner
+    camcorder(r, M){
+      const { ex, ey, er, k } = M, s = k * 1.05, X = 100 + ex + 2, Y = ey + 6, rot = -6;
+      const a = rot * Math.PI / 180, lx = X + s * (-6 * Math.cos(a) - Math.sin(a)), ly = Y + s * (-6 * Math.sin(a) + Math.cos(a));
+      const at = inner => G(X, Y, s, rot, inner);
+      const lens = `<g class="eye lens" data-cx="${f(lx)}" data-cy="${f(ly)}" data-max="2.6"><g class="pupil">` + C(-6, 1, 7, "fl") + `<circle class="glint" cx="-8.6" cy="-1.6" r="2.2"/></g></g>`;
+      return { face:eye(100 - ex, ey, er * 1.05) + mouthPart("smile", r, M), mid:at(CAMCORDER),
+        frames:[at(C(-6, 1, 12, "ln" + OPEN) + C(21, -12.5, 3, "fl")), at(C(-6, 1, 12.8, "ln" + OPEN) + C(21, -12.5, 3))],
+        over:at(lens + C(27, 20, 8.5)), cyc:1, box:tbox(X, Y, s, rot, [-31, -34, 53, 29]) };
+    },
+  };
 
   /* --- Ekstralar: bıyık, papyon, yanak, zzz, el sallama --- */
   function extraPart(type, r, M){
@@ -930,9 +1038,12 @@ ul,ol{padding:0;list-style:none}
     classic: { body:"round", eyes:"two", mouth:"grin" },
     crown:   { body:"round", eyes:"two", mouth:"grin", head:"spikes" },
     glasses: { body:"round", eyes:"two", mouth:"smirk", eyewear:"shades" },
-    reel:    { body:"round", eyes:"two", mouth:"grin", prop:"reel" },
+    camcorder:{ body:"round", anim:"camcorder" },
+    trumpet: { body:"round", anim:"trumpet" },
+    guitar:  { body:"bean", eyes:"two", anim:"guitar" },
+    pizza:   { body:"round", eyes:"two", anim:"pizza" },
     antenna: { body:"round", eyes:"two", mouth:"grin", head:"antenna" },
-    burger:  { body:"fat", eyes:"big", mouth:"open", prop:"burger" },
+    burger:  { body:"fat", eyes:"big", anim:"burger" },
     party:   { body:"small", eyes:"two", mouth:"tongue", head:"party" },
     wave:    { body:"round", eyes:"two", mouth:"grin", extra:"wave" },
     sleepy:  { body:"round", eyes:"two", mouth:"grin", sleepy:true },
@@ -946,8 +1057,16 @@ ul,ol{padding:0;list-style:none}
     spec.mouth = pick(r, ["grin","grin","smile","open","tongue","buck","smirk","o","whistle"]);
     if (!tiny){
       if (r() < .45) spec.head = pick(r, ["spikes","antenna","cap","beanie","tophat","party","crown","bandana","headphones","flower"]);
+      // Bazıları hareketli karakterlerin durağan hali: yiyen, çalan, çeken
+      if (r() < .13){
+        spec.anim = pick(r, ["burger","pizza","trumpet","guitar","camcorder"]);
+        if (["headphones","bandana"].includes(spec.head)) spec.head = null;
+        if (spec.anim === "burger") spec.eyes = "big";
+        if (spec.anim === "trumpet" || spec.anim === "camcorder" || spec.eyes === "sleepy" || spec.eyes === "happy") spec.eyes = spec.anim === "burger" ? "big" : "two";
+        return spec;
+      }
       if (r() < .24) spec.eyewear = pick(r, ["shades","round","heart","star","visor","nerd"]);
-      if (r() < .42) spec.prop = pick(r, ["pizza","burger","wheel","car","tea","simit","icecream","pencil","clap","popcorn","reel"]);
+      if (r() < .42) spec.prop = pick(r, ["pizza","burger","wheel","car","tea","simit","icecream","pencil","clap","popcorn"]);
       if (r() < .2) spec.extra = pick(r, ["mustache","bowtie","blush"]);
     }
     if (spec.head === "headphones" && spec.eyewear === "visor") spec.eyewear = null;
@@ -960,7 +1079,7 @@ ul,ol{padding:0;list-style:none}
   }
 
   // Bir karakteri çizer: { html, box:[x0,y0,x1,y1], cy, R (gövde yarıçapı) }
-  function buildMonster(spec, seed){
+  function buildMonster(spec, seed, opt={}){
     const r = rand(seed);
     const B = BODY[spec.body || "round"](r), { rx, ry, cy } = B;
     const er = clamp(Math.min(rx, ry) * (.19 + r()*.04), 10, 19);
@@ -971,10 +1090,13 @@ ul,ol{padding:0;list-style:none}
     const H = spec.head ? headPart(spec.head, r, M) : {};
     const X = spec.extra ? extraPart(spec.extra, r, M) : {};
     const Pp = spec.prop ? propPart(spec.prop, r, M) : {};
-    grow(H.box); grow(X.box); grow(Pp.box);
+    const A = spec.anim && ANIM[spec.anim] ? ANIM[spec.anim](r, M, !!opt.still) : null;
+    grow(H.box); grow(X.box); grow(Pp.box); if (A) grow(A.box);
 
     let face;
-    if (spec.sleepy){
+    if (A){
+      face = A.face ?? eyesPart(spec.eyes || "two", r, M);
+    } else if (spec.sleepy){
       face = `<g class="sleep">` + eyesPart("happy", r, M).replace(/q([\d.]+) (-?[\d.]+)/g, (m, a, b) => `q${a} ${-b}`)
         + C(100, M.my + 7, 6) + extraPart("zzz", r, M).front + `</g>`
         + `<g class="wake">` + eyesPart("two", r, M) + grin(r, M.my, M.mw) + `</g>`;
@@ -985,7 +1107,14 @@ ul,ol{padding:0;list-style:none}
     } else {
       face = eyesPart(spec.eyes || "two", r, M) + mouthPart(spec.mouth || "grin", r, M);
     }
-    const html = (H.back || "") + L(blob(r, 100, cy, rx, ry, B.wob || 1)) + spots(r, M) + face + (H.front || "") + (X.front || "") + (Pp.front || "");
+    let anim = "";
+    if (A){
+      const fr = opt.still ? A.frames.slice(0, 1) : A.frames;
+      anim = (A.mid || "") + (fr.length > 1
+        ? `<g class="frames" data-n="${fr.length}" style="--n:${fr.length};--cyc:${A.cyc}s">` + fr.map((x, i) => `<g class="fr" style="--i:${i}">${x}</g>`).join("") + `</g>`
+        : fr[0]) + (A.over || "");
+    }
+    const html = (H.back || "") + L(blob(r, 100, cy, rx, ry, B.wob || 1)) + spots(r, M) + face + (H.front || "") + (X.front || "") + (Pp.front || "") + anim;
     return { html, box, cy, R:Math.max(rx, ry) * .92 };
   }
 
@@ -1005,26 +1134,28 @@ ul,ol{padding:0;list-style:none}
     const svg = el.querySelector("svg");
     el.style.setProperty("--d", (el.dataset.d || 0) + "s");
     $$(".eye", el).forEach(g => eyes.push({ el, svg, pupil:g.querySelector(".pupil"), cx:+g.dataset.cx, cy:+g.dataset.cy, max:+g.dataset.max }));
-    const pitch = .92 + (seed % 5) * .04;
-    const voice = el.dataset.v || "giggle";
+    // Herkes "Hi!" der; her karakterin ses inceliği biraz farklı
+    const pitch = .86 + (seed % 7) * .05;
     const quiet = el.dataset.quiet === "1";
-    // Fare karakterin üstüne gelince sesini BİR KEZ çıkarır; fare ayrılana kadar susar
+    let said = 0;
+    const hi = (k=1) => { said = performance.now(); Sound.play("hi", pitch * k); };
+    // Fare karakterin üstüne gelince BİR KEZ "Hi!" der; fare ayrılana kadar susar
     let armed = true, rearm = 0;
     el.addEventListener("pointerenter", e => {
       if (e.pointerType !== "mouse") return;
       clearTimeout(rearm);
       if (!armed || quiet) return;
       armed = false;
-      Sound.play(voice, pitch);
+      hi();
       if (el.dataset.m === "wave") wave(el);
     });
     el.addEventListener("pointerleave", e => {
       if (e.pointerType !== "mouse") return;
       rearm = setTimeout(() => { armed = true; }, 220);
     });
-    el.addEventListener("click", e => {
+    el.addEventListener("click", () => {
       el.classList.remove("boing"); void el.offsetWidth; el.classList.add("boing");
-      if (!quiet) Sound.play(e.pointerType === "mouse" ? "oof" : voice, pitch);
+      if (!quiet && performance.now() - said > 450) hi(1.08);
       if (el.dataset.m === "wave") wave(el);
     });
     el.addEventListener("animationend", e => { if (e.animationName === "squash") el.classList.remove("boing"); });
@@ -1068,7 +1199,7 @@ ul,ol{padding:0;list-style:none}
       if (best < 0 || bv < rMin) break;
       const x = PX[best] + (r() - .5) * g * .6, y = PY[best] + (r() - .5) * g * .6;
       let R = Math.min(bv * 1.22, rMid + r() * (rMax - rMid));
-      const mon = buildMonster(randomSpec(r, R), 100 + n);
+      const mon = buildMonster(randomSpec(r, R), 100 + n, { still:true });
       const [bx0, by0, bx1, by1] = mon.box;
       const Lx = 100 - bx0, Rx = bx1 - 100, Ty = mon.cy - by0, By = by1 - mon.cy;
       let s = R / mon.R;
@@ -1290,6 +1421,8 @@ ul,ol{padding:0;list-style:none}
     entries.forEach(e => {
       if (e.isIntersecting){ e.target.classList.add("in"); visible.add(e.target); }
       else visible.delete(e.target);
+      // Kare kare animasyon yalnızca ekrandayken oynar
+      e.target.classList.toggle("play", e.isIntersecting && !reduce);
       if (e.isIntersecting && e.target.dataset.m === "wave" && !e.target.dataset.waved){
         e.target.dataset.waved = "1"; setTimeout(() => wave(e.target), 1300);
       }
@@ -1323,7 +1456,7 @@ ul,ol{padding:0;list-style:none}
   setTimeout(lookAt, 300);
 
   if (!reduce){
-    $$(".m[data-m]").filter(el => el.dataset.m !== "glasses" && el.dataset.m !== "sleepy").forEach(el => {
+    $$(".m[data-m]").filter(el => !["glasses","sleepy","trumpet"].includes(el.dataset.m)).forEach(el => {
       const loop = () => setTimeout(() => {
         if (visible.has(el)){ el.classList.add("blink"); setTimeout(() => el.classList.remove("blink"), 130); }
         loop();
@@ -1395,7 +1528,7 @@ ul,ol{padding:0;list-style:none}
   soundBtn.addEventListener("click", () => {
     Sound.setOn(!Sound.isOn());
     renderSound();
-    if (Sound.isOn()){ Sound.ensure(); setTimeout(() => Sound.play("hm", 1.1), 60); }
+    if (Sound.isOn()){ Sound.ensure(); setTimeout(() => Sound.play("hi", 1.1), 60); }
   });
 
   /* ---------- E-posta ---------- */
@@ -1422,7 +1555,7 @@ ul,ol{padding:0;list-style:none}
   let napTimer = 0, awake = false;
   const wake = e => {
     clearTimeout(napTimer);
-    if (!awake && (!e || e.pointerType === "mouse")) Sound.play("yawn", 1);
+    if (!awake && (!e || e.pointerType === "mouse")) Sound.play("hi", .8);
     awake = true;
     sleepers.forEach((s, i) => setTimeout(() => s.classList.add("awake"), i * 70));
     queueLook();

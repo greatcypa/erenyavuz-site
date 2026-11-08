@@ -62,7 +62,8 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 ## Bileşenler
 
 - **Canavar**: `viewBox 0 0 200 200`, çizgi `3.4`, yuvarlak uç ve birleşim, gövde dolgusu beyaz.
-  Varyantlar: `classic`, `crown`, `glasses`, `reel`, `antenna`, `wave`, `sleepy`.
+  Varyantlar: `classic`, `crown`, `glasses`, `antenna`, `party`, `wave`, `sleepy` ve hareketliler:
+  `burger`, `pizza`, `trumpet`, `guitar`, `camcorder`.
   Göz bebekleri imleci en fazla 6 birim izler. Rastgele aralıklarla göz kırpar.
 - **Buton**: hap şekli (`border-radius: 999px`), 16×26px iç boşluk.
   Birincil siyah dolgu, ikincil 1.5px siyah kontur. Metin ne olacağını söyler ("E-posta yaz").
@@ -71,20 +72,26 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
   keyframe elmasları sağda, turkuaz playhead kaydırmayla ilerler.
 - **Giriş kalabalığı**: Giriş ekranını boşluksuz dolduran, açık turkuaz (`#A9DCD2`), 1.5px çizgili canavarlar.
   Hiçbiri kenardan ya da menünün altından kesilmez; büyükten küçüğe boşlukları doldurarak yerleşir.
-  Etkileşimsiz. Üstünde 6 tam görünen, etkileşimli canavar asimetrik dağılır.
+  Etkileşimsiz. Üstünde 8 (mobilde 6) tam görünen, etkileşimli canavar asimetrik dağılır.
+- **Hareketli karakterler (GIF gibi)**: 2-5 karelik, adım adım değişen döngüler; ara geçiş yok.
+  Hamburger yiyen ve pizza yiyen (ağız açar, ısırır, çiğner, kırıntı döker; 5 kare, 1.1 sn),
+  trompetçi (gözler kapalı, yanaklar şişik, notalar yükselir; 3 kare, 0.75 sn),
+  gitarist (sağ el tellere vurur; 4 kare, 0.56 sn), eski tip el kamerasıyla çeken
+  (objektif imleci izler, REC ışığı yanıp söner; 2 kare, 1 sn).
+  Yalnızca ekrandayken oynar; "hareketi azalt" ayarında ilk karede durur. Arka plandakiler hep ilk karede.
 - **Canavar parçaları**: gövde (yuvarlak, şişman, zayıf, minik, fasulye), gözler (iki, kocaman, tek göz,
   göz kırpan, mutlu, üç göz, uykulu), ağız (sırıtma, gülümseme, dil, tavşan dişi, ıslık, çiğneme...),
   başlık (diken, anten, kep, bere, silindir, parti şapkası, taç, bandana, kulaklık, çiçek),
   gözlük (siyah, yuvarlak, kalp, yıldız, vizör, inek gözlüğü), elindekiler (pizza, hamburger, direksiyon,
-  oyuncak araba, çay bardağı, simit, dondurma, kalem, klaket, patlamış mısır, film makarası),
+  oyuncak araba, çay bardağı, simit, dondurma, kalem, klaket, patlamış mısır),
   ekstralar (bıyık, papyon, allık).
 - **Carousel + galeri**: Her kutucuk bir iş; kapak görseli kendi oranında, 14px köşe. Sürükleme, oklar, klavye,
   "01 / 08" sayacı. Kutucuğa tıklayınca sayfa değişmeden altta o işin galerisi açılır (masaüstünde 2 kolon,
   mobilde 1). Görseller `assets/work/<klasör>/1.jpg, 2.jpg, 3.jpg...` düzeninden otomatik okunur; 1 kapaktır.
-- **Sesler (foley)**: Web Audio ile ağız/gırtlak benzeri filtrelerle üretilir (formant sentezi), dosya yok.
-  Her karakterin kendi "sesi" var: taçlı "hey-ya!", gözlüklü "yeah~", makaralı "ba-di-ba-du",
-  antenli "uu-ii?", hamburgerli "nom nom", parti şapkalı "yip!", klasik kıkırdama, el sallayan "hii!",
-  uykucular esneme, tıklayınca "uf!". Fare karakterin üstüne gelince bir kez çalar, ayrılana kadar susar.
+- **Ses**: Tek ses var: minik, tiz, sevimli bir "Hi!" (minyon tarzı). Web Audio ile ağız/gırtlak benzeri
+  filtrelerle üretilir (formant sentezi), dosya yok. Her karakterin ses inceliği biraz farklı.
+  Fare karakterin üstüne gelince bir kez "Hi!" der, ayrılana kadar susar. Tıklayınca da der;
+  footer'daki uykucular uyanınca daha kalın bir "Hi".
   Tarayıcı kuralı gereği ziyaretçi sayfaya bir kez tıklamadan ses çıkmaz. Menüde ses aç/kapa düğmesi var.
 
 ## Yapma
