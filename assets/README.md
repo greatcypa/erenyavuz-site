@@ -1,9 +1,8 @@
 # Dosyalar
 
-## assets/work/  (carousel görselleri)
-Görseli buraya yükle, sonra index.html'in en üstündeki WORKS listesinde ilgili işin
-items kısmına src olarak yaz. Oran (ratio) ve kırpma noktası (pos) da orada ayarlanır.
-Önerilen: uzun kenarı 1600px civarı JPG. Videolar kısa, sessiz döngü MP4 (3-5 MB altı).
+## assets/work/
+Her klasör sitedeki bir kutucuktur. Ayrıntılar: assets/work/BENI-OKU.txt
+1.jpg kapak, 2.jpg, 3.jpg... tıklayınca altta açılan görseller.
 
 ## assets/fonts/
 happy-doodle.woff: "Eren Yavuz" yazısının fontu (sadece Latin harfler).

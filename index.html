@@ -168,7 +168,7 @@ ul,ol{padding:0;list-style:none}
 .cast .c5{--x:80%;--y:59%;--w:min(14vw,27vh)}
 .cast .c6{--x:48%;--y:79%;--w:min(9vw,16vh)}
 
-/* ===== İşler: carousel + liste ===== */
+/* ===== İşler: carousel (kapaklar) + altta açılan galeri ===== */
 .carousel{
   --h:clamp(280px,58vh,660px);
   margin-right:calc(-1 * (var(--pad) + max(0px, (100vw - var(--max) - 2 * var(--pad)) / 2)));
@@ -176,35 +176,49 @@ ul,ol{padding:0;list-style:none}
 .track{
   position:relative;display:flex;gap:var(--s3);overflow-x:auto;overscroll-behavior-x:contain;
   scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;
-  padding-right:calc(var(--pad) + max(0px, (100vw - var(--max) - 2 * var(--pad)) / 2));
+  padding:8px calc(var(--pad) + max(0px, (100vw - var(--max) - 2 * var(--pad)) / 2)) 8px 8px;margin-left:-8px;
   cursor:grab;user-select:none;-webkit-user-select:none;
 }
 .track::-webkit-scrollbar{display:none}
 .track.drag{scroll-snap-type:none;scroll-behavior:auto;cursor:grabbing}
-.track:focus-visible{outline-offset:6px}
-.slide{flex:none;scroll-snap-align:start;display:flex;flex-direction:column;gap:12px}
-.media{position:relative;height:var(--h);aspect-ratio:var(--r,4/3);border-radius:14px;overflow:hidden;background:var(--bg,var(--mint))}
-.media img,.media video{position:absolute;inset:0;width:100%;height:100%;object-fit:var(--fit,cover);object-position:var(--pos,50% 50%);-webkit-user-drag:none;pointer-events:none}
-.media .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-.media .ph .m{width:min(42%,220px)}
+.track.drag .media{cursor:grabbing}
+.slide{flex:none;scroll-snap-align:start;scroll-margin-left:8px;display:flex;flex-direction:column;gap:12px}
+.media{
+  position:relative;display:block;padding:0;border:0;height:var(--h);aspect-ratio:var(--r,4/3);border-radius:14px;overflow:hidden;
+  background:var(--mint);cursor:pointer;transition:box-shadow .3s var(--ease-out);
+}
+.media img,.media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none;pointer-events:none;transition:transform .7s var(--ease-out)}
+.media:hover img,.media:hover video{transform:scale(1.025)}
+.media:focus-visible{outline-offset:4px}
+.slide.sel .media{box-shadow:0 0 0 3px var(--paper),0 0 0 6px var(--monster)}
 .slide figcaption{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;column-gap:var(--s2);row-gap:2px;width:0;min-width:100%}
-.slide .cap-t{font-size:20px;font-weight:600;letter-spacing:-.01em}
+.slide .cap-t{font-size:20px;font-weight:600;letter-spacing:-.01em;transition:color .25s}
+.slide.sel .cap-t{color:var(--monster-deep)}
 .slide .cap-k{font-size:16px;color:var(--fog)}
-.car-controls{display:flex;align-items:center;justify-content:space-between;margin-top:var(--s4)}
+.car-controls{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);margin-top:var(--s4)}
+.car-info{display:flex;align-items:baseline;gap:var(--s3);flex-wrap:wrap}
 .car-count{font-size:var(--t-sm);font-weight:500;color:var(--fog);font-variant-numeric:tabular-nums}
+.car-hint{font-size:var(--t-sm);color:var(--fog)}
 .car-arrows{display:flex;gap:12px}
 .arrow{width:54px;height:54px;border-radius:999px;border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;transition:background .2s,opacity .2s}
 .arrow:hover{background:var(--mint)}
 .arrow:disabled{opacity:.25;cursor:default;background:none}
 .arrow svg{width:26px;height:26px;fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .arrow.prev svg{transform:scaleX(-1)}
-.work-list{margin-top:var(--s7);border-bottom:1px solid var(--rule)}
-.work-row{width:100%;display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:var(--s3);text-align:left;padding:clamp(18px,2vw,26px) 0;border-top:1px solid var(--rule)}
-.work-title{font-size:var(--t-work);font-weight:500;letter-spacing:-.02em;line-height:1.1;transition:transform .45s var(--ease),color .25s}
-.work-kind{font-size:var(--t-body);color:var(--fog);text-align:right}
-.work-row:hover .work-title,.work-row:focus-visible .work-title{transform:translateX(14px)}
-.work-row.cur .work-title{color:var(--monster-deep)}
-.all-work{display:inline-block;margin-top:var(--s4)}
+.detail{margin-top:var(--s6);scroll-margin-top:calc(var(--nav-h) + 16px)}
+.detail[hidden]{display:none}
+.detail-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s3);padding-bottom:var(--s3);border-bottom:1px solid var(--ink)}
+.detail-title{font-size:var(--t-h2);font-weight:500;letter-spacing:-.03em;line-height:1.02}
+.detail-kind{margin-top:6px;color:var(--fog)}
+.detail-close{flex:none;min-height:46px;padding:0 20px;border-radius:999px;border:1.5px solid var(--ink);font-size:16px;font-weight:600;transition:background .2s}
+.detail-close:hover{background:var(--mint)}
+.detail-grid{columns:2;column-gap:var(--s3);margin-top:var(--s4)}
+.detail-grid.one{columns:1;max-width:960px}
+.d-item{break-inside:avoid;margin:0 0 var(--s3);border-radius:14px;overflow:hidden;background:var(--mint);min-height:240px;opacity:0;transform:translateY(16px);transition:opacity .5s ease calc(var(--k) * 70ms),transform .7s var(--ease-out) calc(var(--k) * 70ms)}
+.d-item.ok{min-height:0;opacity:1;transform:none}
+.d-item img,.d-item video{display:block;width:100%;height:auto}
+.d-note{color:var(--fog);padding:var(--s3) 0}
+.all-work{display:inline-block;margin-top:var(--s5)}
 
 /* ===== Hikâye (After Effects zaman çizelgesi) ===== */
 .story{position:relative;height:280vh;scroll-margin-top:0}
@@ -295,9 +309,9 @@ ul,ol{padding:0;list-style:none}
   .cast .c6{display:none}
   .carousel{--h:clamp(220px,62vw,420px)}
   .slide figcaption{flex-direction:column;gap:2px}
-  .work-list{margin-top:var(--s6)}
-  .work-row{grid-template-columns:1fr;gap:2px}
-  .work-kind{text-align:left;font-size:16px}
+  .car-hint{display:none}
+  .detail-grid{columns:1}
+  .detail-head{flex-direction:column;align-items:flex-start}
   .steps{grid-template-columns:1fr;margin-top:var(--s5);row-gap:var(--s4)}
   .story{height:240vh}
   .comp{--name:136px;margin-top:var(--s4)}
@@ -319,7 +333,8 @@ ul,ol{padding:0;list-style:none}
   .mon .fl{transition:none;opacity:1}
   .pattern .pg{transition:none;opacity:1;transform:none}
   .mon .reel,.m.waving .arm,.m:hover .mon,.m.boing .mon{animation:none}
-  .nav,.work-title,.chapter{transition:none}
+  .nav,.chapter{transition:none}
+  .d-item{transition:none;opacity:1;transform:none}
 }
 </style>
 </head>
@@ -393,13 +408,19 @@ ul,ol{padding:0;list-style:none}
           <div class="track" id="track" tabindex="0"></div>
         </div>
         <div class="car-controls">
-          <span class="car-count" id="carCount" aria-live="polite"></span>
+          <div class="car-info"><span class="car-count" id="carCount" aria-live="polite"></span><span class="car-hint" data-i18n="car.hint">Ayrıntılar için bir işe tıkla.</span></div>
           <div class="car-arrows">
             <button type="button" class="arrow prev" id="prevBtn" data-i18n-label="car.prev" aria-label="Önceki"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 16.5h21M18.5 8.5l8 8-8 8"/></svg></button>
             <button type="button" class="arrow next" id="nextBtn" data-i18n-label="car.next" aria-label="Sonraki"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 16.5h21M18.5 8.5l8 8-8 8"/></svg></button>
           </div>
         </div>
-        <ul class="work-list" id="workList"></ul>
+        <div class="detail" id="detail" hidden>
+          <div class="detail-head">
+            <div><h3 class="detail-title" id="detailTitle"></h3><p class="detail-kind" id="detailKind"></p></div>
+            <button type="button" class="detail-close" id="detailClose" data-i18n="detail.close">Kapat</button>
+          </div>
+          <div class="detail-grid" id="detailGrid" aria-live="polite"></div>
+        </div>
         <a class="link all-work" id="allWork" href="https://www.behance.net/jakuperen" target="_blank" rel="noopener" data-i18n="work.all">Tüm işler Behance'te</a>
       </div>
     </div>
@@ -496,26 +517,19 @@ ul,ol{padding:0;list-style:none}
   const EMAIL = "hello@erenyavuz.com";
   const BEHANCE = "https://www.behance.net/jakuperen";
 
-  // İşler. Her işin bir veya birden çok görseli (items) olabilir; carousel bunları sırayla gösterir.
-  // src   : görselin yolu, ör. "assets/work/venatura-glisin.jpg" (.mp4 de olur). Boşsa canavar görünür.
-  // ratio : kutunun oranı. Yatay "16/9", "4/3"; dikey "2/3", "3/4", "4/5"; kare "1/1".
-  // pos   : kırpma noktası. "50% 50%" orta, "50% 20%" üst taraf, "100% 50%" sağ taraf.
-  // fit   : "cover" kutuyu doldurur (kırpar), "contain" görselin tamamını gösterir.
-  // cap   : o görselin alt yazısı (boşsa işin türü yazar).
+  // İşler: her kutucuk assets/work/ altındaki bir klasördür.
+  //   1.jpg            -> kapak (carousel'de görünen)
+  //   2.jpg, 3.jpg ... -> kutucuğa tıklayınca altta açılan görseller (jpg, png, webp ya da mp4)
+  // Yeni kutucuk: yeni klasör aç ve buraya bir satır ekle. Sıra buradaki sırayla aynıdır.
   const WORKS = [
-    { t:{tr:"Venatura", en:"Venatura"}, k:{tr:"Key visual", en:"Key visual"}, url:"", items:[
-      { src:"assets/work/venatura-glisin.jpg",           ratio:"2/3",       cap:{tr:"Glisin", en:"Glycine"} },
-      { src:"assets/work/venatura-lipozomal-demir.jpg",  ratio:"1/1",       cap:{tr:"Lipozomal Demir ve C Vitamini", en:"Liposomal Iron and Vitamin C"} },
-      { src:"assets/work/venatura-efervesan.jpg",        ratio:"1097/941",  cap:{tr:"Efervesan C+D+Zn", en:"Effervescent C+D+Zn"} },
-      { src:"assets/work/venatura-peain.jpg",            ratio:"1364/1153", cap:{tr:"PEAin", en:"PEAin"} },
-    ]},
-    { t:{tr:"Motion graphics", en:"Motion graphics"}, k:{tr:"Animasyon", en:"Animation"}, url:"", items:[ { src:"", ratio:"16/9" } ] },
-    { t:{tr:"Afişler", en:"Posters"}, k:{tr:"Basılı tasarım", en:"Print design"}, url:"", items:[ { src:"", ratio:"3/4" } ] },
-    { t:{tr:"Sosyal medya", en:"Social media"}, k:{tr:"Dijital kampanyalar", en:"Digital campaigns"}, url:"", items:[ { src:"", ratio:"4/5" } ] },
-    { t:{tr:"İnfografik", en:"Infographics"}, k:{tr:"Bilgi tasarımı", en:"Information design"}, url:"", items:[ { src:"", ratio:"4/3" } ] },
-    { t:{tr:"İllüstrasyon", en:"Illustration"}, k:{tr:"Karakter ve sahne", en:"Characters and scenes"}, url:"", items:[ { src:"", ratio:"1/1" } ] },
-    { t:{tr:"GIF döngüleri", en:"GIF loops"}, k:{tr:"Kısa animasyon", en:"Short animation"}, url:"", items:[ { src:"", ratio:"1/1" } ] },
-    { t:{tr:"Yapay zekâ deneyleri", en:"AI experiments"}, k:{tr:"Yapay zekâ ile üretim", en:"AI-assisted production"}, url:"", items:[ { src:"", ratio:"16/9" } ] },
+    { folder:"01-peain",            t:{tr:"Venatura PEAin", en:"Venatura PEAin"},                       k:{tr:"Key visual", en:"Key visual"} },
+    { folder:"02-lipozomal-demir",  t:{tr:"Venatura Lipozomal Demir", en:"Venatura Liposomal Iron"},    k:{tr:"Key visual", en:"Key visual"} },
+    { folder:"03-kendine-iyi-bak",  t:{tr:"Venatura Kendine İyi Bak", en:"Venatura Kendine İyi Bak"},   k:{tr:"Kampanya görseli", en:"Campaign visual"} },
+    { folder:"04-efervesan",        t:{tr:"Venatura Efervesan", en:"Venatura Effervescent"},           k:{tr:"Key visual", en:"Key visual"} },
+    { folder:"05-clay-storyboard",  t:{tr:"Clay Storyboard", en:"Clay Storyboard"},                     k:{tr:"3D storyboard", en:"3D storyboard"} },
+    { folder:"06-d-vitamini-gunu",  t:{tr:"Venatura D Vitamini Günü", en:"Venatura Vitamin D Day"},     k:{tr:"Sosyal medya", en:"Social media"} },
+    { folder:"07-lipozomal-brosur", t:{tr:"Venatura Broşür", en:"Venatura Leaflet"},                    k:{tr:"Basılı tasarım", en:"Print design"} },
+    { folder:"08-d-colefor-fuar",   t:{tr:"Vefa İlaç D-Colefor", en:"Vefa İlaç D-Colefor"},             k:{tr:"Fuar standı", en:"Exhibition stand"} },
   ];
 
   const T = {
@@ -523,7 +537,7 @@ ul,ol{padding:0;list-style:none}
       "skip":"İçeriğe geç",
       "nav.work":"İşler","nav.about":"Hakkımda","nav.contact":"İletişim","nav.menu":"Menü","nav.close":"Kapat",
       "sound.on":"Sesi kapat","sound.off":"Sesi aç",
-      "work.label":"Seçili işler","work.all":"Tüm işler Behance'te","car.prev":"Önceki görsel","car.next":"Sonraki görsel","car.label":"Seçili işler",
+      "work.label":"Seçili işler","work.all":"Tüm işler Behance'te","car.prev":"Önceki iş","car.next":"Sonraki iş","car.label":"Seçili işler","car.hint":"Ayrıntılar için bir işe tıkla.","detail.close":"Kapat","detail.loading":"Görseller yükleniyor…","detail.empty":"Bu işin görselleri yakında burada.",
       "story.label":"Hikâye","story.title":"Bir film şeridinde 15 yıl.","story.today":"bugün",
       "layer.flash":"Flash","layer.ae":"After Effects","layer.static":"Basılı ve dijital","layer.ad":"Art direction","layer.ai":"Yapay zekâ",
       "ch.flash":"2011'de motion'a Adobe Flash'la, interaktif işlerle başladım. Her şey hem tıklanıyor hem hareket ediyordu.",
@@ -546,7 +560,7 @@ ul,ol{padding:0;list-style:none}
       "skip":"Skip to content",
       "nav.work":"Work","nav.about":"About","nav.contact":"Contact","nav.menu":"Menu","nav.close":"Close",
       "sound.on":"Mute sounds","sound.off":"Turn sounds on",
-      "work.label":"Selected work","work.all":"All work on Behance","car.prev":"Previous image","car.next":"Next image","car.label":"Selected work",
+      "work.label":"Selected work","work.all":"All work on Behance","car.prev":"Previous project","car.next":"Next project","car.label":"Selected work","car.hint":"Click a project to see more.","detail.close":"Close","detail.loading":"Loading images…","detail.empty":"Images for this project are coming soon.",
       "story.label":"Story","story.title":"Fifteen years on a film strip.","story.today":"today",
       "layer.flash":"Flash","layer.ae":"After Effects","layer.static":"Print and digital","layer.ad":"Art direction","layer.ai":"AI",
       "ch.flash":"I started motion in 2011 with Adobe Flash, building interactive work. Everything was clickable, and everything moved.",
@@ -1101,54 +1115,121 @@ ul,ol{padding:0;list-style:none}
     hero.addEventListener("pointerleave", () => { tx = 0; ty = 0; if (!raf) raf = requestAnimationFrame(step); });
   }
 
-  /* ---------- İşler: carousel ---------- */
-  const track = $("#track"), list = $("#workList"), count = $("#carCount");
-  const prevBtn = $("#prevBtn"), nextBtn = $("#nextBtn");
-  const PH = ["classic","crown","glasses","antenna","reel","party","burger","classic"];
-  const SLIDES = [];
-  WORKS.forEach((w, pi) => (w.items && w.items.length ? w.items : [{}]).forEach(it => SLIDES.push({ w, pi, it })));
+  /* ---------- İşler: carousel (kapaklar) + tıklayınca altta açılan galeri ---------- */
+  const WORK_DIR = "assets/work/";
+  const track = $("#track"), count = $("#carCount"), prevBtn = $("#prevBtn"), nextBtn = $("#nextBtn");
+  const detail = $("#detail"), dGrid = $("#detailGrid"), dTitle = $("#detailTitle"), dKind = $("#detailKind"), dClose = $("#detailClose");
   $("#workCount").textContent = `(${String(WORKS.length).padStart(2, "0")})`;
 
-  SLIDES.forEach((S, i) => {
-    const it = S.it, fig = document.createElement("figure");
-    fig.className = "slide";
-    fig.setAttribute("role", "group");
-    fig.setAttribute("aria-roledescription", "slide");
-    const style = `--r:${it.ratio || "4/3"};--pos:${it.pos || "50% 50%"};--fit:${it.fit || "cover"};${it.bg ? `--bg:${it.bg};` : ""}`;
-    fig.innerHTML = `<div class="media" style="${style}">` + (it.src ? "" : `<div class="ph"><span class="m" data-m="${PH[S.pi % PH.length]}" data-seed="${50 + i}" data-quiet="1"></span></div>`) + `</div>`
-      + `<figcaption><span class="cap-t"></span><span class="cap-k"></span></figcaption>`;
-    if (it.src){
-      const isVid = /\.(mp4|webm)$/i.test(it.src);
-      const m = document.createElement(isVid ? "video" : "img");
-      if (isVid){ m.muted = true; m.loop = true; m.playsInline = true; m.preload = "metadata"; m.setAttribute("muted", ""); }
-      else { m.alt = ""; m.loading = i < 3 ? "eager" : "lazy"; m.decoding = "async"; m.draggable = false; }
-      m.src = it.src;
-      $(".media", fig).appendChild(m);
+  function makeVideo(src){
+    const v = document.createElement("video");
+    v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.preload = "metadata";
+    v.setAttribute("muted", ""); v.setAttribute("playsinline", "");
+    v.src = src; return v;
+  }
+  // Klasördeki numaralı dosyayı bulur (1.jpg, 2.png, 3.mp4 ...)
+  async function headType(url){
+    try { const r = await fetch(url, { method:"HEAD", cache:"no-cache" }); return r.ok ? (r.headers.get("content-type") || "").split(";")[0] : ""; }
+    catch { return ""; }
+  }
+  const isMedia = t => t.startsWith("image/") || t.startsWith("video/");
+  async function findFile(folder, n){
+    const base = `${WORK_DIR}${folder}/${n}.`;
+    if ((await headType(base + "jpg")).startsWith("image/")) return { url:base + "jpg", video:false };
+    const exts = ["png","webp","jpeg","mp4","webm"];
+    const types = await Promise.all(exts.map(e => headType(base + e)));
+    const i = types.findIndex(isMedia);
+    return i < 0 ? null : { url:base + exts[i], video:types[i].startsWith("video/") };
+  }
+  const listCache = {};
+  async function listFiles(folder){
+    if (listCache[folder]) return listCache[folder];
+    const out = [];
+    for (let start = 1; start <= 96; start += 6){
+      const batch = await Promise.all([0,1,2,3,4,5].map(k => findFile(folder, start + k)));
+      const miss = batch.indexOf(null);
+      out.push(...(miss < 0 ? batch : batch.slice(0, miss)));
+      if (miss >= 0) break;
     }
+    return (listCache[folder] = out);
+  }
+
+  WORKS.forEach((w, i) => {
+    const fig = document.createElement("figure");
+    fig.className = "slide";
+    fig.innerHTML = `<button type="button" class="media" aria-expanded="false" aria-controls="detail"></button><figcaption><span class="cap-t"></span><span class="cap-k"></span></figcaption>`;
+    const media = $(".media", fig);
+    const setRatio = (wd, ht) => { if (wd && ht) media.style.setProperty("--r", `${wd}/${ht}`); };
+    const showImg = src => {
+      const img = new Image();
+      img.alt = ""; img.decoding = "async"; img.draggable = false;
+      img.onload = () => setRatio(img.naturalWidth, img.naturalHeight);
+      img.onerror = async () => {
+        img.remove();
+        if (src.endsWith("/1.jpg")){
+          const f = await findFile(w.folder, 1);
+          if (!f) return;
+          if (f.video){ const v = makeVideo(f.url); v.addEventListener("loadedmetadata", () => setRatio(v.videoWidth, v.videoHeight)); media.appendChild(v); }
+          else showImg(f.url);
+        }
+      };
+      img.src = src;
+      media.appendChild(img);
+    };
+    showImg(`${WORK_DIR}${w.folder}/1.jpg`);
+    media.addEventListener("click", () => toggleWork(i));
     track.appendChild(fig);
   });
-  WORKS.forEach((w, pi) => {
-    const li = document.createElement("li");
-    li.innerHTML = `<button type="button" class="work-row" data-p="${pi}"><span class="work-title"></span><span class="work-kind"></span></button>`;
-    list.appendChild(li);
+  const slides = $$(".slide", track);
+  let curSlide = -1, openIdx = -1, openToken = 0;
+
+  async function openWork(i, scroll=true){
+    openIdx = i; const tok = ++openToken, w = WORKS[i];
+    slides.forEach((s, j) => { s.classList.toggle("sel", j === i); $(".media", s).setAttribute("aria-expanded", String(j === i)); });
+    dTitle.textContent = w.t[lang]; dKind.textContent = w.k[lang];
+    detail.hidden = false;
+    dGrid.className = "detail-grid";
+    dGrid.innerHTML = `<p class="d-note">${T[lang]["detail.loading"]}</p>`;
+    if (scroll) requestAnimationFrame(() => detail.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block:"start" }));
+    try { history.replaceState(null, "", "#is-" + w.folder); } catch {}
+    const files = await listFiles(w.folder);
+    if (tok !== openToken) return;
+    dGrid.innerHTML = "";
+    if (!files.length){ dGrid.innerHTML = `<p class="d-note">${T[lang]["detail.empty"]}</p>`; return; }
+    dGrid.classList.toggle("one", files.length === 1);
+    files.forEach((file, k) => {
+      const fig = document.createElement("figure");
+      fig.className = "d-item"; fig.style.setProperty("--k", k);
+      const m = file.video ? makeVideo(file.url) : new Image();
+      if (!file.video){ m.alt = `${w.t[lang]}, ${k + 1}`; m.decoding = "async"; m.loading = k < 4 ? "eager" : "lazy"; m.src = file.url; }
+      const done = () => fig.classList.add("ok");
+      m.addEventListener(file.video ? "loadeddata" : "load", done);
+      m.addEventListener("error", () => fig.remove());
+      fig.appendChild(m); dGrid.appendChild(fig);
+      if (!file.video && m.complete && m.naturalWidth) done();
+    });
+  }
+  function closeWork(){
+    openIdx = -1; openToken++;
+    detail.hidden = true; dGrid.innerHTML = "";
+    slides.forEach(s => { s.classList.remove("sel"); $(".media", s).setAttribute("aria-expanded", "false"); });
+    try { history.replaceState(null, "", location.pathname + location.search); } catch {}
+  }
+  function toggleWork(i){ openIdx === i ? closeWork() : openWork(i); }
+  dClose.addEventListener("click", () => {
+    const i = openIdx; closeWork();
+    if (i >= 0) $(".media", slides[i]).focus({ preventScroll:true });
+    $("#carousel").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block:"center" });
   });
-  const slides = $$(".slide", track), rows = $$(".work-row", list);
-  let curSlide = -1;
 
   function renderWorks(){
     slides.forEach((s, i) => {
-      const { w, it } = SLIDES[i];
-      const t = $(".cap-t", s);
-      t.innerHTML = w.url ? `<a class="link" href="${w.url}" target="_blank" rel="noopener"></a>` : "";
-      (w.url ? $("a", t) : t).textContent = w.t[lang];
-      $(".cap-k", s).textContent = (it.cap && it.cap[lang]) || w.k[lang];
-      const img = $("img", s); if (img) img.alt = `${w.t[lang]}: ${(it.cap && it.cap[lang]) || w.k[lang]}`;
-      s.setAttribute("aria-label", `${i + 1} / ${SLIDES.length}`);
+      const w = WORKS[i];
+      $(".cap-t", s).textContent = w.t[lang];
+      $(".cap-k", s).textContent = w.k[lang];
+      $(".media", s).setAttribute("aria-label", `${w.t[lang]}, ${w.k[lang]}`);
     });
-    rows.forEach((b, i) => {
-      $(".work-title", b).textContent = WORKS[i].t[lang];
-      $(".work-kind", b).textContent = WORKS[i].k[lang];
-    });
+    if (openIdx >= 0){ dTitle.textContent = WORKS[openIdx].t[lang]; dKind.textContent = WORKS[openIdx].k[lang]; }
   }
   function goTo(i, smooth=true){
     i = Math.max(0, Math.min(slides.length - 1, i));
@@ -1166,25 +1247,20 @@ ul,ol{padding:0;list-style:none}
     if (i === curSlide) return;
     curSlide = i;
     count.textContent = `${String(i + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
-    const p = SLIDES[i].pi;
-    rows.forEach((b, j) => { b.classList.toggle("cur", j === p); b.setAttribute("aria-current", j === p ? "true" : "false"); });
     prevBtn.disabled = i === 0;
     nextBtn.disabled = i === slides.length - 1;
-    slides.forEach((s, j) => { const v = $("video", s); if (v){ j === i ? v.play().catch(() => {}) : v.pause(); } });
   }
   let carRaf = 0;
   track.addEventListener("scroll", () => { if (!carRaf) carRaf = requestAnimationFrame(() => { carRaf = 0; updateCarousel(); }); }, { passive:true });
   prevBtn.addEventListener("click", () => goTo(curSlide - 1));
   nextBtn.addEventListener("click", () => goTo(curSlide + 1));
   track.addEventListener("keydown", e => {
-    if (e.key === "ArrowRight"){ e.preventDefault(); goTo(curSlide + 1); }
-    if (e.key === "ArrowLeft"){ e.preventDefault(); goTo(curSlide - 1); }
+    if (e.target.closest(".media") && (e.key === "ArrowRight" || e.key === "ArrowLeft")){
+      e.preventDefault();
+      const i = slides.indexOf(e.target.closest(".slide")) + (e.key === "ArrowRight" ? 1 : -1);
+      if (slides[i]){ goTo(i); $(".media", slides[i]).focus({ preventScroll:true }); }
+    }
   });
-  rows.forEach(b => b.addEventListener("click", () => {
-    goTo(SLIDES.findIndex(S => S.pi === +b.dataset.p));
-    const r = $("#carousel").getBoundingClientRect();
-    if (r.top < 0 || r.bottom > innerHeight) $("#carousel").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block:"center" });
-  }));
   let drag = null;
   track.addEventListener("pointerdown", e => {
     if (e.pointerType !== "mouse" || e.button !== 0) return;
@@ -1380,6 +1456,8 @@ ul,ol{padding:0;list-style:none}
 
   buildPattern();
   updateCarousel();
+  const hashWork = WORKS.findIndex(w => location.hash === "#is-" + w.folder);
+  if (hashWork >= 0) setTimeout(() => { goTo(hashWork, false); openWork(hashWork); }, 300);
   scrub();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { curSlide = -1; updateCarousel(); });
 })();

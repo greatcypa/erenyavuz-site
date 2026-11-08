@@ -78,8 +78,9 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
   gözlük (siyah, yuvarlak, kalp, yıldız, vizör, inek gözlüğü), elindekiler (pizza, hamburger, direksiyon,
   oyuncak araba, çay bardağı, simit, dondurma, kalem, klaket, patlamış mısır, film makarası),
   ekstralar (bıyık, papyon, allık).
-- **Carousel**: Sabit yükseklik, oran işe göre (`4/3`, `16/9`, `3/4`...). 14px köşe, mint zemin,
-  boşken içinde canavar. Sürükleme, oklar, klavye, "01 / 08" sayacı. Altındaki liste içindekiler gibi çalışır.
+- **Carousel + galeri**: Her kutucuk bir iş; kapak görseli kendi oranında, 14px köşe. Sürükleme, oklar, klavye,
+  "01 / 08" sayacı. Kutucuğa tıklayınca sayfa değişmeden altta o işin galerisi açılır (masaüstünde 2 kolon,
+  mobilde 1). Görseller `assets/work/<klasör>/1.jpg, 2.jpg, 3.jpg...` düzeninden otomatik okunur; 1 kapaktır.
 - **Sesler (foley)**: Web Audio ile ağız/gırtlak benzeri filtrelerle üretilir (formant sentezi), dosya yok.
   Her karakterin kendi "sesi" var: taçlı "hey-ya!", gözlüklü "yeah~", makaralı "ba-di-ba-du",
   antenli "uu-ii?", hamburgerli "nom nom", parti şapkalı "yip!", klasik kıkırdama, el sallayan "hii!",

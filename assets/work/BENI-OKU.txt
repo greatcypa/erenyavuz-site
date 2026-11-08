@@ -1,0 +1,18 @@
+GÖRSEL EKLEME
+
+Her klasör sitedeki bir kutucuktur (carousel'deki bir iş).
+
+  1.jpg       -> Kapak. Carousel'deki kutucukta görünen görsel.
+  2.jpg, 3.jpg, 4.jpg ...  -> Kutucuğa tıklayınca altta açılan görseller.
+
+Kurallar:
+- Dosyaları 1, 2, 3 diye sırayla numaralandır. Sıra sitedeki sırayla aynı olur.
+- Arada numara atlama (2'den sonra 3 gelmeli; 3 yoksa 4 ve sonrası görünmez).
+- jpg, png, webp ya da mp4 olabilir (ör. 3.png, 4.mp4).
+- Görselleri uzun kenarı 1600-2000 piksel civarında kaydet, sayfa hızlı açılsın.
+- Kapağı değiştirmek için 1.jpg'yi aynı isimle değiştirmen yeterli.
+
+Yeni bir kutucuk eklemek için yeni bir klasör aç (ör. 09-yeni-is) ve
+index.html'in en üstündeki WORKS listesine bir satır ekle (ya da Claude'a söyle).
+
+Sonra klasörleri GitHub'a yükle: Add file > Upload files > sürükle > Commit changes.
