@@ -35,8 +35,11 @@
    "image": "https://erenyavuz.com/assets/eren.jpg",
    "email": "mailto:hello@erenyavuz.com",
    "jobTitle": [
+    "Kıdemli Grafik Tasarım Uzmanı",
+    "Senior Graphic Design Specialist",
     "Graphic & Motion Designer",
-    "Art Director"
+    "Art Director",
+    "Creative Director"
    ],
    "address": {
     "@type": "PostalAddress",
@@ -75,7 +78,17 @@
     "Video prodüksiyon",
     "Video production",
     "Infographic",
-    "İnfografik"
+    "İnfografik",
+    "Kreatif direktörlük",
+    "Creative direction",
+    "Medikal pazarlama",
+    "Medical marketing",
+    "İlaç sektörü",
+    "Pharmaceutical industry",
+    "Baskı öncesi hazırlık",
+    "Prepress",
+    "Stant tasarımı",
+    "Stand design"
    ],
    "makesOffer": [
     {
@@ -166,7 +179,8 @@
       }
      }
     }
-   ]
+   ],
+   "description": "İlaç sektöründe Kıdemli Grafik Tasarım Uzmanı unvanıyla görev alıyorum. Sorumluluk setim Kreatif Direktör ve Art Direktör rollerinin tamamını kapsıyor. Ürünlerimizin tüm metinsel ve görsel konseptlerini uçtan uca tasarlıyor, yaratıcı süreci stratejik bir bakış açısıyla yönetiyorum."
   },
   {
    "@type": "WebSite",
@@ -449,7 +463,13 @@ ul,ol{padding:0;list-style:none}
 .sec-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--s3)}
 .sec-grid > .sec-label{grid-column:1 / span 3}
 .sec-grid > .sec-body{grid-column:4 / -1;min-width:0}
-#work .sec-body,#about .sec-body{grid-column:1 / -1}
+#work .sec-body,#timeline .sec-body{grid-column:1 / -1}
+/* Hakkımda */
+.section.about{padding-top:var(--s6)}
+.about .sec-label{font-weight:500}
+.about-lead{font-size:var(--t-lead);font-weight:500;line-height:1.4;letter-spacing:-.01em;max-width:44ch}
+.about-cols{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--s5);row-gap:var(--s3);margin-top:var(--s5);color:#2B2F2E}
+.about-cols p{max-width:52ch}
 .sec-label{font-size:var(--t-sm);font-weight:500;letter-spacing:.01em;color:var(--fog);padding-top:.55em}
 .sec-label .count{font-variant-numeric:tabular-nums}
 .h2{font-size:var(--t-h2);font-weight:500;letter-spacing:-.03em;line-height:1.02;max-width:18ch}
@@ -641,6 +661,7 @@ ul,ol{padding:0;list-style:none}
   .car-hint{display:none}
   .detail-head{flex-direction:column;align-items:flex-start}
   .steps{margin-top:var(--s5);row-gap:var(--s5)}
+  .about-cols{grid-template-columns:1fr;margin-top:var(--s4)}
   .story{height:260vh}
   .comp{--name:136px;margin-top:var(--s4)}
   .layer{height:42px}
@@ -694,7 +715,7 @@ ul,ol{padding:0;list-style:none}
 /* Yatay telefon gibi alçak ekranlar: zaman çizelgesi tek ekrana sığsın */
 @media (max-height:560px) and (orientation:landscape){
   .story-pin{padding-top:14px;padding-bottom:14px}
-  #about .h2{font-size:28px}
+  #timeline .h2{font-size:28px}
   .comp{margin-top:12px}
   .comp-bar{display:none}
   .ruler{height:30px}
@@ -811,8 +832,22 @@ ul,ol{padding:0;list-style:none}
     </div>
   </section>
 
+  <!-- Hakkımda -->
+  <section class="section about" id="about" aria-labelledby="aboutLabel">
+    <div class="sec-grid">
+      <h2 class="sec-label" id="aboutLabel" data-i18n="about.label">Hakkımda</h2>
+      <div class="sec-body">
+        <p class="about-lead" data-i18n="about.p1">İlaç sektöründe Kıdemli Grafik Tasarım Uzmanı unvanıyla görev alıyorum. Sorumluluk setim Kreatif Direktör ve Art Direktör rollerinin tamamını kapsıyor. Ürünlerimizin tüm metinsel ve görsel konseptlerini uçtan uca tasarlıyor, yaratıcı süreci stratejik bir bakış açısıyla yönetiyorum.</p>
+        <div class="about-cols">
+          <p data-i18n="about.p2">Medikal Pazarlama, Pazarlama ve Ürün Yönetimi ekipleriyle yakın çalışarak markanın iletişim dilini şekillendiriyor; kampanya konseptlerinden içerik stratejilerine kadar tüm yaratıcı çıktılarda yön veriyorum. Ajans ve matbaa süreçlerinden profesyonel baskı hazırlıklarına, video ve motion-graphic üretimlerinden stant ve dijital varlık tasarımlarına kadar tüm üretim zincirini bizzat koordine ediyorum.</p>
+          <p data-i18n="about.p3">Kurumsal iletişim departmanına bağlı olarak Ticaret, Finans, İş Geliştirme, İnsan Kaynakları ve Dış Ticaret gibi farklı departmanlarla entegre çalışıyor; disiplinler arası tasarım deneyimimi modern dijital pazarlama yöntemleriyle birleştirerek markanın hedeflerine güçlü, yalın ve sonuç odaklı yaratıcı çözümlerle katkı sağlıyorum.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Hikâye: kaydırdıkça ilerleyen After Effects zaman çizelgesi -->
-  <section class="story" id="about" aria-labelledby="storyTitle">
+  <section class="story" id="timeline" aria-labelledby="storyTitle">
     <div class="story-pin">
       <div class="sec-grid">
         <div class="sec-body">
@@ -932,6 +967,10 @@ ul,ol{padding:0;list-style:none}
       "ch.brand":"Marka görsel iletişim ve pazarlama çalışmaları",
       "ch.corp":"Kurumsal iletişim tasarımı",
       "ch.ai":"Yapay zekâ ile daha hızlı ve daha cesur fikirler",
+      "about.label":"Hakkımda",
+      "about.p1":"İlaç sektöründe Kıdemli Grafik Tasarım Uzmanı unvanıyla görev alıyorum. Sorumluluk setim Kreatif Direktör ve Art Direktör rollerinin tamamını kapsıyor. Ürünlerimizin tüm metinsel ve görsel konseptlerini uçtan uca tasarlıyor, yaratıcı süreci stratejik bir bakış açısıyla yönetiyorum.",
+      "about.p2":"Medikal Pazarlama, Pazarlama ve Ürün Yönetimi ekipleriyle yakın çalışarak markanın iletişim dilini şekillendiriyor; kampanya konseptlerinden içerik stratejilerine kadar tüm yaratıcı çıktılarda yön veriyorum. Ajans ve matbaa süreçlerinden profesyonel baskı hazırlıklarına, video ve motion-graphic üretimlerinden stant ve dijital varlık tasarımlarına kadar tüm üretim zincirini bizzat koordine ediyorum.",
+      "about.p3":"Kurumsal iletişim departmanına bağlı olarak Ticaret, Finans, İş Geliştirme, İnsan Kaynakları ve Dış Ticaret gibi farklı departmanlarla entegre çalışıyor; disiplinler arası tasarım deneyimimi modern dijital pazarlama yöntemleriyle birleştirerek markanın hedeflerine güçlü, yalın ve sonuç odaklı yaratıcı çözümlerle katkı sağlıyorum.",
       "process.label":"Süreç","process.title":"Bir proje nasıl ilerler?",
       "p1.t":"Brif","p1.d":"Dinlerim, soru sorarım, kafamda şekillendirmeye başlarım.",
       "p2.t":"Konsept","p2.d":"Fikri ve görsel yönü birlikte belirleriz.",
@@ -954,6 +993,10 @@ ul,ol{padding:0;list-style:none}
       "ch.brand":"Brand visual communication and marketing work",
       "ch.corp":"Corporate communication design",
       "ch.ai":"Faster, bolder ideas with AI",
+      "about.label":"About",
+      "about.p1":"I work in the pharmaceutical industry as a Senior Graphic Design Specialist, with responsibilities that cover the full scope of both the Creative Director and Art Director roles. I design all verbal and visual concepts for our products end to end and lead the creative process from a strategic perspective.",
+      "about.p2":"Working closely with the Medical Marketing, Marketing and Product Management teams, I shape the brand's communication language and give direction to every creative output, from campaign concepts to content strategies. I personally coordinate the entire production chain: agency and print-house processes and professional prepress, video and motion-graphics production, and stand and digital asset design.",
+      "about.p3":"Reporting to the Corporate Communications department, I work closely with Trade, Finance, Business Development, Human Resources, Foreign Trade and other departments. By combining my interdisciplinary design experience with modern digital marketing methods, I contribute strong, lean and results-driven creative solutions to the brand's goals.",
       "process.label":"Process","process.title":"How a project moves",
       "p1.t":"Brief","p1.d":"I listen, ask questions and start shaping it in my head.",
       "p2.t":"Concept","p2.d":"We set the idea and the visual direction together.",
@@ -1968,7 +2011,7 @@ ul,ol{padding:0;list-style:none}
   }
 
   /* ---------- Hikâye: kaydırdıkça ilerleyen playhead ---------- */
-  const story = $("#about"), comp = $("#comp"), chapter = $("#chapter"), layers = $$(".layer"), years = $$(".ruler-scale span");
+  const story = $("#timeline"), comp = $("#comp"), chapter = $("#chapter"), layers = $$(".layer"), years = $$(".ruler-scale span");
   let chapterKey = "";
   function setChapter(key, instant){
     if (key === chapterKey) return;

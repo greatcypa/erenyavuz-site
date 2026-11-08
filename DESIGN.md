@@ -68,6 +68,8 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - **Buton**: hap şekli (`border-radius: 999px`), 16×26px iç boşluk.
   Birincil siyah dolgu, ikincil 1.5px siyah kontur. Metin ne olacağını söyler ("E-posta yaz").
 - **İş satırı**: başlık solda, tür sağda, üstte 1px ayırıcı. Masaüstünde imleci izleyen önizleme.
+- **Hakkımda**: İşlerin hemen altında. Solda "Hakkımda" etiketi; ilk paragraf büyük (lead), diğer ikisi masaüstünde
+  iki sütun, telefonda alt alta. Menüdeki "Hakkımda" buraya gider; zaman çizelgesi hemen ardından gelir.
 - **Zaman çizelgesi**: After Effects kompozisyonu gibi; katman adları solda (Oyun, Video ve Motion,
   Basılı ve dijital, Art direction, AI), barlar ve keyframe elmasları sağda. Cetvel 2011-2027 (1 yıl = 1/16).
   Beş keyframe: 2011, 2013, 2017, 2021, 2026. Kaydırma beş eşit parçaya bölünür; turkuaz playhead her
