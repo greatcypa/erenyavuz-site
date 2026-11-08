@@ -116,8 +116,19 @@
      "@type": "Offer",
      "itemOffered": {
       "@type": "Service",
-      "name": "Video - Motion - İllüstrasyon",
-      "alternateName": "Video - Motion - Illustration",
+      "name": "Video - Motion",
+      "alternateName": "Video - Motion",
+      "provider": {
+       "@id": "https://erenyavuz.com/#person"
+      }
+     }
+    },
+    {
+     "@type": "Offer",
+     "itemOffered": {
+      "@type": "Service",
+      "name": "İllüstrasyon",
+      "alternateName": "Illustration",
       "provider": {
        "@id": "https://erenyavuz.com/#person"
       }
@@ -229,9 +240,9 @@
      "position": 2,
      "item": {
       "@type": "CreativeWork",
-      "name": "Video - Motion - İllüstrasyon",
-      "alternateName": "Video - Motion - Illustration",
-      "genre": "Video - Motion - İllüstrasyon",
+      "name": "Video - Motion",
+      "alternateName": "Video - Motion",
+      "genre": "Video - Motion",
       "image": "https://erenyavuz.com/assets/work/05-clay-storyboard/1.jpg",
       "url": "https://erenyavuz.com/#is-05-clay-storyboard",
       "creator": {
@@ -242,6 +253,21 @@
     {
      "@type": "ListItem",
      "position": 3,
+     "item": {
+      "@type": "CreativeWork",
+      "name": "İllüstrasyon",
+      "alternateName": "Illustration",
+      "genre": "İllüstrasyon",
+      "image": "https://erenyavuz.com/assets/work/10-illustrasyon/kapak.jpg",
+      "url": "https://erenyavuz.com/#is-10-illustrasyon",
+      "creator": {
+       "@id": "https://erenyavuz.com/#person"
+      }
+     }
+    },
+    {
+     "@type": "ListItem",
+     "position": 4,
      "item": {
       "@type": "CreativeWork",
       "name": "İnfografik",
@@ -256,7 +282,7 @@
     },
     {
      "@type": "ListItem",
-     "position": 4,
+     "position": 5,
      "item": {
       "@type": "CreativeWork",
       "name": "Kampanya",
@@ -271,7 +297,7 @@
     },
     {
      "@type": "ListItem",
-     "position": 5,
+     "position": 6,
      "item": {
       "@type": "CreativeWork",
       "name": "Ambalaj",
@@ -286,7 +312,7 @@
     },
     {
      "@type": "ListItem",
-     "position": 6,
+     "position": 7,
      "item": {
       "@type": "CreativeWork",
       "name": "Sosyal Medya",
@@ -301,7 +327,7 @@
     },
     {
      "@type": "ListItem",
-     "position": 7,
+     "position": 8,
      "item": {
       "@type": "CreativeWork",
       "name": "Print",
@@ -316,7 +342,7 @@
     },
     {
      "@type": "ListItem",
-     "position": 8,
+     "position": 9,
      "item": {
       "@type": "CreativeWork",
       "name": "Etkinlik",
@@ -574,6 +600,7 @@ ul,ol{padding:0;list-style:none}
 /* Galeri: iki sütun, görseller sırayla soldan sağa (1-2, 3-4...) dizilir */
 .detail-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--s3);align-items:start;margin-top:var(--s4)}
 .detail-grid.one{grid-template-columns:1fr;max-width:960px}
+.d-item.tall{max-width:560px}
 .d-col{min-width:0}
 .d-item{--rad:20px;margin:0 0 var(--s3);border-radius:var(--rad);overflow:hidden;isolation:isolate;background:var(--mint);min-height:240px;opacity:0;transform:translateY(16px);transition:opacity .5s ease calc(var(--k) * 70ms),transform .7s var(--ease-out) calc(var(--k) * 70ms)}
 .d-item.ok{min-height:0;opacity:1;transform:none}
@@ -968,9 +995,11 @@ ul,ol{padding:0;list-style:none}
   //   2.jpg, 3.jpg ... -> kutucuğa tıklayınca altta açılan görseller (jpg, png, webp ya da mp4)
   // Yeni kutucuk: yeni klasör aç ve buraya bir satır ekle. Sıra buradaki sırayla aynıdır.
   //   k = kutucuğun altında yazan kategori (TR / EN)
+  //   cover = (isteğe bağlı) carousel'de 1.jpg yerine gösterilecek kapak dosyası; galeri yine 1'den başlar
   const WORKS = [
     { folder:"01-peain",            k:{tr:"Product - KV", en:"Product - KV"} },
-    { folder:"05-clay-storyboard",  k:{tr:"Video - Motion - İllüstrasyon", en:"Video - Motion - Illustration"} },
+    { folder:"05-clay-storyboard",  k:{tr:"Video - Motion", en:"Video - Motion"} },
+    { folder:"10-illustrasyon",     k:{tr:"İllüstrasyon", en:"Illustration"}, cover:"kapak.jpg" },
     { folder:"09-infografik",       k:{tr:"İnfografik",   en:"Infographic"} },
     { folder:"03-kendine-iyi-bak",  k:{tr:"Kampanya",     en:"Campaign"} },
     { folder:"04-efervesan",        k:{tr:"Ambalaj",      en:"Packaging"} },
@@ -1882,7 +1911,7 @@ ul,ol{padding:0;list-style:none}
       img.onload = () => setRatio(img.naturalWidth, img.naturalHeight);
       img.onerror = async () => {
         img.remove();
-        if (src.includes("/1.jpg")){
+        if (src.includes("/1.jpg") || (w.cover && src.includes("/" + w.cover))){
           const f = await findFile(w.folder, 1);
           if (!f) return;
           if (f.video){ const v = makeVideo(f.url); v.addEventListener("loadedmetadata", () => setRatio(v.videoWidth, v.videoHeight)); media.appendChild(v); }
@@ -1892,7 +1921,7 @@ ul,ol{padding:0;list-style:none}
       img.src = src;
       media.appendChild(img);
     };
-    showImg(fresh(`${WORK_DIR}${w.folder}/1.jpg`));
+    showImg(fresh(`${WORK_DIR}${w.folder}/${w.cover || "1.jpg"}`));
     media.addEventListener("click", () => toggleWork(i));
     track.appendChild(fig);
   });
@@ -1921,6 +1950,8 @@ ul,ol{padding:0;list-style:none}
       if (!file.video){ m.alt = `${w.k[lang]} – Eren Yavuz, ${k + 1}`; m.decoding = "async"; m.loading = k < 4 ? "eager" : "lazy"; m.src = fresh(file.url); }
       const done = () => fig.classList.add("ok");
       m.addEventListener(file.video ? "loadedmetadata" : "load", done);
+      // Çok uzun (dikey kaydırmalı) görseller: aşırı büyütülmesin, kendi oranında aşağı doğru kaysın
+      if (!file.video) m.addEventListener("load", () => { if (m.naturalHeight > m.naturalWidth * 2.2) fig.classList.add("tall"); });
       if (file.video){
         setTimeout(done, 2500);
         // Görünür olduktan sonra hâlâ durmuşsa ve ekrandaysa yeniden dene (Safari görünmez videoyu başlatmayabilir)

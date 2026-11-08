@@ -93,8 +93,9 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
   gözlük (siyah, yuvarlak, kalp, yıldız, vizör, inek gözlüğü), elindekiler (pizza, hamburger, direksiyon,
   oyuncak araba, çay bardağı, simit, dondurma, kalem, klaket, patlamış mısır),
   ekstralar (bıyık, papyon, allık).
-- **Carousel + galeri**: Her kutucuk bir iş; altında yalnızca kategorisi yazar (Product - KV, Video - Motion - İllüstrasyon,
-  İnfografik, Kampanya, Ambalaj, Sosyal Medya, Print, Etkinlik). Galerideki videolar yalnızca ekrandayken sessiz
+- **Carousel + galeri**: Her kutucuk bir iş; altında yalnızca kategorisi yazar (Product - KV, Video - Motion, İllüstrasyon,
+  İnfografik, Kampanya, Ambalaj, Sosyal Medya, Print, Etkinlik). Bir kutucuğun kapağı galeriden ayrı olabilir
+  (WORKS'te cover: "kapak.jpg"); çok uzun dikey görseller galeride en fazla 560px genişlikte, aşağı kayarak gösterilir. Galerideki videolar yalnızca ekrandayken sessiz
   oynar; 6 saniyeden uzun olanlarda oynatıcı kontrolleri (ses açma, tam ekran) çıkar. Her videonun bir kapak karesi var (N.poster.jpg);
   tarayıcı otomatik oynatmayı engellerse kapak karesi ve oynat düğmesi görünür. Kapak görseli kendi oranında, 14px köşe. Sürükleme, oklar, klavye,
   "01 / 08" sayacı. Kutucuğa tıklayınca sayfa değişmeden altta o işin galerisi açılır (masaüstünde 2 kolon,
