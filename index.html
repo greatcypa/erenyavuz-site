@@ -88,7 +88,17 @@
     "Baskı öncesi hazırlık",
     "Prepress",
     "Stant tasarımı",
-    "Stand design"
+    "Stand design",
+    "Animasyon",
+    "Animation",
+    "Karakter tasarımı",
+    "Character design",
+    "Video kurgu",
+    "Video editing",
+    "Yönetmenlik",
+    "Directing",
+    "Dijital pazarlama",
+    "Digital marketing"
    ],
    "makesOffer": [
     {
@@ -180,7 +190,7 @@
      }
     }
    ],
-   "description": "İlaç sektöründe Kıdemli Grafik Tasarım Uzmanı unvanıyla görev alıyorum. Sorumluluk setim Kreatif Direktör ve Art Direktör rollerinin tamamını kapsıyor. Ürünlerimizin tüm metinsel ve görsel konseptlerini uçtan uca tasarlıyor, yaratıcı süreci stratejik bir bakış açısıyla yönetiyorum."
+   "description": "Bugün yaptığım işin en sevdiğim tarafı, bir fikrin görsel dilini kurmak ve o dilin farklı mecralarda nasıl işleyeceğini düşünmek. Kişisel projelerimde ise illüstrasyon ve animasyona dönüyor, karakterler tasarlayıp onlara kendi dünyalarını kuruyorum."
   },
   {
    "@type": "WebSite",
@@ -467,9 +477,10 @@ ul,ol{padding:0;list-style:none}
 /* Hakkımda */
 .section.about{padding-top:var(--s6)}
 .about .sec-label{font-weight:500}
-.about-lead{font-size:var(--t-lead);font-weight:500;line-height:1.4;letter-spacing:-.01em;max-width:44ch}
-.about-cols{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--s5);row-gap:var(--s3);margin-top:var(--s5);color:#2B2F2E}
-.about-cols p{max-width:52ch}
+/* üç dönem yan yana, ardından bugün: büyük kapanış cümlesi */
+.about-cols{display:grid;grid-template-columns:repeat(3,1fr);column-gap:var(--s4);row-gap:var(--s4);color:#2B2F2E}
+.about-cols p{max-width:52ch;padding-top:var(--s2);border-top:1px solid var(--rule)}
+.about-close{margin-top:var(--s6);font-size:var(--t-lead);font-weight:500;line-height:1.4;letter-spacing:-.01em;max-width:44ch}
 .sec-label{font-size:var(--t-sm);font-weight:500;letter-spacing:.01em;color:var(--fog);padding-top:.55em}
 .sec-label .count{font-variant-numeric:tabular-nums}
 .h2{font-size:var(--t-h2);font-weight:500;letter-spacing:-.03em;line-height:1.02;max-width:18ch}
@@ -580,9 +591,21 @@ ul,ol{padding:0;list-style:none}
 .comp-body{position:relative;padding:0 22px var(--s2) 0}
 .ruler{display:grid;grid-template-columns:var(--name) 1fr;height:38px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--fog);font-variant-numeric:tabular-nums}
 .ruler-scale{position:relative;display:block;background:linear-gradient(to right,var(--rule) 1px,transparent 1px) 0 100%/calc(100% / 16) 5px repeat-x}
-.ruler-scale span{position:absolute;z-index:2;bottom:8px;left:calc(var(--at) * 100%);padding:0 3px;background:var(--paper);font-size:12px;line-height:1;transform:translateX(-50%);transition:color .3s}
-.ruler-scale span:first-child{transform:none}
-.ruler-scale span.on{color:var(--monster-deep);font-weight:600}
+.ruler-scale .yr-y{position:absolute;z-index:3;bottom:8px;left:calc(var(--at) * 100%);padding:0 3px;background:var(--paper);font-size:12px;line-height:1;transform:translateX(-50%);transition:color .3s}
+.ruler-scale .yr-y:first-child{transform:none}
+.ruler-scale .yr-y.on{color:var(--monster-deep);font-weight:600}
+/* Yılın üstüne gelince firma ve pozisyon */
+.ruler-scale .yr-y.has-job{cursor:default;pointer-events:auto;text-decoration:underline dotted var(--monster);text-underline-offset:3px}
+.yr-y .tip{position:absolute;top:calc(100% + 12px);left:-6px;width:max-content;max-width:min(300px,62vw);padding:10px 14px;border:1px solid var(--ink);border-radius:12px;background:var(--paper);color:var(--ink);font-size:14px;font-weight:400;line-height:1.35;text-align:left;white-space:normal;box-shadow:0 8px 24px rgba(0,0,0,.08);opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .18s,transform .18s,visibility 0s .18s;pointer-events:none}
+.yr-y.r .tip{left:auto;right:-6px}
+.yr-y .tip b{display:block;font-weight:600}
+.yr-y .tip i{display:block;margin-top:2px;font-style:normal;color:var(--fog);font-size:13px}
+.yr-y:hover .tip,.yr-y.open .tip{opacity:1;visibility:visible;transform:none;transition:opacity .18s,transform .18s}
+.ruler,.comp-body{position:relative}
+.ruler{z-index:4}
+/* Dokunmatik ekranlarda firma bilgisi cümlenin altında da görünür */
+.chapter .job{display:none;margin-top:6px;font-size:15px;line-height:1.35;color:var(--fog)}
+@media (hover:none){.chapter .job{display:block}}
 .layer{display:grid;grid-template-columns:var(--name) 1fr;align-items:center;height:46px;border-bottom:1px solid #EEF1F0;transition:background .3s}
 .layer-name{display:flex;align-items:center;gap:10px;padding:0 var(--s2);font-size:16px;font-weight:500;color:var(--fog);transition:color .3s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .layer-name::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--rule);flex:none;transition:background .3s}
@@ -645,7 +668,7 @@ ul,ol{padding:0;list-style:none}
 .foot-bottom a:hover{color:var(--monster-deep)}
 
 /* ===== Duyarlı düzen ===== */
-@media (max-width:1100px){.steps{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:1100px){.steps{grid-template-columns:repeat(2,1fr)}.about-cols{grid-template-columns:1fr 1fr}}
 @media (max-width:820px){
   :root{--nav-h:64px}
   .nav{gap:var(--s3)}
@@ -661,7 +684,8 @@ ul,ol{padding:0;list-style:none}
   .car-hint{display:none}
   .detail-head{flex-direction:column;align-items:flex-start}
   .steps{margin-top:var(--s5);row-gap:var(--s5)}
-  .about-cols{grid-template-columns:1fr;margin-top:var(--s4)}
+  .about-cols{grid-template-columns:1fr}
+  .about-close{margin-top:var(--s5)}
   .story{height:260vh}
   .comp{--name:136px;margin-top:var(--s4)}
   .layer{height:42px}
@@ -710,7 +734,7 @@ ul,ol{padding:0;list-style:none}
 @media (max-width:420px){
   .comp{--name:122px}
   .layer-name{font-size:12.5px;padding:0 8px;gap:6px}
-  .ruler-scale span{font-size:11px;padding:0 2px}
+  .ruler-scale .yr-y{font-size:11px;padding:0 2px}
 }
 /* Yatay telefon gibi alçak ekranlar: zaman çizelgesi tek ekrana sığsın */
 @media (max-height:560px) and (orientation:landscape){
@@ -837,11 +861,12 @@ ul,ol{padding:0;list-style:none}
     <div class="sec-grid">
       <h2 class="sec-label" id="aboutLabel" data-i18n="about.label">Hakkımda</h2>
       <div class="sec-body">
-        <p class="about-lead" data-i18n="about.p1">İlaç sektöründe Kıdemli Grafik Tasarım Uzmanı unvanıyla görev alıyorum. Sorumluluk setim Kreatif Direktör ve Art Direktör rollerinin tamamını kapsıyor. Ürünlerimizin tüm metinsel ve görsel konseptlerini uçtan uca tasarlıyor, yaratıcı süreci stratejik bir bakış açısıyla yönetiyorum.</p>
         <div class="about-cols">
-          <p data-i18n="about.p2">Medikal Pazarlama, Pazarlama ve Ürün Yönetimi ekipleriyle yakın çalışarak markanın iletişim dilini şekillendiriyor; kampanya konseptlerinden içerik stratejilerine kadar tüm yaratıcı çıktılarda yön veriyorum. Ajans ve matbaa süreçlerinden profesyonel baskı hazırlıklarına, video ve motion-graphic üretimlerinden stant ve dijital varlık tasarımlarına kadar tüm üretim zincirini bizzat koordine ediyorum.</p>
-          <p data-i18n="about.p3">Kurumsal iletişim departmanına bağlı olarak Ticaret, Finans, İş Geliştirme, İnsan Kaynakları ve Dış Ticaret gibi farklı departmanlarla entegre çalışıyor; disiplinler arası tasarım deneyimimi modern dijital pazarlama yöntemleriyle birleştirerek markanın hedeflerine güçlü, yalın ve sonuç odaklı yaratıcı çözümlerle katkı sağlıyorum.</p>
+          <p data-i18n="about.p1">Tasarım kariyerime Ulkutay Animasyon Stüdyosu’nda başladım. Tarayıcı tabanlı Flash oyunları tasarlarken web içerik yönetimiyle de ilgilendim. Ardından Multiplayer Oyun ve Pop Kültür Programı’nın YouTube ve TV projelerinde grafik tasarım, hareketli grafik, video kurgu ve yönetmenlik görevleri üstlendim. Bu dönem, tasarımın kurgu ve hareketle nasıl bir anlatıya dönüştüğünü deneyimlediğim bir dönemdi.</p>
+          <p data-i18n="about.p2">Dijital Tercüme ve Yazılım’da, Mercedes-Benz projeleri de dahil olmak üzere marka kampanyaları ve pazarlama iletişimi üzerine çalıştım. Kampanyaların görsel dilini geliştirmenin yanında dijital pazarlama çalışmalarına katkı sağladım, web içeriklerini düzenleyip yayına aldım ve üretim süreçlerini koordine ettim. Böylece bir kampanya fikrinin web’de, dijital mecralarda ve basılı işlerde nasıl karşılık bulduğunu üretimin farklı aşamalarında görme fırsatım oldu.</p>
+          <p data-i18n="about.p3">Vefa İlaç’ta Kıdemli Grafik Tasarım Uzmanı olarak marka ve ürün iletişimi, ambalaj, basılı materyaller, etkinlik görselleri ve stant tasarımları üzerine çalıştım. Pazarlama ve ürün ekipleriyle birlikte ürünlerin metinsel ve görsel konseptlerini geliştirdim. Video ve hareketli grafik üretiminden baskı hazırlığına kadar uygulama sürecini yürüttüm, ajans ve matbaa iş birliklerini koordine ettim.</p>
         </div>
+        <p class="about-close" data-i18n="about.p4">Bugün yaptığım işin en sevdiğim tarafı, bir fikrin görsel dilini kurmak ve o dilin farklı mecralarda nasıl işleyeceğini düşünmek. Kişisel projelerimde ise illüstrasyon ve animasyona dönüyor, karakterler tasarlayıp onlara kendi dünyalarını kuruyorum.</p>
       </div>
     </div>
   </section>
@@ -856,7 +881,7 @@ ul,ol{padding:0;list-style:none}
             <div class="comp-bar"><span class="comp-tab">kariyer_final_v15</span></div>
             <div class="comp-body">
               <!-- Zaman çizelgesi 2011-2027 arası (16 yıl); her yıl = 1/16. Keyframe'ler yılların üstünde. -->
-              <div class="ruler"><span></span><span class="ruler-scale"><span style="--at:0">2011</span><span class="yr-minor" style="--at:.125">2013</span><span style="--at:.375">2017</span><span style="--at:.625">2021</span><span style="--at:.9375">2026</span></span></div>
+              <div class="ruler"><span></span><span class="ruler-scale"><span class="yr-y" data-key="game" style="--at:0">2011</span><span class="yr-y yr-minor" data-key="video" style="--at:.125">2013</span><span class="yr-y" data-key="brand" style="--at:.375">2017</span><span class="yr-y r" data-key="corp" style="--at:.625">2021</span><span class="yr-y r" data-key="ai" style="--at:.9375">2026</span></span></div>
               <div class="layer" data-key="game" style="--s:0;--e:.25"><span class="layer-name" data-i18n="layer.game">Oyun</span><span class="track-tl"><span class="bar"><i class="kf"></i><i class="kf"></i></span></span></div>
               <div class="layer" data-key="video" style="--s:.125;--e:1"><span class="layer-name" data-i18n="layer.video">Video ve Motion</span><span class="track-tl"><span class="bar"><i class="kf"></i></span></span></div>
               <div class="layer" data-key="brand" style="--s:.375;--e:1"><span class="layer-name" data-i18n="layer.brand">Basılı ve dijital</span><span class="track-tl"><span class="bar"><i class="kf"></i></span></span></div>
@@ -967,10 +992,15 @@ ul,ol{padding:0;list-style:none}
       "ch.brand":"Marka görsel iletişim ve pazarlama çalışmaları",
       "ch.corp":"Kurumsal iletişim tasarımı",
       "ch.ai":"Yapay zekâ ile daha hızlı ve daha cesur fikirler",
+      "job.game.c":"Ulkutay Animasyon Stüdyosu","job.game.r":"İnteraktif Tasarımcı",
+      "job.video.c":"Multiplayer Oyun ve Pop Kültür Programı","job.video.r":"Video Editör - Yönetmen - Hareketli Grafik ve Grafik Tasarım Uzmanı",
+      "job.brand.c":"Dijital Tercüme ve Yazılım","job.brand.r":"Dijital Pazarlama ve Grafik Tasarım Uzmanı",
+      "job.corp.c":"Vefa İlaç","job.corp.r":"Kıdemli Grafik Tasarım Uzmanı",
       "about.label":"Hakkımda",
-      "about.p1":"İlaç sektöründe Kıdemli Grafik Tasarım Uzmanı unvanıyla görev alıyorum. Sorumluluk setim Kreatif Direktör ve Art Direktör rollerinin tamamını kapsıyor. Ürünlerimizin tüm metinsel ve görsel konseptlerini uçtan uca tasarlıyor, yaratıcı süreci stratejik bir bakış açısıyla yönetiyorum.",
-      "about.p2":"Medikal Pazarlama, Pazarlama ve Ürün Yönetimi ekipleriyle yakın çalışarak markanın iletişim dilini şekillendiriyor; kampanya konseptlerinden içerik stratejilerine kadar tüm yaratıcı çıktılarda yön veriyorum. Ajans ve matbaa süreçlerinden profesyonel baskı hazırlıklarına, video ve motion-graphic üretimlerinden stant ve dijital varlık tasarımlarına kadar tüm üretim zincirini bizzat koordine ediyorum.",
-      "about.p3":"Kurumsal iletişim departmanına bağlı olarak Ticaret, Finans, İş Geliştirme, İnsan Kaynakları ve Dış Ticaret gibi farklı departmanlarla entegre çalışıyor; disiplinler arası tasarım deneyimimi modern dijital pazarlama yöntemleriyle birleştirerek markanın hedeflerine güçlü, yalın ve sonuç odaklı yaratıcı çözümlerle katkı sağlıyorum.",
+      "about.p1":"Tasarım kariyerime Ulkutay Animasyon Stüdyosu’nda başladım. Tarayıcı tabanlı Flash oyunları tasarlarken web içerik yönetimiyle de ilgilendim. Ardından Multiplayer Oyun ve Pop Kültür Programı’nın YouTube ve TV projelerinde grafik tasarım, hareketli grafik, video kurgu ve yönetmenlik görevleri üstlendim. Bu dönem, tasarımın kurgu ve hareketle nasıl bir anlatıya dönüştüğünü deneyimlediğim bir dönemdi.",
+      "about.p2":"Dijital Tercüme ve Yazılım’da, Mercedes-Benz projeleri de dahil olmak üzere marka kampanyaları ve pazarlama iletişimi üzerine çalıştım. Kampanyaların görsel dilini geliştirmenin yanında dijital pazarlama çalışmalarına katkı sağladım, web içeriklerini düzenleyip yayına aldım ve üretim süreçlerini koordine ettim. Böylece bir kampanya fikrinin web’de, dijital mecralarda ve basılı işlerde nasıl karşılık bulduğunu üretimin farklı aşamalarında görme fırsatım oldu.",
+      "about.p3":"Vefa İlaç’ta Kıdemli Grafik Tasarım Uzmanı olarak marka ve ürün iletişimi, ambalaj, basılı materyaller, etkinlik görselleri ve stant tasarımları üzerine çalıştım. Pazarlama ve ürün ekipleriyle birlikte ürünlerin metinsel ve görsel konseptlerini geliştirdim. Video ve hareketli grafik üretiminden baskı hazırlığına kadar uygulama sürecini yürüttüm, ajans ve matbaa iş birliklerini koordine ettim.",
+      "about.p4":"Bugün yaptığım işin en sevdiğim tarafı, bir fikrin görsel dilini kurmak ve o dilin farklı mecralarda nasıl işleyeceğini düşünmek. Kişisel projelerimde ise illüstrasyon ve animasyona dönüyor, karakterler tasarlayıp onlara kendi dünyalarını kuruyorum.",
       "process.label":"Süreç","process.title":"Bir proje nasıl ilerler?",
       "p1.t":"Brif","p1.d":"Dinlerim, soru sorarım, kafamda şekillendirmeye başlarım.",
       "p2.t":"Konsept","p2.d":"Fikri ve görsel yönü birlikte belirleriz.",
@@ -993,10 +1023,15 @@ ul,ol{padding:0;list-style:none}
       "ch.brand":"Brand visual communication and marketing work",
       "ch.corp":"Corporate communication design",
       "ch.ai":"Faster, bolder ideas with AI",
+      "job.game.c":"Ulkutay Animation Studio","job.game.r":"Interactive Designer",
+      "job.video.c":"Multiplayer, gaming & pop culture show","job.video.r":"Video Editor - Director - Motion Graphics & Graphic Design Specialist",
+      "job.brand.c":"Dijital Tercüme ve Yazılım","job.brand.r":"Digital Marketing & Graphic Design Specialist",
+      "job.corp.c":"Vefa İlaç","job.corp.r":"Senior Graphic Design Specialist",
       "about.label":"About",
-      "about.p1":"I work in the pharmaceutical industry as a Senior Graphic Design Specialist, with responsibilities that cover the full scope of both the Creative Director and Art Director roles. I design all verbal and visual concepts for our products end to end and lead the creative process from a strategic perspective.",
-      "about.p2":"Working closely with the Medical Marketing, Marketing and Product Management teams, I shape the brand's communication language and give direction to every creative output, from campaign concepts to content strategies. I personally coordinate the entire production chain: agency and print-house processes and professional prepress, video and motion-graphics production, and stand and digital asset design.",
-      "about.p3":"Reporting to the Corporate Communications department, I work closely with Trade, Finance, Business Development, Human Resources, Foreign Trade and other departments. By combining my interdisciplinary design experience with modern digital marketing methods, I contribute strong, lean and results-driven creative solutions to the brand's goals.",
+      "about.p1":"I started my design career at Ulkutay Animation Studio. While designing browser-based Flash games, I also handled web content management. I then took on graphic design, motion graphics, video editing and directing for the YouTube and TV projects of Multiplayer, a gaming and pop culture show. It was the period in which I experienced how design turns into a narrative through editing and motion.",
+      "about.p2":"At Dijital Tercüme ve Yazılım, I worked on brand campaigns and marketing communications, including projects for Mercedes-Benz. Alongside developing the visual language of campaigns, I contributed to digital marketing, edited and published web content, and coordinated production processes. This gave me the chance to see, at different stages of production, how a campaign idea comes to life on the web, in digital channels and in print.",
+      "about.p3":"At Vefa İlaç, as a Senior Graphic Design Specialist, I worked on brand and product communication, packaging, printed materials, event visuals and stand design. Together with the marketing and product teams, I developed the verbal and visual concepts of our products. I ran the execution process from video and motion graphics production to prepress, and coordinated collaborations with agencies and print houses.",
+      "about.p4":"Today, the part of my work I love most is building the visual language of an idea and thinking about how that language will work across different media. In my personal projects, I return to illustration and animation, designing characters and building worlds of their own.",
       "process.label":"Process","process.title":"How a project moves",
       "p1.t":"Brief","p1.d":"I listen, ask questions and start shaping it in my head.",
       "p2.t":"Concept","p2.d":"We set the idea and the visual direction together.",
@@ -2026,7 +2061,7 @@ ul,ol{padding:0;list-style:none}
   }
 
   /* ---------- Hikâye: kaydırdıkça ilerleyen playhead ---------- */
-  const story = $("#timeline"), comp = $("#comp"), chapter = $("#chapter"), layers = $$(".layer"), years = $$(".ruler-scale span");
+  const story = $("#timeline"), comp = $("#comp"), chapter = $("#chapter"), layers = $$(".layer"), years = $$(".ruler-scale .yr-y");
   let chapterKey = "";
   function setChapter(key, instant){
     if (key === chapterKey) return;
@@ -2036,12 +2071,34 @@ ul,ol{padding:0;list-style:none}
     years.forEach((y, j) => y.classList.toggle("on", j === ci));
     const write = () => {
       const yr = document.createElement("span"); yr.className = "yr"; yr.textContent = CHAPTERS[ci].year;
-      chapter.replaceChildren(yr, document.createTextNode(T[lang]["ch." + key]));
+      const parts = [yr, document.createTextNode(T[lang]["ch." + key])];
+      if (T[lang]["job." + key + ".c"]){ const j = document.createElement("span"); j.className = "job"; j.textContent = `${T[lang]["job." + key + ".c"]} · ${T[lang]["job." + key + ".r"]}`; parts.push(j); }
+      chapter.replaceChildren(...parts);
       chapter.classList.remove("swap");
     };
     if (instant || reduce){ write(); return; }
     chapter.classList.add("swap"); setTimeout(write, 180);
   }
+  // Yıl etiketlerine firma ve pozisyon ipuçları (dile göre yeniden yazılır); dokununca açılır/kapanır
+  function renderJobs(){
+    years.forEach(y => {
+      const k = y.dataset.key, c = T[lang]["job." + k + ".c"];
+      y.querySelector(".tip")?.remove();
+      y.classList.toggle("has-job", !!c);
+      if (!c) return;
+      const tip = document.createElement("span"); tip.className = "tip";
+      const b = document.createElement("b"); b.textContent = c;
+      const i = document.createElement("i"); i.textContent = T[lang]["job." + k + ".r"];
+      tip.append(b, i); y.appendChild(tip);
+    });
+  }
+  years.forEach(y => y.addEventListener("click", e => {
+    e.stopPropagation();
+    const was = y.classList.contains("open");
+    years.forEach(o => o.classList.remove("open"));
+    if (!was && y.classList.contains("has-job")) y.classList.add("open");
+  }));
+  document.addEventListener("click", () => years.forEach(o => o.classList.remove("open")));
   function scrub(){
     const b = story.getBoundingClientRect();
     const total = b.height - innerHeight;
@@ -2145,7 +2202,8 @@ ul,ol{padding:0;list-style:none}
     $("#carousel").setAttribute("aria-label", T[next]["car.label"]);
     $('meta[name="description"]').setAttribute("content", T[next]["meta.desc"]);
     $$(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === next)));
-    $("#chapterList").innerHTML = CHAPTERS.map(c => `<li>${c.year}: ${T[next]["ch." + c.key]}</li>`).join("");
+    $("#chapterList").innerHTML = CHAPTERS.map(c => `<li>${c.year}: ${T[next]["ch." + c.key]}${T[next]["job." + c.key + ".c"] ? ` (${T[next]["job." + c.key + ".c"]}, ${T[next]["job." + c.key + ".r"]})` : ""}</li>`).join("");
+    renderJobs();
     renderWorks();
     renderSound();
     const k = chapterKey; chapterKey = ""; setChapter(k || "game", true);

@@ -68,12 +68,14 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - **Buton**: hap şekli (`border-radius: 999px`), 16×26px iç boşluk.
   Birincil siyah dolgu, ikincil 1.5px siyah kontur. Metin ne olacağını söyler ("E-posta yaz").
 - **İş satırı**: başlık solda, tür sağda, üstte 1px ayırıcı. Masaüstünde imleci izleyen önizleme.
-- **Hakkımda**: İşlerin hemen altında. Solda "Hakkımda" etiketi; ilk paragraf büyük (lead), diğer ikisi masaüstünde
-  iki sütun, telefonda alt alta. Menüdeki "Hakkımda" buraya gider; zaman çizelgesi hemen ardından gelir.
+- **Hakkımda**: İşlerin hemen altında. Solda "Hakkımda" etiketi; kariyerin üç dönemi masaüstünde üç sütun
+  (tablette iki, telefonda tek), ardından bugünü anlatan büyük kapanış paragrafı. Menüdeki "Hakkımda" buraya gider; zaman çizelgesi hemen ardından gelir.
 - **Zaman çizelgesi**: After Effects kompozisyonu gibi; katman adları solda (Oyun, Video ve Motion,
   Basılı ve dijital, Art direction, AI), barlar ve keyframe elmasları sağda. Cetvel 2011-2027 (1 yıl = 1/16).
   Beş keyframe: 2011, 2013, 2017, 2021, 2026. Kaydırma beş eşit parçaya bölünür; turkuaz playhead her
   keyframe'de biraz bekler, o yılın cümlesi altta yılıyla birlikte görünür, sonra bir sonrakine kayar.
+  Yılların üstüne gelince (telefonda dokununca) firma ve pozisyon küçük bir kartta çıkar; altı noktalı çizgili
+  yıllar firma bilgisi olanlardır. Dokunmatik ekranlarda firma ve pozisyon yıl cümlesinin altında da yazar.
 - **Giriş kalabalığı**: Giriş ekranını boşluksuz dolduran, açık turkuaz (`#A9DCD2`), 1.5px çizgili canavarlar.
   Hiçbiri kenardan ya da menünün altından kesilmez; büyükten küçüğe boşlukları doldurarak yerleşir.
   Etkileşimsiz. Üstünde 8 (mobilde 6) tam görünen, etkileşimli canavar asimetrik dağılır.
