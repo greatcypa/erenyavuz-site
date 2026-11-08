@@ -1782,18 +1782,25 @@ ul,ol{padding:0;list-style:none}
   const track = $("#track"), count = $("#carCount"), prevBtn = $("#prevBtn"), nextBtn = $("#nextBtn");
   const detail = $("#detail"), dGrid = $("#detailGrid"), dTitle = $("#detailTitle"), dClose = $("#detailClose");
 
-  // Galeri videoları yalnızca ekrandayken oynar; 6 saniyeden uzun (sesli) olanlarda oynatıcı kontrolleri çıkar
+  // Galeri videoları yalnızca ekrandayken oynar; 6 saniyeden uzun (sesli) olanlarda oynatıcı kontrolleri çıkar.
+  // Tarayıcı otomatik oynatmayı engellerse (ör. Safari / iPhone düşük güç modu) oynat düğmesi görünür.
+  // Her videonun yanında aynı adlı bir kapak karesi durur: 3.mp4 -> 3.poster.jpg (yüklenene kadar görünür).
+  const tryPlay = v => {
+    const p = v.play();
+    if (p && p.catch) p.catch(e => { if (e && e.name === "NotAllowedError") v.controls = true; });
+  };
   const vio = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => {
     const v = e.target;
-    if (e.isIntersecting && !reduce) v.play().catch(() => {}); else v.pause();
-  }), { threshold:.3 }) : null;
+    if (e.isIntersecting && !reduce) tryPlay(v); else v.pause();
+  }), { threshold:.25 }) : null;
   function makeVideo(src, gallery=false){
     const v = document.createElement("video");
-    v.muted = true; v.loop = true; v.playsInline = true; v.preload = "metadata";
-    v.setAttribute("muted", ""); v.setAttribute("playsinline", "");
+    v.muted = true; v.defaultMuted = true; v.loop = true; v.playsInline = true; v.preload = "metadata";
+    v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "");
     if (gallery){
+      v.poster = src.replace(/\.(mp4|webm)(\?|$)/, ".poster.jpg$2");
       v.addEventListener("loadedmetadata", () => { if (v.duration > 6) v.controls = true; });
-      if (vio) vio.observe(v); else v.autoplay = true;
+      if (vio) vio.observe(v); else { v.autoplay = true; v.controls = true; }
     } else v.autoplay = true;
     v.src = src; return v;
   }
@@ -1878,7 +1885,15 @@ ul,ol{padding:0;list-style:none}
       const m = file.video ? makeVideo(fresh(file.url), true) : new Image();
       if (!file.video){ m.alt = `${w.k[lang]} – Eren Yavuz, ${k + 1}`; m.decoding = "async"; m.loading = k < 4 ? "eager" : "lazy"; m.src = fresh(file.url); }
       const done = () => fig.classList.add("ok");
-      m.addEventListener(file.video ? "loadeddata" : "load", done);
+      m.addEventListener(file.video ? "loadedmetadata" : "load", done);
+      if (file.video){
+        setTimeout(done, 2500);
+        // Görünür olduktan sonra hâlâ durmuşsa ve ekrandaysa yeniden dene (Safari görünmez videoyu başlatmayabilir)
+        m.addEventListener("loadedmetadata", () => setTimeout(() => {
+          const b = m.getBoundingClientRect();
+          if (m.paused && !reduce && b.bottom > 0 && b.top < innerHeight) tryPlay(m);
+        }, 800), { once:true });
+      }
       m.addEventListener("error", () => fig.remove());
       fig.appendChild(m); cols[files.length === 1 ? 0 : k % 2].appendChild(fig);
       if (!file.video && m.complete && m.naturalWidth) done();

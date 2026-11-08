@@ -11,6 +11,8 @@ Kurallar:
 - jpg, png, webp ya da mp4 olabilir (ör. 3.png, 4.mp4).
 - Görselleri uzun kenarı 1600-2000 piksel civarında kaydet, sayfa hızlı açılsın.
 - Kapağı değiştirmek için 1.jpg'yi aynı isimle değiştirmen yeterli.
+- Videolar için isteğe bağlı kapak karesi: aynı numarayla .poster.jpg (ör. 3.mp4 için 3.poster.jpg).
+  Video yüklenene ya da oynatılana kadar bu kare görünür.
 
 Yeni bir kutucuk eklemek için yeni bir klasör aç (ör. 09-yeni-is) ve
 index.html'in en üstündeki WORKS listesine bir satır ekle (ya da Claude'a söyle).

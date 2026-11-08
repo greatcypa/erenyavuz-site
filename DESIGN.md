@@ -93,7 +93,8 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
   ekstralar (bıyık, papyon, allık).
 - **Carousel + galeri**: Her kutucuk bir iş; altında yalnızca kategorisi yazar (Product - KV, Video - Motion - İllüstrasyon,
   İnfografik, Kampanya, Ambalaj, Sosyal Medya, Print, Etkinlik). Galerideki videolar yalnızca ekrandayken sessiz
-  oynar; 6 saniyeden uzun olanlarda oynatıcı kontrolleri (ses açma, tam ekran) çıkar. Kapak görseli kendi oranında, 14px köşe. Sürükleme, oklar, klavye,
+  oynar; 6 saniyeden uzun olanlarda oynatıcı kontrolleri (ses açma, tam ekran) çıkar. Her videonun bir kapak karesi var (N.poster.jpg);
+  tarayıcı otomatik oynatmayı engellerse kapak karesi ve oynat düğmesi görünür. Kapak görseli kendi oranında, 14px köşe. Sürükleme, oklar, klavye,
   "01 / 08" sayacı. Kutucuğa tıklayınca sayfa değişmeden altta o işin galerisi açılır (masaüstünde 2 kolon,
   mobilde 1). Görseller `assets/work/<klasör>/1.jpg, 2.jpg, 3.jpg...` düzeninden otomatik okunur; 1 kapaktır.
 - **Sesler**: Dosya yok, hepsi Web Audio ile tarayıcıda üretilir. Çoğu karakter minik, tiz, sevimli bir
