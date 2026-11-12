@@ -505,7 +505,7 @@ ul,ol{padding:0;list-style:none}
 .sec-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--s3)}
 .sec-grid > .sec-label{grid-column:1 / span 3}
 .sec-grid > .sec-body{grid-column:4 / -1;min-width:0}
-#work .sec-body,#timeline .sec-body{grid-column:1 / -1}
+#work .sec-body,#timeline .sec-body,#process .sec-body{grid-column:1 / -1}
 /* Hakkımda */
 .section.about{padding-top:var(--s6)}
 .about .sec-label{font-weight:500}
@@ -973,11 +973,10 @@ ul,ol{padding:0;list-style:none}
   </section>
 
   <!-- Süreç -->
-  <section class="section" id="process">
+  <section class="section" id="process" aria-labelledby="processTitle">
     <div class="sec-grid">
-      <p class="sec-label" data-i18n="process.label">Süreç</p>
       <div class="sec-body">
-        <h2 class="h2" data-i18n="process.title">Bir proje nasıl ilerler?</h2>
+        <h2 class="h2" id="processTitle" data-i18n="process.title">Bir proje nasıl ilerler?</h2>
         <ol class="steps">
           <li><span class="num">01</span><h3 data-i18n="p1.t">Brif</h3><p data-i18n="p1.d"></p></li>
           <li><span class="num">02</span><h3 data-i18n="p2.t">Konsept</h3><p data-i18n="p2.d"></p></li>
@@ -1083,7 +1082,7 @@ ul,ol{padding:0;list-style:none}
       "about.p2":"Dijital Tercüme ve Yazılım’da, Mercedes-Benz projeleri de dahil olmak üzere marka kampanyaları ve pazarlama iletişimi üzerine çalıştım. Kampanyaların görsel dilini geliştirmenin yanında dijital pazarlama çalışmalarına katkı sağladım, tüm Türkiye’deki Mercedes-Benz bayi web sitelerini düzenleyip yayına aldım ve dijital içerik üretim süreçlerini koordine ettim. Böylece bir kampanya fikrinin web’de, dijital mecralarda ve basılı işlerde nasıl karşılık bulduğunu üretimin farklı aşamalarında görme fırsatım oldu.",
       "about.p3":"Vefa İlaç’ta Kıdemli Grafik Tasarım Uzmanı olarak marka ve ürün iletişimi, ambalaj, basılı materyaller, etkinlik görselleri ve stant tasarımları üzerine çalıştım. Pazarlama ve ürün ekipleriyle birlikte ürünlerin metinsel ve görsel konseptlerini geliştirdim. Video ve hareketli grafik üretiminden baskı hazırlığına kadar uygulama sürecini yürüttüm, ajans ve matbaa iş birliklerini koordine ettim.",
       "about.p4":"Bugün yaptığım işin en sevdiğim tarafı, bir fikrin görsel dilini kurmak ve o dilin farklı mecralarda nasıl işleyeceğini düşünmek. Kişisel projelerimde ise illüstrasyon ve animasyona dönüyor, karakterler tasarlayıp onlara kendi dünyalarını kuruyorum.",
-      "process.label":"Süreç","process.title":"Bir proje nasıl ilerler?",
+      "process.title":"Bir proje nasıl ilerler?",
       "p1.t":"Brif","p1.d":"Dinlerim, soru sorarım, kafamda şekillendirmeye başlarım.",
       "p2.t":"Konsept","p2.d":"Fikri ve görsel yönü birlikte belirleriz.",
       "p3.t":"Stil kareleri","p3.d":"Aklımızdakileri şekillendirmeye başlarız: renk, kompozisyon, tipografi.",
@@ -1116,7 +1115,7 @@ ul,ol{padding:0;list-style:none}
       "about.p2":"At Dijital Tercüme ve Yazılım, I worked on brand campaigns and marketing communications, including projects for Mercedes-Benz. Alongside developing the visual language of campaigns, I contributed to digital marketing, edited and launched the websites of Mercedes-Benz dealerships across Turkey, and coordinated digital content production processes. This gave me the chance to see, at different stages of production, how a campaign idea comes to life on the web, in digital channels and in print.",
       "about.p3":"At Vefa İlaç, as a Senior Graphic Design Specialist, I worked on brand and product communication, packaging, printed materials, event visuals and stand design. Together with the marketing and product teams, I developed the verbal and visual concepts of our products. I ran the execution process from video and motion graphics production to prepress, and coordinated collaborations with agencies and print houses.",
       "about.p4":"Today, the part of my work I love most is building the visual language of an idea and thinking about how that language will work across different media. In my personal projects, I return to illustration and animation, designing characters and building worlds of their own.",
-      "process.label":"Process","process.title":"How a project moves",
+      "process.title":"How a project moves",
       "p1.t":"Brief","p1.d":"I listen, ask questions and start shaping it in my head.",
       "p2.t":"Concept","p2.d":"We set the idea and the visual direction together.",
       "p3.t":"Style frames","p3.d":"We start shaping what's in our heads: colour, composition, typography.",
