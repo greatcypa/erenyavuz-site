@@ -618,8 +618,9 @@ ul,ol{padding:0;list-style:none}
 .detail-close:hover{background:var(--mint)}
 /* Galeri: iki sütun, görseller sırayla soldan sağa (1-2, 3-4...) dizilir */
 .detail-grid{--gg:clamp(28px,3vw,56px);display:grid;grid-template-columns:1fr 1fr;column-gap:var(--gg);align-items:start;margin-top:var(--s4)}
-.detail-grid.one{grid-template-columns:1fr;max-width:960px}
+.detail-grid.one{grid-template-columns:1fr;max-width:960px;margin-left:auto;margin-right:auto}
 .d-item.tall{max-width:560px}
+.detail-grid .d-item.tall{margin-left:auto;margin-right:auto}
 .d-col{min-width:0}
 .d-item{--rad:20px;margin:0 0 var(--gg,var(--s3));border-radius:var(--rad);overflow:hidden;isolation:isolate;background:var(--mint);min-height:240px;opacity:0;transform:translateY(16px);transition:opacity .5s ease calc(var(--k) * 70ms),transform .7s var(--ease-out) calc(var(--k) * 70ms)}
 .d-item.ok{min-height:0;opacity:1;transform:none}
@@ -1927,7 +1928,7 @@ ul,ol{padding:0;list-style:none}
   /* ---------- İşler: carousel (kapaklar) + tıklayınca altta açılan galeri ---------- */
   const WORK_DIR = "assets/work/";
   // Görsel değiştirince bu sayıyı bir artır: tarayıcıların eski kopyayı göstermesini önler
-  const MEDIA_V = "9";
+  const MEDIA_V = "10";
   const fresh = url => `${url}?v=${MEDIA_V}`;
   const track = $("#track"), count = $("#carCount"), prevBtn = $("#prevBtn"), nextBtn = $("#nextBtn");
   const detail = $("#detail"), dGrid = $("#detailGrid"), dTitle = $("#detailTitle"), dClose = $("#detailClose"), dMore = $("#detailMore");
