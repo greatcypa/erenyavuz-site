@@ -25,9 +25,9 @@
 <meta name="twitter:image" content="https://erenyavuz.com/assets/og.jpg">
 <script>
 /* Intro (paraşütle iniş) oynayacak mı? İlk boyamadan önce karar verilir ki giriş ekranı bir an görünüp kaybolmasın.
-   INTRO_AUTO=false iken yalnızca adresin sonuna ?intro=1 eklenince oynar (önizleme). */
+   Her ziyarette bir kez oynar; adresin sonuna ?intro=1 eklenince her seferinde oynar. */
 (function(){
-  var INTRO_AUTO = false, d = document.documentElement, play = false;
+  var INTRO_AUTO = true, d = document.documentElement, play = false;
   try {
     var forced = /[?&]intro=1(&|$)/.test(location.search);
     var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
