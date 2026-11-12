@@ -23,6 +23,23 @@
 <meta name="twitter:title" content="Eren Yavuz | Graphic &amp; Motion Designer / Art Director">
 <meta name="twitter:description" content="Eren Yavuz, İstanbul'da grafik ve motion tasarımcı, art director: product ve key visual, video, motion, illüstrasyon, infografik, kampanya, ambalaj, sosyal medya, print ve etkinlik tasarımı.">
 <meta name="twitter:image" content="https://erenyavuz.com/assets/og.jpg">
+<script>
+/* Intro (paraşütle iniş) oynayacak mı? İlk boyamadan önce karar verilir ki giriş ekranı bir an görünüp kaybolmasın.
+   INTRO_AUTO=false iken yalnızca adresin sonuna ?intro=1 eklenince oynar (önizleme). */
+(function(){
+  var INTRO_AUTO = false, d = document.documentElement, play = false;
+  try {
+    var forced = /[?&]intro=1(&|$)/.test(location.search);
+    var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var seen = false; try { seen = sessionStorage.getItem("intro") === "1"; } catch (e) {}
+    play = forced || (INTRO_AUTO && !calm && !seen && !location.hash);
+  } catch (e) {}
+  if (!play) return;
+  d.classList.add("intro-on");
+  // Güvenlik: bir şey ters giderse site kilitli kalmasın
+  setTimeout(function(){ if (!window.__introDone) d.classList.remove("intro-on"); }, 9000);
+})();
+</script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -825,6 +842,32 @@ ul,ol{padding:0;list-style:none}
   .nav,.chapter{transition:none}
   .d-item{transition:none;opacity:1;transform:none}
 }
+
+/* ===== Intro: paraşütle kalabalığın içine iniş ===== */
+.intro-on,.intro-on body{overflow:hidden}
+.intro-on #hero{transform:translateY(100vh)}
+.intro-on .nav{transform:translateY(-100%)}
+.intro-on .hero-text{opacity:0;transform:translateY(16px)}
+.intro-out .hero-text{transition:opacity .5s ease .12s,transform .8s var(--ease-out) .12s}
+.intro{position:fixed;inset:0;z-index:95;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.intro .sky{position:absolute;inset:0;transition:opacity .5s ease}
+.intro.open .sky{opacity:0}
+.intro .streak{position:absolute;top:0;left:var(--x);width:2px;height:var(--h);border-radius:2px;background:var(--pattern);animation:introRush var(--t) linear var(--dl) infinite backwards}
+.intro .cloud{position:absolute;top:0;left:var(--x);width:var(--w);height:auto;overflow:visible;animation:introRush var(--t) linear var(--dl) infinite backwards}
+.intro .cloud path{fill:var(--paper);stroke:var(--pattern);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+@keyframes introRush{from{transform:translateY(112vh)}to{transform:translateY(-60vh)}}
+.intro-skip{position:absolute;right:var(--pad);bottom:max(var(--pad),env(safe-area-inset-bottom));padding:10px 18px;border:2px solid var(--monster);border-radius:999px;background:var(--paper);color:var(--ink);font:500 15px/1 var(--font);cursor:pointer}
+.intro.land .intro-skip{opacity:0;transition:opacity .2s}
+.m.diver{position:fixed;left:0;top:0;z-index:96;pointer-events:none;will-change:transform;transform-origin:50% 50%}
+.diver .mon{transform-origin:50% -55%}
+.diver .ln{transition:none;stroke-dashoffset:0;pointer-events:none;cursor:default}
+.diver .fl{transition:none;opacity:1}
+.diver .strings .ln{stroke-width:2.2}
+.diver .dv-hold,.diver.open .dv-fall{display:none}
+.diver.open .dv-hold{display:inline}
+.diver .chute-w{transform-box:fill-box;transform-origin:50% 100%;transition:transform .9s var(--ease-out),opacity .55s ease .2s}
+.diver.landed .chute-w{transform:translate(38%,30%) rotate(58deg) scale(.8);opacity:0}
+.diver.landed .dv-body{visibility:hidden}
 </style>
 </head>
 <body>
@@ -1787,7 +1830,7 @@ ul,ol{padding:0;list-style:none}
         : fr[0]) + (A.over || "");
     }
     const html = (H.back || "") + L(blob(r, 100, cy, rx, ry, B.wob || 1)) + spots(r, M) + face + (H.front || "") + (X.front || "") + (Pp.front || "") + anim;
-    return { html, box, cy, R:Math.max(rx, ry) * .92 };
+    return { html, box, cy, R:Math.max(rx, ry) * .92, M };
   }
 
   const specFor = el => PRESETS[el.dataset.m] || PRESETS.classic;
@@ -2143,6 +2186,9 @@ ul,ol{padding:0;list-style:none}
   }, { threshold:.15 });
   $$(".m[data-m]").forEach(el => io.observe(el));
   io.observe(me);
+  // Intro oynarken giriş ekranı aşağıda bekler: kalabalık yükselmeden önce çizilmiş olsun
+  if (document.documentElement.classList.contains("intro-on"))
+    $$(".cast .m, #me").forEach((el, i) => { el.style.setProperty("--d", (i * .04).toFixed(2) + "s"); el.classList.add("in"); });
   document.addEventListener("animationend", e => {
     if (e.animationName === "wave") e.target.closest(".m")?.classList.remove("waving");
   });
@@ -2350,6 +2396,124 @@ ul,ol{padding:0;list-style:none}
     // yazı tipi yüklenince giriş yerleşimi kaydıysa arka planı yeniden diz
     const sig = heroSig(); if (sig !== lastSig){ lastSig = sig; buildPattern(); }
   });
+
+  /* ---------- Intro: gözlüklü karakter paraşütle iner, kalabalığın içindeki yerine konar ----------
+     Giriş ekranının kendisi "kalabalık"tır: aşağıdan yükselir, karakter .c3'ün yerine iner.
+     Tıklama, tuş, kaydırma: anında geçilir. */
+  (function intro(){
+    const root = document.documentElement;
+    if (!root.classList.contains("intro-on")) return;
+    const tEl = $(".cast .c3");
+    const quit = () => { window.__introDone = true; root.classList.remove("intro-on"); hero.style.transform = ""; };
+    if (!tEl || !tEl.offsetParent){ quit(); return; }
+    window.scrollTo(0, 0);
+    tEl.style.visibility = "hidden";
+
+    // Paraşütçü: .c3 ile birebir aynı çizim + kollar + paraşüt
+    const D = buildMonster(specFor(tEl), +tEl.dataset.seed || 7), M = D.M, { rx, ry, cy } = M;
+    const hx = rx * 1.14, hy = cy - ry * .58, cb = hy - 104;
+    const side = fn => [1, -1].map(fn).join("");
+    const hold = side(s => L(`M${f(100 + s * rx * .9)} ${f(cy + ry * .15)}Q${f(100 + s * rx * 1.2)} ${f(cy - ry * .12)} ${f(100 + s * hx)} ${f(cy - ry * .48)}`, OPEN) + C(100 + s * hx, hy, 9));
+    const flail = (a, b) => side(s => L(`M${f(100 + s * rx * .9)} ${f(cy + ry * .1)}Q${f(100 + s * rx * 1.22)} ${f(cy - ry * .02)} ${f(100 + s * rx * a)} ${f(cy - ry * b + 9)}`, OPEN) + C(100 + s * rx * a, cy - ry * b, 9));
+    const fall = bigMouth(M, 12, 11, 3)
+      + `<g class="frames" data-n="2" style="--n:2;--cyc:.2s"><g class="fr" style="--i:0">${flail(1.28, .86)}</g><g class="fr" style="--i:1">${flail(1.42, .42)}</g></g>`;
+    const DOME = "M-120 0Q-123 -90 0 -90Q123 -90 120 0q-30 -17 -60 0q-30 -17 -60 0q-30 -17 -60 0q-30 -17 -60 0Z";
+    const chute = `<g class="strings">` + L(`M-120 0L${f(-hx)} 104M-60 0L${f(-hx)} 104M60 0L${f(hx)} 104M120 0L${f(hx)} 104`, OPEN) + `</g>`
+      + L(DOME)
+      + P("M0 -90Q-68 -62 -60 0q30 -17 60 0Z") + P("M0 -90Q68 -62 60 0q30 -17 60 0Q123 -90 0 -90Z")
+      + L("M0 -90Q-68 -62 -60 0M0 -90V0M0 -90Q68 -62 60 0", OPEN) + L(DOME, OPEN);
+    const diver = document.createElement("span");
+    diver.className = "m in play diver";
+    diver.setAttribute("aria-hidden", "true");
+    diver.innerHTML = `<svg class="mon" viewBox="0 0 200 200" focusable="false"><g filter="url(#boil)">`
+      + `<g class="chute-w"><g class="chute" transform="scale(0)">${G(100, cb, 1, 0, chute)}</g></g>`
+      + `<g class="dv-body">${D.html}<g class="dv-fall">${fall}</g><g class="dv-hold">${hold}</g></g></g></svg>`;
+    const svg = diver.firstChild, chuteG = $(".chute", diver);
+
+    // Gökyüzü: yukarı akan hız çizgileri ve bulutlar
+    const ov = document.createElement("div");
+    ov.className = "intro";
+    const rs = rand(21);
+    let sky = "";
+    for (let i = 0; i < 16; i++) sky += `<i class="streak" style="--x:${f(3 + rs() * 94)}%;--h:${f(50 + rs() * 130)}px;--t:${(.34 + rs() * .3).toFixed(2)}s;--dl:${(-rs() * .6).toFixed(2)}s"></i>`;
+    const CLOUD = "M14 44Q0 44 2 32Q4 22 16 24Q18 8 36 10Q46 0 60 8Q76 2 82 18Q98 16 100 30Q102 44 88 44Z";
+    [[6, 15, 0], [70, 21, -.45], [38, 11, -.8]].forEach(([x, w, dl]) => { sky += `<svg class="cloud" viewBox="0 0 104 48" style="--x:${x}%;--w:${w}vw;--t:.95s;--dl:${dl}s"><path d="${CLOUD}"/></svg>`; });
+    ov.innerHTML = `<div class="sky" aria-hidden="true">${sky}</div><button type="button" class="intro-skip">${lang === "en" ? "Skip" : "Geç"}</button>`;
+    document.body.append(ov, diver);
+
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const eo3 = t => 1 - Math.pow(1 - t, 3);
+    const eio = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const back = t => { const c = 2.2; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
+    const k = innerWidth < 700 ? .74 : 1;       // telefonda daha kısa
+    const T1 = .95, T2 = 3.15;                   // paraşüt açılır / yere konar (sn)
+    let t0 = 0, raf = 0, landed = false, W0 = innerWidth;
+
+    function land(instant){
+      if (landed) return;
+      landed = true;
+      cancelAnimationFrame(raf);
+      window.__introDone = true;
+      hero.style.transform = "";
+      root.classList.add("intro-out");
+      root.classList.remove("intro-on");
+      tEl.style.visibility = "";
+      ov.classList.add("open", "land");
+      ov.style.pointerEvents = "none";
+      try { sessionStorage.setItem("intro", "1"); } catch {}
+      if (instant) diver.remove();
+      else {
+        const b = tEl.getBoundingClientRect();
+        diver.style.width = b.width + "px";
+        diver.style.transform = `translate(${b.left}px,${b.top}px)`;
+        svg.style.transform = "";
+        diver.classList.add("landed");
+        // konduğu yerdekiler hafifçe zıplar
+        const c = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+        const [ox, oy] = c(tEl);
+        $$(".cast .m").filter(el => el.offsetParent)
+          .map(el => { const [x, y] = c(el); return [Math.hypot(x - ox, y - oy), el]; })
+          .sort((a, b2) => a[0] - b2[0]).slice(0, 4)
+          .forEach(([, el], i) => setTimeout(() => { el.classList.remove("boing"); void el.offsetWidth; el.classList.add("boing"); }, i * 90));
+      }
+      setTimeout(() => { diver.remove(); ov.remove(); root.classList.remove("intro-out"); }, 1100);
+    }
+
+    function frame(now){
+      if (!t0) t0 = now;
+      const u = (now - t0) / 1000 / k, vw = innerWidth, vh = innerHeight;
+      if (u >= T2){ land(false); return; }
+      // kalabalık (giriş ekranı) aşağıdan yükselir, inişten biraz önce yerine oturur
+      const hyOff = vh * (1 - eo3(clamp((u - T1 - .1) / (T2 - T1 - .5), 0, 1)));
+      hero.style.transform = `translateY(${hyOff.toFixed(1)}px)`;
+      const b = tEl.getBoundingClientRect(), tw = b.width, tx = b.left, ty = b.top - hyOff;
+      const s0 = clamp(Math.min(vw * .3, vh * .3) / tw, 1.2, 3);
+      const x0 = vw * .5 - tw / 2, yH = vh * .5 - tw / 2;
+      let x, y, s, rot;
+      if (u < T1){
+        y = lerp(-tw * (s0 + 1), yH, eo3(clamp(u / .45, 0, 1)));
+        x = x0 + Math.sin(u * 38) * 5; s = s0;
+        rot = Math.sin(u * 27) * 4 * clamp((T1 - u) / .12, 0, 1);
+      } else {
+        if (!diver.classList.contains("open")){ diver.classList.add("open"); ov.classList.add("open"); }
+        const p = eio(clamp((u - T1) / (T2 - T1), 0, 1));
+        const jerk = -vh * .06 * Math.sin(clamp((u - T1) / .55, 0, 1) * Math.PI);
+        x = lerp(x0, tx, p); y = lerp(yH, ty, p) + jerk; s = lerp(s0, 1, p);
+        rot = Math.sin((u - T1) * 3.3) * 9 * Math.pow(1 - p, .8);
+        const cs = back(clamp((u - T1) / .32, 0, 1));
+        chuteG.setAttribute("transform", `translate(100 ${f(hy)}) scale(${cs.toFixed(3)}) translate(-100 ${f(-hy)})`);
+      }
+      diver.style.width = tw + "px";
+      diver.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${s.toFixed(3)})`;
+      svg.style.transform = `rotate(${rot.toFixed(2)}deg)`;
+      raf = requestAnimationFrame(frame);
+    }
+    const skip = () => land(true);
+    ov.addEventListener("click", skip);
+    ["keydown", "wheel", "touchmove"].forEach(ev => window.addEventListener(ev, skip, { once:true, passive:true }));
+    window.addEventListener("resize", () => { if (!landed && innerWidth !== W0) skip(); });
+    raf = requestAnimationFrame(frame);
+  })();
 })();
 </script>
 </body>

@@ -142,3 +142,8 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
   farklı yerleşim). Hiçbir karakter yazının üstüne binmez.
 - Yatay telefon gibi alçak ekranlarda zaman çizelgesi sıkışık düzene geçer ve tek ekrana sığar.
 - Galeri 600px üstünde iki sütun, altında tek sütun. Süreç adımları 600-1100px arası iki sütun.
+
+## Intro (paraşütle iniş)
+- Gözlüklü karakter (.c3) serbest düşer, paraşütü açılır, giriş ekranı aşağıdan "kalabalık" olarak yükselir ve karakter kendi yerine konar. Ardından menü ve isim belirir.
+- Süre: masaüstünde ~3,2 sn, telefonda ~2,4 sn. Tıklama, tuş, kaydırma ya da "Geç" düğmesi anında bitirir. Sessizdir.
+- `<head>` içindeki `INTRO_AUTO` bayrağı: `false` iken yalnızca `?intro=1` ile oynar (önizleme); `true` yapılınca her ziyarette bir kez oynar (sessionStorage), "hareketi azalt" ayarında ve #bağlantılı girişlerde oynamaz.
