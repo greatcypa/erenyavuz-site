@@ -72,10 +72,10 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
   (tablette iki, telefonda tek), ardından bugünü anlatan büyük kapanış paragrafı. Menüdeki "Hakkımda" buraya gider; zaman çizelgesi hemen ardından gelir.
 - **Zaman çizelgesi**: After Effects kompozisyonu gibi; katman adları solda (Oyun, Video ve Motion,
   Basılı ve dijital, Art direction, AI), barlar ve keyframe elmasları sağda. Cetvel 2011-2027 (1 yıl = 1/16).
-  Beş keyframe: 2011, 2013, 2017, 2021, 2026. Kaydırma beş eşit parçaya bölünür; turkuaz playhead her
+  Altı keyframe: 2011, 2013, 2016, 2017, 2021, 2026. Kaydırma altı eşit parçaya bölünür; turkuaz playhead her
   keyframe'de biraz bekler, o yılın cümlesi altta yılıyla birlikte görünür, sonra bir sonrakine kayar.
-  Kendi bölümü olmayan ara işler (2016 IPD Post Production) cetvelde ayrı yıl olarak durur, Video ve Motion katmanında
-  keyframe'i vardır; dokunmatik ekranda 2013 bölümünün altında yazar (JOB_EXTRA).
+  2016 (IPD Post Production) kendi cümlesiyle ayrı bir durak; kendi katmanı olmadığı için Video ve Motion katmanını
+  vurgular (CHAPTERS'ta layer alanı). Kaydırma altı eşit parçaya bölünür.
   Yılların üstüne gelince (telefonda dokununca) firma ve pozisyon küçük bir kartta çıkar; altı noktalı çizgili
   yıllar firma bilgisi olanlardır. Dokunmatik ekranlarda firma ve pozisyon yıl cümlesinin altında da yazar.
 - **Giriş kalabalığı**: Giriş ekranını boşluksuz dolduran, açık turkuaz (`#A9DCD2`), 1.5px çizgili canavarlar.

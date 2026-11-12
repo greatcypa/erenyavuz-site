@@ -643,7 +643,7 @@ ul,ol{padding:0;list-style:none}
 .more-cta:hover .more-arrow{transform:translateX(12px)}
 
 /* ===== Hikâye (After Effects zaman çizelgesi) ===== */
-.story{position:relative;height:300vh;scroll-margin-top:0}
+.story{position:relative;height:350vh;scroll-margin-top:0}
 .story-pin{position:sticky;top:0;height:100svh;display:flex;align-items:center;padding:calc(var(--nav-h) + 8px) var(--pad) var(--s5)}
 .story-pin .sec-grid{width:100%}
 .comp{--name:200px;margin-top:var(--s6);border:1px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--paper)}
@@ -747,7 +747,7 @@ ul,ol{padding:0;list-style:none}
   .steps{margin-top:var(--s5);row-gap:var(--s5)}
   .about-cols{grid-template-columns:1fr}
   .about-close{margin-top:var(--s5)}
-  .story{height:260vh}
+  .story{height:300vh}
   .comp{--name:136px;margin-top:var(--s4)}
   .layer{height:42px}
   .layer-name{font-size:14px;padding:0 10px;gap:8px}
@@ -1068,6 +1068,7 @@ ul,ol{padding:0;list-style:none}
       "layer.game":"Oyun","layer.video":"Video ve Motion","layer.brand":"Basılı ve dijital","layer.corp":"Art direction","layer.ai":"AI",
       "ch.game":"Tarayıcı tabanlı oyun tasarımları",
       "ch.video":"YouTube ve TV prodüksiyon projeleri",
+      "ch.ipd":"TV ve dijital reklam videolarının hareketli grafikleri",
       "ch.brand":"Marka görsel iletişim ve pazarlama çalışmaları",
       "ch.corp":"Kurumsal iletişim tasarımı",
       "ch.ai":"Yapay zekâ ile daha hızlı ve daha cesur fikirler",
@@ -1100,6 +1101,7 @@ ul,ol{padding:0;list-style:none}
       "layer.game":"Games","layer.video":"Video & Motion","layer.brand":"Print and digital","layer.corp":"Art direction","layer.ai":"AI",
       "ch.game":"Browser-based game design",
       "ch.video":"YouTube and TV production projects",
+      "ch.ipd":"Motion graphics for TV and digital ad videos",
       "ch.brand":"Brand visual communication and marketing work",
       "ch.corp":"Corporate communication design",
       "ch.ai":"Faster, bolder ideas with AI",
@@ -1130,6 +1132,7 @@ ul,ol{padding:0;list-style:none}
   const CHAPTERS = [
     { year:2011, at:0,     key:"game"  },
     { year:2013, at:.125,  key:"video" },
+    { year:2016, at:.3125, key:"ipd", layer:"video" },   // kendi katmanı yok: Video ve Motion katmanını vurgular
     { year:2017, at:.375,  key:"brand" },
     { year:2021, at:.625,  key:"corp"  },
     { year:2026, at:.9375, key:"ai"    },
@@ -2178,13 +2181,14 @@ ul,ol{padding:0;list-style:none}
 
   /* ---------- Hikâye: kaydırdıkça ilerleyen playhead ---------- */
   // Kendi bölümü olmayan ara işler: cetvelde yılın üstünde, dokunmatik ekranda bu bölümün cümlesinin altında yazar
-  const JOB_EXTRA = { video:[{ year:2016, key:"ipd" }] };
+  const JOB_EXTRA = {};
   const story = $("#timeline"), comp = $("#comp"), chapter = $("#chapter"), layers = $$(".layer"), years = $$(".ruler-scale .yr-y");
   let chapterKey = "";
   function setChapter(key, instant){
     if (key === chapterKey) return;
     chapterKey = key;
-    layers.forEach(l => l.classList.toggle("focus", l.dataset.key === key));
+    const lk = (CHAPTERS.find(c => c.key === key) || {}).layer || key;
+    layers.forEach(l => l.classList.toggle("focus", l.dataset.key === lk));
     const ci = CHAPTERS.findIndex(c => c.key === key);
     years.forEach(y => y.classList.toggle("on", y.dataset.key === key));
     const write = () => {
