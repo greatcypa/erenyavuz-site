@@ -147,3 +147,5 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - Gözlüklü karakter (.c3) serbest düşer, paraşütü açılır, giriş ekranı aşağıdan "kalabalık" olarak yükselir ve karakter kendi yerine konar. Ardından menü ve isim belirir.
 - Süre: masaüstünde ~3,2 sn, telefonda ~2,4 sn. Tıklama, tuş, kaydırma ya da "Geç" düğmesi anında bitirir. Sessizdir.
 - `<head>` içindeki `INTRO_AUTO` bayrağı: `false` iken yalnızca `?intro=1` ile oynar (önizleme); `true` yapılınca her ziyarette bir kez oynar (sessionStorage), "hareketi azalt" ayarında ve #bağlantılı girişlerde oynamaz.
+- Gözlüklü karakterin dik, gür saçı var (`head:"hair"`), profil fotoğrafındaki saça göre çizildi.
+- Intro sesleri (`introSounds`): rüzgâr + kayan düdük + "aaaa!", paraşütün "pof"u + "voa!", süzülürken "viii~", konunca "boing" + kalabalıktan "Hi!"ler. Tarayıcı izin vermezse (ilk dokunuştan önce çoğu vermez) intro sessiz oynar.

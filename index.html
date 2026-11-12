@@ -1202,6 +1202,13 @@ ul,ol{padding:0;list-style:none}
     action: { vol:1.15, base:385, shift:1.4, lp:5200, vib:.04, vibRate:7.5, breath:.08,
               syl:[{v:"ae",d:.13,p:[1.18,1.3],g:.045},{c:"kS",v:"uh",d:.075,p:[1.1,1.02],hold:true},{v:"m",d:.13,p:[1,.84],g:0,gl:.03}] },
   };
+  // Intro sesleri: düşerken "aaaa!", paraşüt açılınca "voa!", süzülürken "viii~"
+  VOICES.yell = { vol:1.05, base:440, shift:1.42, lp:5400, vib:.085, vibRate:12, breath:.1,
+                  syl:[{v:"a",d:.2,p:[1.25,1.5],hold:true},{v:"a",d:.42,p:[1.5,1.02],g:0,gl:.02}] };
+  VOICES.woah = { vol:1.1, base:400, shift:1.4, lp:5200, vib:.04, vibRate:8, breath:.08,
+                  syl:[{v:"u",d:.06,p:[1,1.2],hold:true},{v:"o",d:.1,p:[1.38,1.3],g:0,gl:.05,hold:true},{v:"a",d:.15,p:[1.3,.98],g:0,gl:.06}] };
+  VOICES.wii  = { vol:.95, base:410, shift:1.42, lp:5200, vib:.06, vibRate:8.5, breath:.07,
+                  syl:[{v:"u",d:.06,p:[1,1.2],hold:true},{v:"i",d:.34,p:[1.3,1.58],g:0,gl:.05,hold:true},{v:"i",d:.2,p:[1.58,1.12],g:0,gl:.02}] };
   const VOICE_GAIN = 1.6;
 
   function makeNoise(c){
@@ -1363,6 +1370,55 @@ ul,ol{padding:0;list-style:none}
     crunch:  (c, d, nb, t) => sfxBite(c, d, nb, t, 1.15),
     trumpet: (c, d, nb, t, p) => sfxTrumpet(c, d, nb, t, p),
   };
+  /* --- Intro foley'leri: rüzgâr, kayan düdük, paraşütün "pof"u, yay gibi "boing" --- */
+  function introSounds(c, dest, nb, at, k){
+    const env = (g, t, peak, a, d) => { g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(.0001, t + a + d); };
+    const noise = (t, len, type, f0, f1, q, peak, a) => {
+      const n = c.createBufferSource(); n.buffer = nb; n.loop = true;
+      const bp = c.createBiquadFilter(); bp.type = type; bp.Q.value = q;
+      bp.frequency.setValueAtTime(f0, t); bp.frequency.exponentialRampToValueAtTime(f1, t + len);
+      const g = c.createGain(); env(g, t, peak, a, len - a);
+      n.connect(bp); bp.connect(g); g.connect(dest); n.start(t, Math.random() * .3); n.stop(t + len + .05);
+    };
+    const tone = (t, len, type, f0, f1, peak, a) => {
+      const o = c.createOscillator(); o.type = type;
+      o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + len);
+      const g = c.createGain(); env(g, t, peak, a, len - a);
+      o.connect(g); g.connect(dest); o.start(t); o.stop(t + len + .05);
+      return o;
+    };
+    const fall = .9 * k;
+    // 1) Serbest düşüş: rüzgâr + inen kayan düdük + "aaaa!"
+    noise(at(0), fall, "bandpass", 500, 1700, .7, .5, fall * .7);
+    const wh = tone(at(.06), fall - .08, "sine", 2100, 620, .16, .05);
+    const lfo = c.createOscillator(), lg = c.createGain(); lfo.frequency.value = 13; lg.gain.value = 26;
+    lfo.connect(lg); lg.connect(wh.frequency); lfo.start(at(.06)); lfo.stop(at(.06) + fall);
+    speak(c, dest, nb, at(.1), "yell", k < 1 ? 1.12 : 1);
+    // 2) Paraşüt açılır: kumaşın "pof"u + ip gerilmesi + "voa!"
+    const t1 = at(.95);
+    noise(t1, .26, "lowpass", 1500, 220, .6, 1.5, .012);
+    tone(t1, .2, "sine", 170, 58, .9, .008);
+    [0, .05, .11].forEach((dt, i) => noise(t1 + .1 + dt, .05, "bandpass", 900 + i * 500, 700 + i * 400, 2, .28, .006));
+    tone(t1 + .03, .16, "triangle", 300, 620, .2, .02);
+    speak(c, dest, nb, t1 + .14, "woah", 1.04);
+    // 3) Süzülürken keyifli bir "viii~" ve hafif esinti
+    speak(c, dest, nb, at(1.85), "wii", 1.08);
+    noise(at(1.2), 1.7 * k, "bandpass", 420, 300, .5, .09, .5 * k);
+    // 4) Konar: yumuşak "tap" + yay gibi "boing" + kalabalıktan "Hi!"ler
+    const t2 = at(3.15);
+    tone(t2, .14, "sine", 150, 52, 1, .006);
+    noise(t2, .08, "lowpass", 900, 300, .7, .5, .005);
+    const bo = c.createOscillator(); bo.type = "triangle";
+    const N = 48, curve = new Float32Array(N);
+    for (let i = 0; i < N; i++){ const x = i / (N - 1); curve[i] = 235 * (1 + .55 * Math.exp(-x * 4.2) * Math.sin(x * 34)); }
+    bo.frequency.setValueCurveAtTime(curve, t2 + .02, .5);
+    const bg = c.createGain(); env(bg, t2 + .02, .42, .012, .5);
+    bo.connect(bg); bg.connect(dest); bo.start(t2 + .02); bo.stop(t2 + .6);
+    [[.16, 1.02], [.25, 1.3], [.31, .88], [.4, 1.46]].forEach(([dt, p], i) => {
+      const g = c.createGain(); g.gain.value = i ? .5 : .8; g.connect(dest);
+      speak(c, g, nb, t2 + dt, "hi", p);
+    });
+  }
   const makeSound = (c, d, nb, t, name, pitch) => VOICES[name] ? speak(c, d, nb, t, name, pitch) : SFX[name] ? SFX[name](c, d, nb, t, pitch) : 0;
 
   const Sound = (() => {
@@ -1436,9 +1492,26 @@ ul,ol{padding:0;list-style:none}
       for (let s0 = 0; s0 + W < d.length; s0 += W){ let sum = 0; for (let i = s0; i < s0 + W; i++) sum += d[i] * d[i]; loud = Math.max(loud, Math.sqrt(sum / W)); }
       return raw ? Array.from(d, v => Math.round(v * 32767)) : { peak:+peak.toFixed(3), loud:+loud.toFixed(3) };
     }
-    return { play, setOn, isOn:() => on, ensure, measure };
+    // Intro: ses yalnızca tarayıcı izin veriyorsa çalar (çoğu tarayıcı ilk dokunuştan önce izin vermez).
+    // Geri dönen işlev sesleri keser ("Geç" için).
+    function intro(k){
+      if (!on || !ensure() || ctx.state !== "running") return null;
+      const g = ctx.createGain(); g.connect(master);
+      const t = ctx.currentTime + .04;
+      try { introSounds(ctx, g, noiseBuf, s2 => t + s2 * k, k); } catch { return null; }
+      return () => { try { g.gain.setTargetAtTime(0, ctx.currentTime, .03); } catch {} };
+    }
+    async function introRender(k){
+      const C = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      const oc = new C(1, 44100 * 5, 44100);
+      const comp = oc.createDynamicsCompressor(), g = oc.createGain(); g.gain.value = .5; g.connect(comp); comp.connect(oc.destination);
+      introSounds(oc, g, makeNoise(oc), s2 => .04 + s2 * k, k);
+      const d = (await oc.startRendering()).getChannelData(0);
+      return Array.from(d, v => Math.round(Math.max(-1, Math.min(1, v)) * 32767));
+    }
+    return { play, setOn, isOn:() => on, ensure, measure, intro, introRender };
   })();
-  window.__voices = { names:Object.keys(VOICES).concat(Object.keys(SFX)), measure:Sound.measure };
+  window.__voices = { names:Object.keys(VOICES).concat(Object.keys(SFX)), measure:Sound.measure, introRender:Sound.introRender };
 
   /* =========================================================
      CANAVAR ÇİZİMİ: gövde + göz + ağız + şapka + gözlük + eşya
@@ -1578,6 +1651,14 @@ ul,ol{padding:0;list-style:none}
       case "spikes": { const n = 4, w = rx * 1.05, x0 = 100 - w/2, step = w / n; let d = `M${f(x0)} ${f(ht + 26)}`;
         for (let j = 0; j < n; j++) d += `L${f(x0 + (j + .5) * step)} ${f(ht - 14 - r() * 12)}L${f(x0 + (j + 1) * step)} ${f(ht + 10)}`;
         return { back:L(d + `L${f(x0 + w)} ${f(ht + 26)}Z`), box:[x0, ht - 28, x0 + w, ht + 26] }; }
+      // Dik, gür saç: şakaktan şakağa dolu bir kütle, tepede sağa yatık tutamlar
+      case "hair": { const pt = (deg, m) => { const a = deg * Math.PI / 180; return `${f(100 + rx * m * Math.cos(a))} ${f(cy - ry * m * Math.sin(a))}`; };
+        const tufts = [[137, 1.3], [118, 1.4], [100, 1.47], [82, 1.45], [64, 1.36], [48, 1.24]];
+        let d = `M${pt(163, 1.03)}Q${pt(156, 1.13)} ${pt(149, 1.2)}L${pt(145, 1.1)}`;
+        tufts.forEach(([a, m], i) => { const nx = tufts[i + 1]; d += `Q${pt(a + 9, m - .05)} ${pt(a - 3, m)}` + (nx ? `Q${pt(a - 5, m - .16)} ${pt((a + nx[0]) / 2 + 1, 1.12)}` : ""); });
+        d += `Q${pt(40, 1.12)} ${pt(31, 1.19)}Q${pt(24, 1.12)} ${pt(17, 1.03)}`
+          + `Q${pt(30, .9)} ${pt(47, .86)}Q${pt(72, .7)} ${pt(96, .78)}Q${pt(118, .7)} ${pt(136, .85)}Q${pt(150, .9)} ${pt(163, 1.03)}Z`;
+        return { front:P(d) + L(d, OPEN), box:[100 - rx * 1.06, cy - ry * 1.5, 100 + rx * 1.1, cy] }; }
       case "antenna": return { back: L(`M${f(100 - 14*k)} ${f(ht + 10)}L${f(100 - 26*k)} ${f(ht - 24)}`, OPEN) + L(`M${f(100 + 14*k)} ${f(ht + 10)}L${f(100 + 28*k)} ${f(ht - 22)}`, OPEN) + C(100 - 27*k, ht - 27, 6) + C(100 + 29*k, ht - 25, 5.5),
         box:[100 - 27*k - 7, ht - 34, 100 + 29*k + 7, ht + 10] };
       case "cap": { const rot = r()*10 - 5; return { front:G(100, ht + 12, k, rot, L("M-34 10Q-34 -26 0 -28Q34 -26 34 10Z") + L("M12 8Q44 0 62 12Q42 22 6 14Z") + L("M0 -27V8", OPEN) + C(0, -28, 3.5, "fl")), box:[100 - 36*k, ht + 12 - 32*k, 100 + 64*k, ht + 12 + 22*k] }; }
@@ -1752,7 +1833,7 @@ ul,ol{padding:0;list-style:none}
   const PRESETS = {
     classic: { body:"round", eyes:"two", mouth:"grin" },
     crown:   { body:"round", eyes:"two", mouth:"grin", head:"spikes" },
-    glasses: { body:"round", eyes:"two", mouth:"smirk", eyewear:"shades" },
+    glasses: { body:"round", eyes:"two", mouth:"smirk", eyewear:"shades", head:"hair" },
     camcorder:{ body:"round", anim:"camcorder" },
     trumpet: { body:"round", anim:"trumpet" },
     guitar:  { body:"bean", eyes:"two", anim:"guitar" },
@@ -2411,14 +2492,14 @@ ul,ol{padding:0;list-style:none}
 
     // Paraşütçü: .c3 ile birebir aynı çizim + kollar + paraşüt
     const D = buildMonster(specFor(tEl), +tEl.dataset.seed || 7), M = D.M, { rx, ry, cy } = M;
-    const hx = rx * 1.14, hy = cy - ry * .58, cb = hy - 104;
+    const hx = rx * 1.14, hy = cy - ry * .58, cb = hy - 128;
     const side = fn => [1, -1].map(fn).join("");
     const hold = side(s => L(`M${f(100 + s * rx * .9)} ${f(cy + ry * .15)}Q${f(100 + s * rx * 1.2)} ${f(cy - ry * .12)} ${f(100 + s * hx)} ${f(cy - ry * .48)}`, OPEN) + C(100 + s * hx, hy, 9));
     const flail = (a, b) => side(s => L(`M${f(100 + s * rx * .9)} ${f(cy + ry * .1)}Q${f(100 + s * rx * 1.22)} ${f(cy - ry * .02)} ${f(100 + s * rx * a)} ${f(cy - ry * b + 9)}`, OPEN) + C(100 + s * rx * a, cy - ry * b, 9));
     const fall = bigMouth(M, 12, 11, 3)
       + `<g class="frames" data-n="2" style="--n:2;--cyc:.2s"><g class="fr" style="--i:0">${flail(1.28, .86)}</g><g class="fr" style="--i:1">${flail(1.42, .42)}</g></g>`;
     const DOME = "M-120 0Q-123 -90 0 -90Q123 -90 120 0q-30 -17 -60 0q-30 -17 -60 0q-30 -17 -60 0q-30 -17 -60 0Z";
-    const chute = `<g class="strings">` + L(`M-120 0L${f(-hx)} 104M-60 0L${f(-hx)} 104M60 0L${f(hx)} 104M120 0L${f(hx)} 104`, OPEN) + `</g>`
+    const chute = `<g class="strings">` + L(`M-120 0L${f(-hx)} 128M-60 0L${f(-hx)} 128M60 0L${f(hx)} 128M120 0L${f(hx)} 128`, OPEN) + `</g>`
       + L(DOME)
       + P("M0 -90Q-68 -62 -60 0q30 -17 60 0Z") + P("M0 -90Q68 -62 60 0q30 -17 60 0Q123 -90 0 -90Z")
       + L("M0 -90Q-68 -62 -60 0M0 -90V0M0 -90Q68 -62 60 0", OPEN) + L(DOME, OPEN);
@@ -2447,7 +2528,7 @@ ul,ol{padding:0;list-style:none}
     const back = t => { const c = 2.2; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
     const k = innerWidth < 700 ? .74 : 1;       // telefonda daha kısa
     const T1 = .95, T2 = 3.15;                   // paraşüt açılır / yere konar (sn)
-    let t0 = 0, raf = 0, landed = false, W0 = innerWidth;
+    let t0 = 0, raf = 0, landed = false, W0 = innerWidth, hush = null;
 
     function land(instant){
       if (landed) return;
@@ -2461,7 +2542,7 @@ ul,ol{padding:0;list-style:none}
       ov.classList.add("open", "land");
       ov.style.pointerEvents = "none";
       try { sessionStorage.setItem("intro", "1"); } catch {}
-      if (instant) diver.remove();
+      if (instant){ diver.remove(); if (hush) hush(); }
       else {
         const b = tEl.getBoundingClientRect();
         diver.style.width = b.width + "px";
@@ -2480,7 +2561,7 @@ ul,ol{padding:0;list-style:none}
     }
 
     function frame(now){
-      if (!t0) t0 = now;
+      if (!t0){ t0 = now; window.__introT0 = performance.timeOrigin + performance.now(); hush = Sound.intro(k); }
       const u = (now - t0) / 1000 / k, vw = innerWidth, vh = innerHeight;
       if (u >= T2){ land(false); return; }
       // kalabalık (giriş ekranı) aşağıdan yükselir, inişten biraz önce yerine oturur
@@ -2488,7 +2569,7 @@ ul,ol{padding:0;list-style:none}
       hero.style.transform = `translateY(${hyOff.toFixed(1)}px)`;
       const b = tEl.getBoundingClientRect(), tw = b.width, tx = b.left, ty = b.top - hyOff;
       const s0 = clamp(Math.min(vw * .3, vh * .3) / tw, 1.2, 3);
-      const x0 = vw * .5 - tw / 2, yH = vh * .5 - tw / 2;
+      const x0 = vw * .5 - tw / 2, yH = vh * .55 - tw / 2;
       let x, y, s, rot;
       if (u < T1){
         y = lerp(-tw * (s0 + 1), yH, eo3(clamp(u / .45, 0, 1)));
