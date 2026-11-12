@@ -386,6 +386,7 @@
   --s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:64px;--s7:96px;--s8:144px;
   --pad:clamp(20px,4vw,56px);
   --max:1440px;
+  --shadow:0 26px 44px -24px rgba(0,0,0,.30);
   --nav-h:72px;
 
   --t-sm:14px;
@@ -561,32 +562,45 @@ ul,ol{padding:0;list-style:none}
 .me.in .ring path{stroke-dashoffset:0}
 
 /* ===== İşler: carousel (kapaklar) + altta açılan galeri ===== */
+/* Carousel ekranın iki kenarına kadar uzanır. --bleed: içerik sütununun kenara uzaklığı;
+   --in: ilk kapağın soldan boşluğu (büyük ekranlarda içerik sütunundan daha içeride değil, daha dışarıda başlar);
+   --fe: kenarlardaki beyaz geçişin (vinyet) genişliği */
 .carousel{
   --h:clamp(280px,58vh,660px);
-  margin-right:calc(-1 * (var(--pad) + max(0px, (100vw - var(--max) - 2 * var(--pad)) / 2)));
+  --bleed:calc(var(--pad) + max(0px, (100vw - var(--max) - 2 * var(--pad)) / 2));
+  --in:max(var(--pad), min(var(--bleed), 9vw));
+  --fe:calc(var(--in) * .9);
+  --gap:clamp(28px,2.8vw,52px);
+  position:relative;margin-left:calc(-1 * var(--bleed));margin-right:calc(-1 * var(--bleed));
 }
+.carousel::before,.carousel::after{content:"";position:absolute;top:0;bottom:0;z-index:2;width:var(--fe);pointer-events:none}
+.carousel::before{left:0;background:linear-gradient(to right,var(--paper) 0%,rgba(255,255,255,.82) 28%,rgba(255,255,255,.4) 62%,rgba(255,255,255,0) 100%)}
+.carousel::after{right:0;background:linear-gradient(to left,var(--paper) 0%,rgba(255,255,255,.82) 28%,rgba(255,255,255,.4) 62%,rgba(255,255,255,0) 100%)}
 .track{
-  position:relative;display:flex;gap:var(--s3);overflow-x:auto;overscroll-behavior-x:contain;
+  position:relative;display:flex;gap:var(--gap);overflow-x:auto;overscroll-behavior-x:contain;
   scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;
-  padding:8px calc(var(--pad) + max(0px, (100vw - var(--max) - 2 * var(--pad)) / 2)) 8px 8px;margin-left:-8px;
+  padding:10px var(--in) 10px var(--in);scroll-padding-inline:var(--in);
   cursor:grab;user-select:none;-webkit-user-select:none;
 }
 .track::-webkit-scrollbar{display:none}
 .track.drag{scroll-snap-type:none;scroll-behavior:auto;cursor:grabbing}
 .track.drag .media{cursor:grabbing}
-.slide{flex:none;scroll-snap-align:start;scroll-margin-left:8px;display:flex;flex-direction:column;gap:12px}
+.slide{flex:none;scroll-snap-align:start;display:flex;flex-direction:column;gap:16px}
 .media{
   position:relative;display:block;padding:0;border:0;height:var(--h);aspect-ratio:var(--r,4/3);border-radius:14px;overflow:hidden;
   background:var(--mint);cursor:pointer;transition:box-shadow .3s var(--ease-out);
+  box-shadow:var(--shadow);
 }
 .media img,.media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none;pointer-events:none;transition:transform .7s var(--ease-out)}
 .media:hover img,.media:hover video{transform:scale(1.025)}
 .media:focus-visible{outline-offset:4px}
-.slide.sel .media{box-shadow:0 0 0 3px var(--paper),0 0 0 6px var(--monster)}
+.slide.sel .media{box-shadow:0 0 0 3px var(--paper),0 0 0 6px var(--monster),var(--shadow)}
 .slide figcaption{width:0;min-width:100%}
 .slide .cap-t{font-size:20px;font-weight:600;letter-spacing:-.01em;transition:color .25s}
 .slide.sel .cap-t{color:var(--monster-deep)}
-.car-controls{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);margin-top:var(--s4)}
+.car-controls{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);margin-top:var(--s4);
+  --bleed:calc(var(--pad) + max(0px, (100vw - var(--max) - 2 * var(--pad)) / 2));--in:max(var(--pad), min(var(--bleed), 9vw));
+  margin-left:calc(var(--in) - var(--bleed));margin-right:calc(var(--in) - var(--bleed))}
 .car-info{display:flex;align-items:baseline;gap:var(--s3);flex-wrap:wrap}
 .car-count{font-size:var(--t-sm);font-weight:500;color:var(--fog);font-variant-numeric:tabular-nums}
 .car-hint{font-size:var(--t-sm);color:var(--fog)}
@@ -603,15 +617,14 @@ ul,ol{padding:0;list-style:none}
 .detail-close{flex:none;min-height:46px;padding:0 20px;border-radius:999px;border:1.5px solid var(--ink);font-size:16px;font-weight:600;transition:background .2s}
 .detail-close:hover{background:var(--mint)}
 /* Galeri: iki sütun, görseller sırayla soldan sağa (1-2, 3-4...) dizilir */
-.detail-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--s3);align-items:start;margin-top:var(--s4)}
+.detail-grid{--gg:clamp(28px,3vw,56px);display:grid;grid-template-columns:1fr 1fr;column-gap:var(--gg);align-items:start;margin-top:var(--s4)}
 .detail-grid.one{grid-template-columns:1fr;max-width:960px}
 .d-item.tall{max-width:560px}
 .d-col{min-width:0}
-.d-item{--rad:20px;margin:0 0 var(--s3);border-radius:var(--rad);overflow:hidden;isolation:isolate;background:var(--mint);min-height:240px;opacity:0;transform:translateY(16px);transition:opacity .5s ease calc(var(--k) * 70ms),transform .7s var(--ease-out) calc(var(--k) * 70ms)}
+.d-item{--rad:20px;margin:0 0 var(--gg,var(--s3));border-radius:var(--rad);overflow:hidden;isolation:isolate;background:var(--mint);min-height:240px;opacity:0;transform:translateY(16px);transition:opacity .5s ease calc(var(--k) * 70ms),transform .7s var(--ease-out) calc(var(--k) * 70ms)}
 .d-item.ok{min-height:0;opacity:1;transform:none}
 /* Her görsel bir "pano" gibi: ince çerçeve çizgisi + hafif gölge (açık zeminli görseller beyaz sayfada kaybolmasın) */
-.d-item{position:relative;box-shadow:0 14px 32px -18px rgba(0,0,0,.28)}
-.d-item::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);pointer-events:none}
+.d-item{position:relative;box-shadow:var(--shadow)}
 .d-item img,.d-item video{display:block;width:100%;height:auto;border-radius:var(--rad)}
 .d-note{grid-column:1 / -1;color:var(--fog);padding:var(--s3) 0}
 /* Daha fazlası için: karakterlerle aynı elle çizilmiş turkuaz çizgi */
