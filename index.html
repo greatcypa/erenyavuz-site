@@ -939,9 +939,9 @@ ul,ol{padding:0;list-style:none}
             <div class="comp-bar"><span class="comp-tab">kariyer_final_v15</span></div>
             <div class="comp-body">
               <!-- Zaman çizelgesi 2011-2027 arası (16 yıl); her yıl = 1/16. Keyframe'ler yılların üstünde. -->
-              <div class="ruler"><span></span><span class="ruler-scale"><span class="yr-y" data-key="game" style="--at:0">2011</span><span class="yr-y yr-minor" data-key="video" style="--at:.125">2013</span><span class="yr-y" data-key="brand" style="--at:.375">2017</span><span class="yr-y r" data-key="corp" style="--at:.625">2021</span><span class="yr-y r" data-key="ai" style="--at:.9375">2026</span></span></div>
+              <div class="ruler"><span></span><span class="ruler-scale"><span class="yr-y" data-key="game" style="--at:0">2011</span><span class="yr-y yr-minor" data-key="video" style="--at:.125">2013</span><span class="yr-y yr-minor" data-key="ipd" style="--at:.3125">2016</span><span class="yr-y" data-key="brand" style="--at:.375">2017</span><span class="yr-y r" data-key="corp" style="--at:.625">2021</span><span class="yr-y r" data-key="ai" style="--at:.9375">2026</span></span></div>
               <div class="layer" data-key="game" style="--s:0;--e:.25"><span class="layer-name" data-i18n="layer.game">Oyun</span><span class="track-tl"><span class="bar"><i class="kf"></i><i class="kf"></i></span></span></div>
-              <div class="layer" data-key="video" style="--s:.125;--e:1"><span class="layer-name" data-i18n="layer.video">Video ve Motion</span><span class="track-tl"><span class="bar"><i class="kf"></i></span></span></div>
+              <div class="layer" data-key="video" style="--s:.125;--e:1"><span class="layer-name" data-i18n="layer.video">Video ve Motion</span><span class="track-tl"><span class="bar"><i class="kf"></i><i class="kf" style="left:21.43%"></i></span></span></div>
               <div class="layer" data-key="brand" style="--s:.375;--e:1"><span class="layer-name" data-i18n="layer.brand">Basılı ve dijital</span><span class="track-tl"><span class="bar"><i class="kf"></i></span></span></div>
               <div class="layer" data-key="corp" style="--s:.625;--e:1"><span class="layer-name" data-i18n="layer.corp">Art direction</span><span class="track-tl"><span class="bar"><i class="kf"></i></span></span></div>
               <div class="layer" data-key="ai" style="--s:.9375;--e:1"><span class="layer-name" data-i18n="layer.ai">AI</span><span class="track-tl"><span class="bar"><i class="kf"></i></span></span></div>
@@ -1056,6 +1056,7 @@ ul,ol{padding:0;list-style:none}
       "ch.ai":"Yapay zekâ ile daha hızlı ve daha cesur fikirler",
       "job.game.c":"Ulkutay Animasyon Stüdyosu","job.game.r":"İnteraktif Tasarımcı",
       "job.video.c":"Multiplayer Oyun ve Pop Kültür Programı","job.video.r":"Video Editör - Yönetmen - Hareketli Grafik ve Grafik Tasarım Uzmanı",
+      "job.ipd.c":"IPD Post Production","job.ipd.r":"Hareketli Grafik Tasarım Uzmanı",
       "job.brand.c":"Dijital Tercüme ve Yazılım","job.brand.r":"Dijital Pazarlama ve Grafik Tasarım Uzmanı",
       "job.corp.c":"Vefa İlaç","job.corp.r":"Kıdemli Grafik Tasarım Uzmanı",
       "about.label":"Hakkımda",
@@ -1087,6 +1088,7 @@ ul,ol{padding:0;list-style:none}
       "ch.ai":"Faster, bolder ideas with AI",
       "job.game.c":"Ulkutay Animation Studio","job.game.r":"Interactive Designer",
       "job.video.c":"Multiplayer, gaming & pop culture show","job.video.r":"Video Editor - Director - Motion Graphics & Graphic Design Specialist",
+      "job.ipd.c":"IPD Post Production","job.ipd.r":"Motion Graphics Design Specialist",
       "job.brand.c":"Dijital Tercüme ve Yazılım","job.brand.r":"Digital Marketing & Graphic Design Specialist",
       "job.corp.c":"Vefa İlaç","job.corp.r":"Senior Graphic Design Specialist",
       "about.label":"About",
@@ -2158,6 +2160,8 @@ ul,ol{padding:0;list-style:none}
   }
 
   /* ---------- Hikâye: kaydırdıkça ilerleyen playhead ---------- */
+  // Kendi bölümü olmayan ara işler: cetvelde yılın üstünde, dokunmatik ekranda bu bölümün cümlesinin altında yazar
+  const JOB_EXTRA = { video:[{ year:2016, key:"ipd" }] };
   const story = $("#timeline"), comp = $("#comp"), chapter = $("#chapter"), layers = $$(".layer"), years = $$(".ruler-scale .yr-y");
   let chapterKey = "";
   function setChapter(key, instant){
@@ -2165,11 +2169,12 @@ ul,ol{padding:0;list-style:none}
     chapterKey = key;
     layers.forEach(l => l.classList.toggle("focus", l.dataset.key === key));
     const ci = CHAPTERS.findIndex(c => c.key === key);
-    years.forEach((y, j) => y.classList.toggle("on", j === ci));
+    years.forEach(y => y.classList.toggle("on", y.dataset.key === key));
     const write = () => {
       const yr = document.createElement("span"); yr.className = "yr"; yr.textContent = CHAPTERS[ci].year;
       const parts = [yr, document.createTextNode(T[lang]["ch." + key])];
       if (T[lang]["job." + key + ".c"]){ const j = document.createElement("span"); j.className = "job"; j.textContent = `${T[lang]["job." + key + ".c"]} · ${T[lang]["job." + key + ".r"]}`; parts.push(j); }
+      (JOB_EXTRA[key] || []).forEach(x => { const j = document.createElement("span"); j.className = "job"; j.textContent = `${x.year} · ${T[lang]["job." + x.key + ".c"]} · ${T[lang]["job." + x.key + ".r"]}`; parts.push(j); });
       chapter.replaceChildren(...parts);
       chapter.classList.remove("swap");
     };
@@ -2298,7 +2303,8 @@ ul,ol{padding:0;list-style:none}
     $("#carousel").setAttribute("aria-label", T[next]["car.label"]);
     $('meta[name="description"]').setAttribute("content", T[next]["meta.desc"]);
     $$(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === next)));
-    $("#chapterList").innerHTML = CHAPTERS.map(c => `<li>${c.year}: ${T[next]["ch." + c.key]}${T[next]["job." + c.key + ".c"] ? ` (${T[next]["job." + c.key + ".c"]}, ${T[next]["job." + c.key + ".r"]})` : ""}</li>`).join("");
+    $("#chapterList").innerHTML = CHAPTERS.map(c => `<li>${c.year}: ${T[next]["ch." + c.key]}${T[next]["job." + c.key + ".c"] ? ` (${T[next]["job." + c.key + ".c"]}, ${T[next]["job." + c.key + ".r"]})` : ""}</li>`
+      + (JOB_EXTRA[c.key] || []).map(x => `<li>${x.year}: ${T[next]["job." + x.key + ".c"]}, ${T[next]["job." + x.key + ".r"]}</li>`).join("")).join("");
     renderJobs();
     renderWorks();
     renderSound();
