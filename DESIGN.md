@@ -98,6 +98,9 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - **Carousel + galeri**: Her kutucuk bir iş; altında yalnızca kategorisi yazar (Product - KV, Video - Motion, İllüstrasyon,
   İnfografik, Kampanya, Ambalaj, Sosyal Medya, Print, Etkinlik). Bir kutucuğun kapağı galeriden ayrı olabilir
   (WORKS'te cover: "kapak.jpg"); çok uzun dikey görseller galeride en fazla 560px genişlikte, aşağı kayarak gösterilir.
+- **Galeri panoları**: Galerideki her görselin çevresinde ince bir çerçeve çizgisi ve hafif gölge var; açık zeminli
+  düz tasarımlar beyaz sayfada kaybolmaz, mockup'larla aynı dili konuşur. İnfografik'te ekran mockup'ları başta
+  (ilk iki satır) ve sonda, düz infografikler ortada.
 - **Daha fazlası için**: Video - Motion galerisinin altında, elle çizilmiş turkuaz çerçeveli büyük düğme; içinde
   kamera tutan karakter (üstüne gelince "Action!") ve elle çizilmiş ok. Tıklayınca Vimeo açılır.
   Başka bir işe eklemek için WORKS'te more: "adres" yazmak yeterli. Galerideki videolar yalnızca ekrandayken sessiz

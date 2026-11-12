@@ -609,6 +609,9 @@ ul,ol{padding:0;list-style:none}
 .d-col{min-width:0}
 .d-item{--rad:20px;margin:0 0 var(--s3);border-radius:var(--rad);overflow:hidden;isolation:isolate;background:var(--mint);min-height:240px;opacity:0;transform:translateY(16px);transition:opacity .5s ease calc(var(--k) * 70ms),transform .7s var(--ease-out) calc(var(--k) * 70ms)}
 .d-item.ok{min-height:0;opacity:1;transform:none}
+/* Her görsel bir "pano" gibi: ince çerçeve çizgisi + hafif gölge (açık zeminli görseller beyaz sayfada kaybolmasın) */
+.d-item{position:relative;box-shadow:0 14px 32px -18px rgba(0,0,0,.28)}
+.d-item::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);pointer-events:none}
 .d-item img,.d-item video{display:block;width:100%;height:auto;border-radius:var(--rad)}
 .d-note{grid-column:1 / -1;color:var(--fog);padding:var(--s3) 0}
 /* Daha fazlası için: karakterlerle aynı elle çizilmiş turkuaz çizgi */
@@ -1907,7 +1910,7 @@ ul,ol{padding:0;list-style:none}
   /* ---------- İşler: carousel (kapaklar) + tıklayınca altta açılan galeri ---------- */
   const WORK_DIR = "assets/work/";
   // Görsel değiştirince bu sayıyı bir artır: tarayıcıların eski kopyayı göstermesini önler
-  const MEDIA_V = "8";
+  const MEDIA_V = "9";
   const fresh = url => `${url}?v=${MEDIA_V}`;
   const track = $("#track"), count = $("#carCount"), prevBtn = $("#prevBtn"), nextBtn = $("#nextBtn");
   const detail = $("#detail"), dGrid = $("#detailGrid"), dTitle = $("#detailTitle"), dClose = $("#detailClose"), dMore = $("#detailMore");
