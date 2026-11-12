@@ -18,3 +18,6 @@ Yeni bir kutucuk eklemek için yeni bir klasör aç (ör. 09-yeni-is) ve
 index.html'in en üstündeki WORKS listesine bir satır ekle (ya da Claude'a söyle).
 
 Sonra klasörleri GitHub'a yükle: Add file > Upload files > sürükle > Commit changes.
+
+- Galeride bir görseli sağ sütuna almak için index.html'deki WORKS listesinde o işe right:[numara] ekle
+  (ör. Product - KV'de right:[15]). Normalde tek numaralar sol, çiftler sağ sütunda durur.

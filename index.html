@@ -1045,8 +1045,9 @@ ul,ol{padding:0;list-style:none}
   //   k = kutucuğun altında yazan kategori (TR / EN)
   //   more  = (isteğe bağlı) galerinin altındaki "Daha fazlası için" düğmesinin gideceği adres
   //   cover = (isteğe bağlı) carousel'de 1.jpg yerine gösterilecek kapak dosyası; galeri yine 1'den başlar
+  //   right = (isteğe bağlı) iki sütunlu galeride sağ sütuna alınacak görsel numaraları (normalde tekler sol, çiftler sağ)
   const WORKS = [
-    { folder:"01-peain",            k:{tr:"Product - KV", en:"Product - KV"} },
+    { folder:"01-peain",            k:{tr:"Product - KV", en:"Product - KV"}, right:[15] },
     { folder:"05-clay-storyboard",  k:{tr:"Video - Motion", en:"Video - Motion"}, more:VIMEO },
     { folder:"10-illustrasyon",     k:{tr:"İllüstrasyon", en:"Illustration"}, cover:"kapak.jpg" },
     { folder:"09-infografik",       k:{tr:"İnfografik",   en:"Infographic"} },
@@ -2045,7 +2046,7 @@ ul,ol{padding:0;list-style:none}
         }, 800), { once:true });
       }
       m.addEventListener("error", () => fig.remove());
-      fig.appendChild(m); cols[files.length === 1 ? 0 : k % 2].appendChild(fig);
+      fig.appendChild(m); cols[files.length === 1 ? 0 : (w.right && w.right.includes(k + 1)) ? 1 : k % 2].appendChild(fig);
       if (!file.video && m.complete && m.naturalWidth) done();
     });
   }
