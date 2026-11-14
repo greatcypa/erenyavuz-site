@@ -910,7 +910,9 @@ ul,ol{padding:0;list-style:none}
   transition:left .7s var(--ease-out),top .7s var(--ease-out),width .7s var(--ease-out),transform .7s var(--ease-out),opacity .45s ease,filter .45s ease}
 .pr.in{opacity:1}
 .pr:not(.in){transform:translate(-50%,-62%) rotate(calc(var(--r) * 2.2)) scale(1.08)}
-.pr.in:hover:not(.on),.pr.in:focus-visible:not(.on){transform:translate(-50%,-53%) rotate(calc(var(--r) * .45))}
+/* --f: kaydırırken ekranın ortasına yaklaşan baskı (0..1), --h: üzerine gelinen baskı. İkisi de aynı hafif kalkıp düzleşmeyi yapar. */
+.pr.in:not(.on){transform:translate(-50%,calc(-50% - max(var(--f,0),var(--h,0)) * 3%)) rotate(calc(var(--r) * (1 - max(var(--f,0),var(--h,0)) * .55)))}
+.pr.in:hover:not(.on),.pr.in:focus-visible:not(.on){--h:1}
 .pr.on{left:50%;top:50%;width:var(--aw);transform:translate(-50%,-50%) rotate(0deg);z-index:60;cursor:zoom-out}
 .desk.has-on .pr:not(.on){opacity:.5;filter:saturate(.6) brightness(.8)}
 .pr-paper{position:relative;padding:5.5cqw 5.5cqw 8.5cqw;border-radius:.5cqw;
@@ -2115,7 +2117,7 @@ ul,ol{padding:0;list-style:none}
   /* ---------- İşler: carousel (kapaklar) + tıklayınca altta açılan galeri ---------- */
   const WORK_DIR = "assets/work/";
   // Görsel değiştirince bu sayıyı bir artır: tarayıcıların eski kopyayı göstermesini önler
-  const MEDIA_V = "12";
+  const MEDIA_V = "13";
   const fresh = url => `${url}?v=${MEDIA_V}`;
   const track = $("#track"), count = $("#carCount"), prevBtn = $("#prevBtn"), nextBtn = $("#nextBtn");
   const detail = $("#detail"), dGrid = $("#detailGrid"), dTitle = $("#detailTitle"), dClose = $("#detailClose"), dMore = $("#detailMore");
@@ -2149,7 +2151,7 @@ ul,ol{padding:0;list-style:none}
   }
   // Klasördeki numaralı dosyayı bulur (1.jpg, 2.png, 3.mp4 ...)
   async function headType(url){
-    try { const r = await fetch(url, { method:"HEAD", cache:"no-cache" }); return r.ok ? (r.headers.get("content-type") || "").split(";")[0] : ""; }
+    try { const r = await fetch(fresh(url), { method:"HEAD", cache:"no-store" }); return r.ok ? (r.headers.get("content-type") || "").split(";")[0] : ""; }
     catch { return ""; }
   }
   const isMedia = t => t.startsWith("image/") || t.startsWith("video/");
@@ -2375,6 +2377,7 @@ ul,ol{padding:0;list-style:none}
         const c = j % cols, r = Math.floor(j / cols), inRow = r === rows - 1 ? m - r * cols : cols, k = kOf(it.a);
         const pw = Math.min(cw * (mob ? 1.05 : rows === 1 ? 1 : .76), ch * (rows === 1 ? .8 : 1) / k);
         const st = it.el.style;
+        it.yf = (r + .5) / rows * .8 + .1 + JY[j % 6];
         st.setProperty("--x", (((c + .5) / inRow * sp + (1 - sp) / 2 + JX[j % 6]) * 100).toFixed(2) + "%");
         st.setProperty("--y", (((r + .5) / rows * .8 + .1 + JY[j % 6]) * 100).toFixed(2) + "%");
         st.setProperty("--w", pw.toFixed(1) + "px");
@@ -2410,6 +2413,27 @@ ul,ol{padding:0;list-style:none}
       else if (e.key === "ArrowLeft"){ e.preventDefault(); step(on < 0 ? 0 : -1); }
     });
     deskLayout = layout;
+    // Kaydırırken: ekranın ortasından geçen baskı, üzerine gelinmiş gibi hafifçe kalkıp düzleşir
+    let tick = false;
+    function onScroll(){
+      if (!desk.isConnected){ removeEventListener("scroll", onScroll); return; }
+      if (tick || reduce) return; tick = true;
+      requestAnimationFrame(() => {
+        tick = false;
+        const b = desk.getBoundingClientRect(), vh = innerHeight;
+        if (b.bottom < -80 || b.top > vh + 80) return;
+        const single = b.height < vh * .9 && items.filter(it => it.a > 0).every(it => Math.abs(it.yf - .5) < .12);
+        items.forEach((it, j) => {
+          if (!(it.a > 0)) return;
+          // tek sıra (masaüstü): dalga soldan sağa ilerlesin diye her baskının eşiği biraz kayar
+          const cy = b.top + it.yf * b.height + (single ? (j - (items.length - 1) / 2) * vh * .09 : 0);
+          const q = Math.abs(cy - vh * .5) / (vh * .5), f = Math.max(0, 1 - q * 2.2);
+          it.el.style.setProperty("--f", (f * f * (3 - 2 * f)).toFixed(3));
+        });
+      });
+    }
+    addEventListener("scroll", onScroll, { passive:true });
+    onScroll();
   }
   function closeWork(){
     openIdx = -1; openToken++;

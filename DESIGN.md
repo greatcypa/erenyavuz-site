@@ -158,3 +158,5 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - WORKS'te `desk:true` olan işlerde (şimdilik Print) galeri bir kesim altlığı olarak açılır: işler hafif açılarla saçılmış baskı provalarıdır (kâğıt payı ve grenı, titrek turkuaz kesim izleri, kayıt işareti, CMYK şeridi, "PRINT · 01/04" etiketi). Tıklanan baskı öne gelir, düzleşir ve büyür; oklar ve klavye oklarıyla sıradakine geçilir, Esc ya da altlığa tıklamak bırakır.
 - Yayında (`DESK_ON = true`). Sayfa çevirme denemesi (`flip`) kapalı; kodu duruyor, WORKS'te `flip:true` ve `?flip=1` ile açılır.
 - Zemin tam genişlikte koyu turkuaz bir kesim matıdır (1 cm / 5 cm çizgiler, cm rakamları, açı çizgileri; `drawMat`). `deskSkip:[1]` ile masa fotoğrafı olan kapak görseli mata konmaz, carousel kapağı olarak kalır.
+- Kaydırırken ekranın ortasından geçen baskı, üzerine gelinmiş gibi hafifçe kalkıp düzleşir (`--f`; üzerine gelme `--h`). "Hareketi azalt" ayarında kapalıdır.
+- Galeri dosya yoklaması da `?v=MEDIA_V` ile yapılır: silinen bir görsel önbellekte kalıp galeride görünmeye devam etmesin. Görsel silince de `MEDIA_V` artırılır.
