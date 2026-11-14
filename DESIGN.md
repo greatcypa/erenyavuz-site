@@ -157,3 +157,4 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 ## Baskı masası (önizleme)
 - WORKS'te `desk:true` olan işlerde (şimdilik Print) galeri bir kesim altlığı olarak açılır: işler hafif açılarla saçılmış baskı provalarıdır (kâğıt payı ve grenı, titrek turkuaz kesim izleri, kayıt işareti, CMYK şeridi, "PRINT · 01/04" etiketi). Tıklanan baskı öne gelir, düzleşir ve büyür; oklar ve klavye oklarıyla sıradakine geçilir, Esc ya da altlığa tıklamak bırakır.
 - Şimdilik yalnızca adreste `?masa=1` varken açılır (`DESK_ON`).
+- Zemin tam genişlikte koyu turkuaz bir kesim matıdır (1 cm / 5 cm çizgiler, cm rakamları, açı çizgileri; `drawMat`). `deskSkip:[1]` ile masa fotoğrafı olan kapak görseli mata konmaz, carousel kapağı olarak kalır.

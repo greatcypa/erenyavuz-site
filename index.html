@@ -900,9 +900,11 @@ ul,ol{padding:0;list-style:none}
 /* ===== Baskı masası (WORKS'te desk:true): kesim altlığına saçılmış baskı provaları ===== */
 .detail-grid.deskwrap{display:block}
 .deskbox{outline:none}
-.desk{position:relative;border-radius:28px;background-color:var(--mint);
-  background-image:linear-gradient(rgba(14,159,142,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(14,159,142,.13) 1px,transparent 1px),linear-gradient(rgba(14,159,142,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(14,159,142,.07) 1px,transparent 1px);
-  background-size:120px 120px,120px 120px,24px 24px,24px 24px;background-position:center}
+.desk{--bleed:calc(var(--pad) + max(0px, (100vw - var(--max) - 2 * var(--pad)) / 2));position:relative;overflow:hidden;
+  margin-left:calc(-1 * var(--bleed));margin-right:calc(-1 * var(--bleed));
+  background:radial-gradient(120% 90% at 50% 40%,#0C7A6D 0%,#096257 70%,#07544B 100%)}
+.desk .mat{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;fill:none;stroke:#CFF3EB;font:600 10px/1 var(--font);letter-spacing:.04em}
+.desk .mat text{fill:#CFF3EB;stroke:none;opacity:.6}
 .pr{position:absolute;left:var(--x);top:var(--y);width:var(--w);margin:0;z-index:var(--z);cursor:zoom-in;outline:none;container-type:inline-size;
   transform:translate(-50%,-50%) rotate(var(--r));opacity:0;
   transition:left .7s var(--ease-out),top .7s var(--ease-out),width .7s var(--ease-out),transform .7s var(--ease-out),opacity .45s ease,filter .45s ease}
@@ -910,7 +912,7 @@ ul,ol{padding:0;list-style:none}
 .pr:not(.in){transform:translate(-50%,-62%) rotate(calc(var(--r) * 2.2)) scale(1.08)}
 .pr.in:hover:not(.on),.pr.in:focus-visible:not(.on){transform:translate(-50%,-53%) rotate(calc(var(--r) * .45))}
 .pr.on{left:50%;top:50%;width:var(--aw);transform:translate(-50%,-50%) rotate(0deg);z-index:60;cursor:zoom-out}
-.desk.has-on .pr:not(.on){opacity:.42;filter:saturate(.55)}
+.desk.has-on .pr:not(.on){opacity:.5;filter:saturate(.6) brightness(.8)}
 .pr-paper{position:relative;padding:5.5cqw 5.5cqw 8.5cqw;border-radius:.5cqw;
   background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   box-shadow:0 1px 2px rgba(0,0,0,.14),0 22px 36px -18px rgba(0,0,0,.4)}
@@ -927,7 +929,6 @@ ul,ol{padding:0;list-style:none}
 .pr-bar i{width:2.6cqw;height:2.6cqw;border-radius:.3cqw}
 .pr-id{margin-left:auto;font-size:max(1.75cqw,7px);font-weight:600;letter-spacing:.08em;color:var(--fog);font-variant-numeric:tabular-nums;white-space:nowrap}
 .desk-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);margin-top:var(--s4)}
-@media (max-width:700px){ .desk{border-radius:20px} }
 </style>
 </head>
 <body>
@@ -1149,7 +1150,8 @@ ul,ol{padding:0;list-style:none}
   //   more  = (isteğe bağlı) galerinin altındaki "Daha fazlası için" düğmesinin gideceği adres
   //   cover = (isteğe bağlı) carousel'de 1.jpg yerine gösterilecek kapak dosyası; galeri yine 1'den başlar
   //   flip  = (isteğe bağlı) true ise galeri iki sütun yerine sayfa çevirir gibi açılır (yalnızca görseller)
-  //   desk  = (isteğe bağlı) true ise galeri "baskı masası" olarak açılır: saçılmış baskı provaları (yalnızca görseller)
+  //   desk  = (isteğe bağlı) true ise galeri "kesim matı" olarak açılır: saçılmış baskı provaları (yalnızca görseller)
+  //   deskSkip = (isteğe bağlı) kesim matına konmayacak görsel numaraları (ör. zaten masa fotoğrafı olan kapak)
   //   right = (isteğe bağlı) iki sütunlu galeride sağ sütuna alınacak görsel numaraları (normalde tekler sol, çiftler sağ)
   const WORKS = [
     { folder:"01-peain",            k:{tr:"Product - KV", en:"Product - KV"}, right:[15] },
@@ -1159,7 +1161,7 @@ ul,ol{padding:0;list-style:none}
     { folder:"03-kendine-iyi-bak",  k:{tr:"Kampanya",     en:"Campaign"} },
     { folder:"04-efervesan",        k:{tr:"Ambalaj",      en:"Packaging"} },
     { folder:"06-d-vitamini-gunu",  k:{tr:"Sosyal Medya", en:"Social Media"} },
-    { folder:"07-lipozomal-brosur", k:{tr:"Print",        en:"Print"}, flip:true, desk:true },
+    { folder:"07-lipozomal-brosur", k:{tr:"Print",        en:"Print"}, flip:true, desk:true, deskSkip:[1] },
     { folder:"08-d-colefor-fuar",   k:{tr:"Etkinlik",     en:"Event"} },
   ];
 
@@ -2215,7 +2217,10 @@ ul,ol{padding:0;list-style:none}
     if (tok !== openToken) return;
     dGrid.innerHTML = "";
     if (!files.length){ dGrid.innerHTML = `<p class="d-note">${T[lang]["detail.empty"]}</p>`; return; }
-    if (w.desk && DESK_ON && files.length > 1 && files.every(f => !f.video)){ buildDesk(w, files); return; }
+    if (w.desk && DESK_ON && files.every(f => !f.video)){
+      const df = files.filter((f, k) => !(w.deskSkip || []).includes(k + 1));
+      if (df.length > 1){ buildDesk(w, df); return; }
+    }
     if (w.flip && FLIP_ON && files.length > 1 && files.every(f => !f.video)){ buildFlip(w, files); return; }
     dGrid.classList.toggle("one", files.length === 1);
     const cols = [0, 1].map(() => { const c = document.createElement("div"); c.className = "d-col"; dGrid.appendChild(c); return c; });
@@ -2321,10 +2326,22 @@ ul,ol{padding:0;list-style:none}
     const MK = c => `<svg class="pr-mk ${c}" viewBox="0 0 20 20" aria-hidden="true"><g filter="url(#boil)"><path d="M0 20H13M20 0V13"/></g></svg>`;
     const hint = en ? "Click a print to pick it up" : "Yakından bakmak için bir baskıya tıkla";
     dGrid.className = "detail-grid deskwrap";
-    dGrid.innerHTML = `<div class="deskbox"><div class="desk"></div>
+    dGrid.innerHTML = `<div class="deskbox"><div class="desk"><svg class="mat" aria-hidden="true"></svg></div>
       <div class="desk-bar"><div class="car-info"><span class="car-count"></span><span class="car-hint">${hint}</span></div>
       <div class="car-arrows"><button type="button" class="arrow prev" aria-label="${en ? "Previous" : "Önceki"}">${ARROW}</button><button type="button" class="arrow next" aria-label="${en ? "Next" : "Sonraki"}">${ARROW}</button></div></div></div>`;
-    const box = $(".deskbox", dGrid), desk = $(".desk", box), count = $(".car-count", box);
+    const box = $(".deskbox", dGrid), desk = $(".desk", box), mat = $(".mat", desk), count = $(".car-count", box);
+    // Kesim matı: 1 cm'lik ince, 5 cm'lik kalın çizgiler, kenarda cm rakamları, köşeden açı çizgileri
+    function drawMat(W, H){
+      const u = W < 620 ? 18 : 24, m = u, x1 = W - m, y1 = H - m;
+      let d1 = "", d5 = "", tx = "";
+      for (let x = m, i = 0; x <= x1 + .5; x += u, i++){ (i % 5 ? (d1 += `M${x} ${m}V${y1}`) : (d5 += `M${x} ${m}V${y1}`)); if (i % 5 === 0 && i) tx += `<text x="${x}" y="${m - 6}" text-anchor="middle">${i}</text>`; }
+      for (let y = m, i = 0; y <= y1 + .5; y += u, i++){ (i % 5 ? (d1 += `M${m} ${y}H${x1}`) : (d5 += `M${m} ${y}H${x1}`)); if (i % 5 === 0 && i) tx += `<text x="${m - 5}" y="${y + 3.5}" text-anchor="end">${i}</text>`; }
+      const L0 = Math.min(y1 - m, x1 - m), ang = a => `M${m} ${y1}L${(m + L0 * Math.cos(a)).toFixed(1)} ${(y1 - L0 * Math.sin(a)).toFixed(1)}`;
+      mat.setAttribute("viewBox", `0 0 ${W} ${H}`);
+      mat.innerHTML = `<path d="${d1}" stroke-width="1" opacity=".13"/><path d="${d5}" stroke-width="1" opacity=".34"/>`
+        + `<path d="${ang(Math.PI / 6) + ang(Math.PI / 4) + ang(Math.PI / 3)}" stroke-width="1" opacity=".3"/>`
+        + `<rect x="${m}" y="${m}" width="${x1 - m}" height="${y1 - m}" stroke-width="1.5" opacity=".55"/>` + tx;
+    }
     const ROT = [-6, 4.5, 3.5, -5, 7, -3], JX = [-.02, .025, .03, -.03, .01, -.015], JY = [.02, -.03, -.02, .035, -.01, .02];
     let on = -1;
     const items = files.map((file, i) => {
@@ -2332,7 +2349,7 @@ ul,ol{padding:0;list-style:none}
       el.className = "pr"; el.tabIndex = 0; el.setAttribute("role", "button");
       el.innerHTML = `<div class="pr-paper"><img alt="${w.k[lang]} – Eren Yavuz, ${i + 1}" decoding="async">${MK("tl") + MK("tr") + MK("bl") + MK("br")}
         <svg class="pr-reg" viewBox="0 0 20 20" aria-hidden="true"><g filter="url(#boil)"><circle cx="10" cy="10" r="5.5"/><path d="M10 0V20M0 10H20"/></g></svg>
-        <div class="pr-bar" aria-hidden="true"><i style="background:#00AEEF"></i><i style="background:#EC008C"></i><i style="background:#FFE600"></i><i style="background:#1D1D1B"></i><span class="pr-id">${w.k[lang].toUpperCase()} · ${pad2(i + 1)}/${pad2(n)}</span></div></div>`;
+        <div class="pr-bar" aria-hidden="true"><i style="background:#00AEEF"></i><i style="background:#EC008C"></i><i style="background:#FFE600"></i><i style="background:#1D1D1B"></i><span class="pr-id">CMYK · ${w.k[lang].toUpperCase()} · ${pad2(i + 1)}/${pad2(n)}</span></div></div>`;
       const it = { el, a:0 }, img = $("img", el);
       img.addEventListener("load", () => { it.a = img.naturalWidth / img.naturalHeight; ready(); });
       img.addEventListener("error", () => { it.a = -1; el.remove(); ready(); });
@@ -2350,12 +2367,13 @@ ul,ol{padding:0;list-style:none}
       const W = desk.clientWidth, mob = W < 620;
       const cols = mob ? Math.min(m, 2) : (m <= 3 ? m : Math.min(4, Math.ceil(m / 2))), rows = Math.ceil(m / cols);
       const base = mob ? W * 1.25 : Math.min(innerHeight * .8, W * .62);
-      const H = Math.round(base * (rows === 1 ? .72 : rows / 2));
+      const H = Math.round(base * (rows === 1 ? .86 : rows / 2));
       desk.style.height = H + "px";
+      drawMat(W, H);
       const cw = W / cols, ch = H / rows, sp = !mob && cols <= 2 ? .64 : .84;   // sütunlar birbirine ne kadar yakın
       live.forEach((it, j) => {
         const c = j % cols, r = Math.floor(j / cols), inRow = r === rows - 1 ? m - r * cols : cols, k = kOf(it.a);
-        const pw = Math.min(cw * (mob ? 1.05 : .76), ch / k);
+        const pw = Math.min(cw * (mob ? 1.05 : rows === 1 ? 1 : .76), ch * (rows === 1 ? .8 : 1) / k);
         const st = it.el.style;
         st.setProperty("--x", (((c + .5) / inRow * sp + (1 - sp) / 2 + JX[j % 6]) * 100).toFixed(2) + "%");
         st.setProperty("--y", (((r + .5) / rows * .8 + .1 + JY[j % 6]) * 100).toFixed(2) + "%");
