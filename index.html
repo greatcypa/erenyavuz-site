@@ -868,6 +868,34 @@ ul,ol{padding:0;list-style:none}
 .diver .chute-w{transform-box:fill-box;transform-origin:50% 100%;transition:transform .9s var(--ease-out),opacity .55s ease .2s}
 .diver.landed .chute-w{transform:translate(38%,30%) rotate(58deg) scale(.8);opacity:0}
 .diver.landed .dv-body{visibility:hidden}
+
+/* ===== Sayfa çevirme galerisi (WORKS'te flip:true olan işler): ortadan katlı kart, 3B dönerek çevrilir ===== */
+.detail-grid.flipwrap{display:block}
+.flip{outline:none}
+.fb{--rad:20px;position:relative;width:min(100%,1040px,calc(76vh * 4 / 3));aspect-ratio:4/3;margin:0 auto;perspective:2600px;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:pan-y;-webkit-tap-highlight-color:transparent}
+.fb::before{content:"";position:absolute;inset:0;border-radius:var(--rad);box-shadow:var(--shadow),0 3px 22px rgba(0,0,0,.09)}
+.fb-half,.fb-leaf{position:absolute;top:0;width:50%;height:100%}
+.fb-half,.fb-face{overflow:hidden;background:#fff}
+.fb-half.l{left:0}.fb-half.r{left:50%}
+.fb .l{border-radius:var(--rad) 0 0 var(--rad)}
+.fb .r{border-radius:0 var(--rad) var(--rad) 0}
+.fb img{position:absolute;top:0;left:0;width:200%;height:100%;max-width:none;object-fit:contain;padding:5%;pointer-events:none;-webkit-user-drag:none}
+.fb .r img{left:-100%}
+.fb-leaf{display:none;z-index:3;transform-style:preserve-3d;will-change:transform}
+.fb-leaf.fwd{left:50%;transform-origin:0 50%}
+.fb-leaf.bwd{left:0;transform-origin:100% 50%}
+.fb-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.fb-face.back{transform:rotateY(180deg)}
+.fb i.sh{position:absolute;inset:0;background:#0a2b27;opacity:0;pointer-events:none}
+.fb-spine{position:absolute;z-index:4;left:50%;top:0;bottom:0;width:64px;margin-left:-32px;pointer-events:none;
+  background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.05) 38%,rgba(0,0,0,.13) 50%,rgba(255,255,255,.35) 52%,rgba(0,0,0,.03) 64%,rgba(0,0,0,0))}
+.fb-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);width:min(100%,1040px,calc(76vh * 4 / 3));margin:var(--s4) auto 0}
+.flip:focus-visible .fb::before{box-shadow:0 0 0 3px var(--paper),0 0 0 6px var(--monster),var(--shadow)}
+@media (max-width:700px){
+  .fb,.fb-bar{width:100%}
+  .fb{aspect-ratio:1/1;--rad:16px}
+  .fb-spine{width:44px;margin-left:-22px}
+}
 </style>
 </head>
 <body>
@@ -1088,6 +1116,7 @@ ul,ol{padding:0;list-style:none}
   //   k = kutucuğun altında yazan kategori (TR / EN)
   //   more  = (isteğe bağlı) galerinin altındaki "Daha fazlası için" düğmesinin gideceği adres
   //   cover = (isteğe bağlı) carousel'de 1.jpg yerine gösterilecek kapak dosyası; galeri yine 1'den başlar
+  //   flip  = (isteğe bağlı) true ise galeri iki sütun yerine sayfa çevirir gibi açılır (yalnızca görseller)
   //   right = (isteğe bağlı) iki sütunlu galeride sağ sütuna alınacak görsel numaraları (normalde tekler sol, çiftler sağ)
   const WORKS = [
     { folder:"01-peain",            k:{tr:"Product - KV", en:"Product - KV"}, right:[15] },
@@ -1097,7 +1126,7 @@ ul,ol{padding:0;list-style:none}
     { folder:"03-kendine-iyi-bak",  k:{tr:"Kampanya",     en:"Campaign"} },
     { folder:"04-efervesan",        k:{tr:"Ambalaj",      en:"Packaging"} },
     { folder:"06-d-vitamini-gunu",  k:{tr:"Sosyal Medya", en:"Social Media"} },
-    { folder:"07-lipozomal-brosur", k:{tr:"Print",        en:"Print"} },
+    { folder:"07-lipozomal-brosur", k:{tr:"Print",        en:"Print"}, flip:true },
     { folder:"08-d-colefor-fuar",   k:{tr:"Etkinlik",     en:"Event"} },
   ];
 
@@ -2153,6 +2182,7 @@ ul,ol{padding:0;list-style:none}
     if (tok !== openToken) return;
     dGrid.innerHTML = "";
     if (!files.length){ dGrid.innerHTML = `<p class="d-note">${T[lang]["detail.empty"]}</p>`; return; }
+    if (w.flip && FLIP_ON && files.length > 1 && files.every(f => !f.video)){ buildFlip(w, files); return; }
     dGrid.classList.toggle("one", files.length === 1);
     const cols = [0, 1].map(() => { const c = document.createElement("div"); c.className = "d-col"; dGrid.appendChild(c); return c; });
     files.forEach((file, k) => {
@@ -2176,6 +2206,75 @@ ul,ol{padding:0;list-style:none}
       fig.appendChild(m); cols[files.length === 1 ? 0 : (w.right && w.right.includes(k + 1)) ? 1 : k % 2].appendChild(fig);
       if (!file.video && m.complete && m.naturalWidth) done();
     });
+  }
+  /* Sayfa çevirme galerisi: her görsel ortadan katlı bir kart; ileri/geri giderken yarısı 3B dönerek çevrilir.
+     Önizleme: şimdilik yalnızca adreste ?flip=1 varken açılır (FLIP_ON). */
+  const FLIP_ON = /[?&]flip=1(&|$)/.test(location.search);
+  function buildFlip(w, files){
+    const urls = files.map(f => fresh(f.url)), n = urls.length;
+    const pre = urls.map(u => { const im = new Image(); im.decoding = "async"; im.src = u; return im; });
+    const ARROW = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 16.5h21M18.5 8.5l8 8-8 8"/></svg>`;
+    const en = lang === "en";
+    dGrid.className = "detail-grid flipwrap";
+    dGrid.innerHTML = `<div class="flip" tabindex="0" role="group" aria-label="${w.k[lang]}">
+      <div class="fb">
+        <div class="fb-half l"><img alt=""><i class="sh"></i></div>
+        <div class="fb-half r"><img alt="" aria-hidden="true"><i class="sh"></i></div>
+        <div class="fb-leaf" aria-hidden="true"><div class="fb-face front"><img alt=""><i class="sh"></i></div><div class="fb-face back"><img alt=""><i class="sh"></i></div></div>
+        <div class="fb-spine"></div>
+      </div>
+      <div class="fb-bar">
+        <div class="car-info"><span class="car-count"></span><span class="car-hint">${en ? "Click or swipe to turn the page" : "Sayfayı çevirmek için tıkla ya da kaydır"}</span></div>
+        <div class="car-arrows"><button type="button" class="arrow prev" aria-label="${en ? "Previous" : "Önceki"}">${ARROW}</button><button type="button" class="arrow next" aria-label="${en ? "Next" : "Sonraki"}">${ARROW}</button></div>
+      </div></div>`;
+    const flip = $(".flip", dGrid), fb = $(".fb", flip), hl = $(".fb-half.l", fb), hr = $(".fb-half.r", fb),
+          leaf = $(".fb-leaf", fb), front = $(".front", leaf), back = $(".back", leaf),
+          count = $(".car-count", flip), bPrev = $(".prev", flip), bNext = $(".next", flip);
+    const set = (el, i) => { $("img", el).src = urls[i]; };
+    const fade = (el, frames, o) => $(".sh", el).animate(frames.map(v => ({ opacity:v })), o);
+    let cur = 0, busy = false;
+    const render = () => {
+      set(hl, cur); set(hr, cur);
+      $("img", hl).alt = `${w.k[lang]} – Eren Yavuz, ${cur + 1}`;
+      count.textContent = `${String(cur + 1).padStart(2, "0")} / ${String(n).padStart(2, "0")}`;
+      bPrev.disabled = cur === 0; bNext.disabled = cur === n - 1;
+    };
+    async function go(dir){
+      const to = cur + dir;
+      if (busy || to < 0 || to >= n) return;
+      if (reduce || !leaf.animate){ cur = to; render(); return; }
+      busy = true;
+      try { await pre[to].decode(); } catch {}
+      if (!flip.isConnected) return;
+      const fwd = dir > 0;
+      leaf.className = "fb-leaf " + (fwd ? "fwd" : "bwd");
+      front.className = "fb-face front " + (fwd ? "r" : "l");
+      back.className  = "fb-face back "  + (fwd ? "l" : "r");
+      set(front, cur); set(back, to);
+      const under = fwd ? hr : hl, over = fwd ? hl : hr;   // altından çıkan yarı / üstü kapanan yarı
+      leaf.style.display = "block";
+      set(under, to);
+      const o = { duration:950, easing:"cubic-bezier(.5,.05,.2,1)", fill:"both" };
+      const anims = [
+        leaf.animate([{ transform:"rotateY(0deg)" }, { transform:`rotateY(${fwd ? -180 : 180}deg)` }], o),
+        fade(front, [0, .34, .34], o), fade(back, [.34, .34, 0], o), fade(under, [.3, .04, 0], o), fade(over, [0, 0, .22], o),
+      ];
+      try { await anims[0].finished; } catch {}
+      cur = to; render();
+      leaf.style.display = "none";
+      anims.forEach(a => a.cancel());
+      busy = false;
+    }
+    bPrev.addEventListener("click", () => go(-1));
+    bNext.addEventListener("click", () => go(1));
+    flip.addEventListener("keydown", e => { if (e.key === "ArrowRight"){ e.preventDefault(); go(1); } else if (e.key === "ArrowLeft"){ e.preventDefault(); go(-1); } });
+    // Tıklama: sağ yarı ileri, sol yarı geri. Kaydırma (parmak/fare): yönüne göre.
+    let px = null, swiped = false;
+    fb.addEventListener("pointerdown", e => { px = e.clientX; swiped = false; });
+    fb.addEventListener("pointerup", e => { if (px === null) return; const dx = e.clientX - px; px = null; if (Math.abs(dx) > 36){ swiped = true; go(dx < 0 ? 1 : -1); } });
+    fb.addEventListener("pointercancel", () => { px = null; });
+    fb.addEventListener("click", e => { if (swiped){ swiped = false; return; } const b = fb.getBoundingClientRect(); go(e.clientX - b.left > b.width / 2 ? 1 : -1); });
+    render();
   }
   function closeWork(){
     openIdx = -1; openToken++;

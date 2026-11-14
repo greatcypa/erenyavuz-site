@@ -149,3 +149,7 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - Yayında (`INTRO_AUTO = true`). `<head>` içindeki `INTRO_AUTO` bayrağı: `false` iken yalnızca `?intro=1` ile oynar (önizleme); `true` yapılınca her ziyarette bir kez oynar (sessionStorage), "hareketi azalt" ayarında ve #bağlantılı girişlerde oynamaz.
 - Gözlüklü karakterin dik, gür saçı var (`head:"hair"`), profil fotoğrafındaki saça göre çizildi.
 - Intro sesleri (`introSounds`): rüzgâr + kayan düdük + "aaaa!", paraşütün "pof"u + "voa!", süzülürken "viii~", konunca "boing" + kalabalıktan "Hi!"ler. Tarayıcı izin vermezse (ilk dokunuştan önce çoğu vermez) intro sessiz oynar.
+
+## Sayfa çevirme galerisi (önizleme)
+- WORKS'te `flip:true` olan işlerde (şimdilik Print) galeri iki sütun yerine ortadan katlı bir kart olarak açılır; ileri/geri giderken kartın yarısı 3B dönerek sayfa gibi çevrilir. Tıklama (sağ yarı ileri, sol yarı geri), oklar, klavye okları ve kaydırma ile çalışır.
+- Şimdilik yalnızca adreste `?flip=1` varken açılır (`FLIP_ON`). Yayına almak için `FLIP_ON` koşulu kaldırılır.
