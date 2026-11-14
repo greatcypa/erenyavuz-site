@@ -160,3 +160,4 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - Zemin tam genişlikte koyu turkuaz bir kesim matıdır (1 cm / 5 cm çizgiler, cm rakamları, açı çizgileri; `drawMat`). `deskSkip:[1]` ile masa fotoğrafı olan kapak görseli mata konmaz, carousel kapağı olarak kalır.
 - Kaydırırken ekranın ortasından geçen baskı, üzerine gelinmiş gibi hafifçe kalkıp düzleşir (`--f`; üzerine gelme `--h`). "Hareketi azalt" ayarında kapalıdır.
 - Galeri dosya yoklaması da `?v=MEDIA_V` ile yapılır: silinen bir görsel önbellekte kalıp galeride görünmeye devam etmesin. Görsel silince de `MEDIA_V` artırılır.
+- `cut:[3, 4]`: D-Colefor kapsül ve Prizin çek-çıkar matta dikdörtgen kâğıt yerine kendi biçimlerinde kesilmiş durur (şeffaf zeminli `.webp`, kenarında beyaz pay; gölge biçimi izler).

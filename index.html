@@ -926,6 +926,10 @@ ul,ol{padding:0;list-style:none}
 .pr-mk.tr{right:2.1cqw;top:2.1cqw;transform:scaleX(-1)}
 .pr-mk.bl{left:2.1cqw;bottom:5.1cqw;transform:scaleY(-1)}
 .pr-mk.br{right:2.1cqw;bottom:5.1cqw;transform:scale(-1)}
+/* Kendi biçiminde kesilmiş işler (cut): dikdörtgen kâğıt yok, gölge biçimi izler */
+.pr.cut .pr-paper{padding:0;background:none;box-shadow:none;border-radius:0}
+.pr.cut img{filter:drop-shadow(0 1px 1px rgba(0,0,0,.28)) drop-shadow(0 16px 14px rgba(0,0,0,.34))}
+.pr.cut:focus-visible img{filter:drop-shadow(0 0 3px var(--monster)) drop-shadow(0 16px 14px rgba(0,0,0,.34))}
 .pr-reg{position:absolute;left:50%;top:1.2cqw;width:3cqw;height:3cqw;margin-left:-1.5cqw;overflow:visible;fill:none;stroke:var(--monster);stroke-width:1.4;stroke-linecap:round}
 .pr-bar{position:absolute;left:5.5cqw;right:5.5cqw;bottom:2.9cqw;height:2.6cqw;display:flex;align-items:center;gap:.55cqw}
 .pr-bar i{width:2.6cqw;height:2.6cqw;border-radius:.3cqw}
@@ -1153,6 +1157,7 @@ ul,ol{padding:0;list-style:none}
   //   cover = (isteğe bağlı) carousel'de 1.jpg yerine gösterilecek kapak dosyası; galeri yine 1'den başlar
   //   flip  = (isteğe bağlı) true ise galeri iki sütun yerine sayfa çevirir gibi açılır (yalnızca görseller)
   //   desk  = (isteğe bağlı) true ise galeri "kesim matı" olarak açılır: saçılmış baskı provaları (yalnızca görseller)
+  //   cut   = (isteğe bağlı) kesim matında kâğıt provası yerine kendi biçiminde kesilmiş (şeffaf zeminli, beyaz kenarlı) duracak görsel numaraları
   //   deskSkip = (isteğe bağlı) kesim matına konmayacak görsel numaraları (ör. zaten masa fotoğrafı olan kapak)
   //   right = (isteğe bağlı) iki sütunlu galeride sağ sütuna alınacak görsel numaraları (normalde tekler sol, çiftler sağ)
   const WORKS = [
@@ -1163,7 +1168,7 @@ ul,ol{padding:0;list-style:none}
     { folder:"03-kendine-iyi-bak",  k:{tr:"Kampanya",     en:"Campaign"} },
     { folder:"04-efervesan",        k:{tr:"Ambalaj",      en:"Packaging"} },
     { folder:"06-d-vitamini-gunu",  k:{tr:"Sosyal Medya", en:"Social Media"} },
-    { folder:"07-lipozomal-brosur", k:{tr:"Print",        en:"Print"}, desk:true, deskSkip:[1] },
+    { folder:"07-lipozomal-brosur", k:{tr:"Print",        en:"Print"}, desk:true, deskSkip:[1], cut:[3, 4] },
     { folder:"08-d-colefor-fuar",   k:{tr:"Etkinlik",     en:"Event"} },
   ];
 
@@ -2117,7 +2122,7 @@ ul,ol{padding:0;list-style:none}
   /* ---------- İşler: carousel (kapaklar) + tıklayınca altta açılan galeri ---------- */
   const WORK_DIR = "assets/work/";
   // Görsel değiştirince bu sayıyı bir artır: tarayıcıların eski kopyayı göstermesini önler
-  const MEDIA_V = "13";
+  const MEDIA_V = "14";
   const fresh = url => `${url}?v=${MEDIA_V}`;
   const track = $("#track"), count = $("#carCount"), prevBtn = $("#prevBtn"), nextBtn = $("#nextBtn");
   const detail = $("#detail"), dGrid = $("#detailGrid"), dTitle = $("#detailTitle"), dClose = $("#detailClose"), dMore = $("#detailMore");
@@ -2348,11 +2353,13 @@ ul,ol{padding:0;list-style:none}
     let on = -1;
     const items = files.map((file, i) => {
       const el = document.createElement("figure");
-      el.className = "pr"; el.tabIndex = 0; el.setAttribute("role", "button");
-      el.innerHTML = `<div class="pr-paper"><img alt="${w.k[lang]} – Eren Yavuz, ${i + 1}" decoding="async">${MK("tl") + MK("tr") + MK("bl") + MK("br")}
+      const cut = (w.cut || []).includes(+(/(\d+)\.\w+$/.exec(file.url) || [])[1]);
+      el.className = "pr" + (cut ? " cut" : ""); el.tabIndex = 0; el.setAttribute("role", "button");
+      el.innerHTML = cut ? `<div class="pr-paper"><img alt="${w.k[lang]} – Eren Yavuz, ${i + 1}" decoding="async"></div>`
+        : `<div class="pr-paper"><img alt="${w.k[lang]} – Eren Yavuz, ${i + 1}" decoding="async">${MK("tl") + MK("tr") + MK("bl") + MK("br")}
         <svg class="pr-reg" viewBox="0 0 20 20" aria-hidden="true"><g filter="url(#boil)"><circle cx="10" cy="10" r="5.5"/><path d="M10 0V20M0 10H20"/></g></svg>
         <div class="pr-bar" aria-hidden="true"><i style="background:#00AEEF"></i><i style="background:#EC008C"></i><i style="background:#FFE600"></i><i style="background:#1D1D1B"></i><span class="pr-id">CMYK · ${w.k[lang].toUpperCase()} · ${pad2(i + 1)}/${pad2(n)}</span></div></div>`;
-      const it = { el, a:0 }, img = $("img", el);
+      const it = { el, a:0, cut }, img = $("img", el);
       img.addEventListener("load", () => { it.a = img.naturalWidth / img.naturalHeight; ready(); });
       img.addEventListener("error", () => { it.a = -1; el.remove(); ready(); });
       img.src = fresh(file.url);
@@ -2374,7 +2381,7 @@ ul,ol{padding:0;list-style:none}
       drawMat(W, H);
       const cw = W / cols, ch = H / rows, sp = !mob && cols <= 2 ? .64 : .84;   // sütunlar birbirine ne kadar yakın
       live.forEach((it, j) => {
-        const c = j % cols, r = Math.floor(j / cols), inRow = r === rows - 1 ? m - r * cols : cols, k = kOf(it.a);
+        const c = j % cols, r = Math.floor(j / cols), inRow = r === rows - 1 ? m - r * cols : cols, k = it.cut ? 1 / it.a : kOf(it.a);
         const pw = Math.min(cw * (mob ? 1.05 : rows === 1 ? 1 : .76), ch * (rows === 1 ? .8 : 1) / k);
         const st = it.el.style;
         it.yf = (r + .5) / rows * .8 + .1 + JY[j % 6];
