@@ -1161,7 +1161,7 @@ ul,ol{padding:0;list-style:none}
     { folder:"03-kendine-iyi-bak",  k:{tr:"Kampanya",     en:"Campaign"} },
     { folder:"04-efervesan",        k:{tr:"Ambalaj",      en:"Packaging"} },
     { folder:"06-d-vitamini-gunu",  k:{tr:"Sosyal Medya", en:"Social Media"} },
-    { folder:"07-lipozomal-brosur", k:{tr:"Print",        en:"Print"}, flip:true, desk:true, deskSkip:[1] },
+    { folder:"07-lipozomal-brosur", k:{tr:"Print",        en:"Print"}, desk:true, deskSkip:[1] },
     { folder:"08-d-colefor-fuar",   k:{tr:"Etkinlik",     en:"Event"} },
   ];
 
@@ -2316,8 +2316,8 @@ ul,ol{padding:0;list-style:none}
     render();
   }
   /* Baskı masası: işler kesim altlığına hafif açılarla saçılmış baskı provaları gibi durur (kâğıt payı, kesim izleri,
-     CMYK şeridi). Tıklanan öne gelip düzleşir ve büyür. Önizleme: şimdilik yalnızca adreste ?masa=1 varken açılır. */
-  const DESK_ON = /[?&]masa=1(&|$)/.test(location.search);
+     CMYK şeridi). Tıklanan öne gelip düzleşir ve büyür. */
+  const DESK_ON = true;
   let deskLayout = null;
   addEventListener("resize", () => { if (deskLayout) deskLayout(); });
   function buildDesk(w, files){
