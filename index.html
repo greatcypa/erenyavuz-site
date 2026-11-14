@@ -896,6 +896,38 @@ ul,ol{padding:0;list-style:none}
   .fb{aspect-ratio:1/1;--rad:16px}
   .fb-spine{width:44px;margin-left:-22px}
 }
+
+/* ===== Baskı masası (WORKS'te desk:true): kesim altlığına saçılmış baskı provaları ===== */
+.detail-grid.deskwrap{display:block}
+.deskbox{outline:none}
+.desk{position:relative;border-radius:28px;background-color:var(--mint);
+  background-image:linear-gradient(rgba(14,159,142,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(14,159,142,.13) 1px,transparent 1px),linear-gradient(rgba(14,159,142,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(14,159,142,.07) 1px,transparent 1px);
+  background-size:120px 120px,120px 120px,24px 24px,24px 24px;background-position:center}
+.pr{position:absolute;left:var(--x);top:var(--y);width:var(--w);margin:0;z-index:var(--z);cursor:zoom-in;outline:none;container-type:inline-size;
+  transform:translate(-50%,-50%) rotate(var(--r));opacity:0;
+  transition:left .7s var(--ease-out),top .7s var(--ease-out),width .7s var(--ease-out),transform .7s var(--ease-out),opacity .45s ease,filter .45s ease}
+.pr.in{opacity:1}
+.pr:not(.in){transform:translate(-50%,-62%) rotate(calc(var(--r) * 2.2)) scale(1.08)}
+.pr.in:hover:not(.on),.pr.in:focus-visible:not(.on){transform:translate(-50%,-53%) rotate(calc(var(--r) * .45))}
+.pr.on{left:50%;top:50%;width:var(--aw);transform:translate(-50%,-50%) rotate(0deg);z-index:60;cursor:zoom-out}
+.desk.has-on .pr:not(.on){opacity:.42;filter:saturate(.55)}
+.pr-paper{position:relative;padding:5.5cqw 5.5cqw 8.5cqw;border-radius:.5cqw;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  box-shadow:0 1px 2px rgba(0,0,0,.14),0 22px 36px -18px rgba(0,0,0,.4)}
+.pr:focus-visible .pr-paper{box-shadow:0 0 0 3px var(--monster),0 22px 36px -18px rgba(0,0,0,.4)}
+.pr img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}
+/* Kesim izleri ve kayıt (register) işareti: karakterlerle aynı titrek turkuaz çizgi */
+.pr-mk{position:absolute;width:3.4cqw;height:3.4cqw;overflow:visible;fill:none;stroke:var(--monster);stroke-width:1.5;stroke-linecap:round}
+.pr-mk.tl{left:2.1cqw;top:2.1cqw}
+.pr-mk.tr{right:2.1cqw;top:2.1cqw;transform:scaleX(-1)}
+.pr-mk.bl{left:2.1cqw;bottom:5.1cqw;transform:scaleY(-1)}
+.pr-mk.br{right:2.1cqw;bottom:5.1cqw;transform:scale(-1)}
+.pr-reg{position:absolute;left:50%;top:1.2cqw;width:3cqw;height:3cqw;margin-left:-1.5cqw;overflow:visible;fill:none;stroke:var(--monster);stroke-width:1.4;stroke-linecap:round}
+.pr-bar{position:absolute;left:5.5cqw;right:5.5cqw;bottom:2.9cqw;height:2.6cqw;display:flex;align-items:center;gap:.55cqw}
+.pr-bar i{width:2.6cqw;height:2.6cqw;border-radius:.3cqw}
+.pr-id{margin-left:auto;font-size:max(1.75cqw,7px);font-weight:600;letter-spacing:.08em;color:var(--fog);font-variant-numeric:tabular-nums;white-space:nowrap}
+.desk-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);margin-top:var(--s4)}
+@media (max-width:700px){ .desk{border-radius:20px} }
 </style>
 </head>
 <body>
@@ -1117,6 +1149,7 @@ ul,ol{padding:0;list-style:none}
   //   more  = (isteğe bağlı) galerinin altındaki "Daha fazlası için" düğmesinin gideceği adres
   //   cover = (isteğe bağlı) carousel'de 1.jpg yerine gösterilecek kapak dosyası; galeri yine 1'den başlar
   //   flip  = (isteğe bağlı) true ise galeri iki sütun yerine sayfa çevirir gibi açılır (yalnızca görseller)
+  //   desk  = (isteğe bağlı) true ise galeri "baskı masası" olarak açılır: saçılmış baskı provaları (yalnızca görseller)
   //   right = (isteğe bağlı) iki sütunlu galeride sağ sütuna alınacak görsel numaraları (normalde tekler sol, çiftler sağ)
   const WORKS = [
     { folder:"01-peain",            k:{tr:"Product - KV", en:"Product - KV"}, right:[15] },
@@ -1126,7 +1159,7 @@ ul,ol{padding:0;list-style:none}
     { folder:"03-kendine-iyi-bak",  k:{tr:"Kampanya",     en:"Campaign"} },
     { folder:"04-efervesan",        k:{tr:"Ambalaj",      en:"Packaging"} },
     { folder:"06-d-vitamini-gunu",  k:{tr:"Sosyal Medya", en:"Social Media"} },
-    { folder:"07-lipozomal-brosur", k:{tr:"Print",        en:"Print"}, flip:true },
+    { folder:"07-lipozomal-brosur", k:{tr:"Print",        en:"Print"}, flip:true, desk:true },
     { folder:"08-d-colefor-fuar",   k:{tr:"Etkinlik",     en:"Event"} },
   ];
 
@@ -2182,6 +2215,7 @@ ul,ol{padding:0;list-style:none}
     if (tok !== openToken) return;
     dGrid.innerHTML = "";
     if (!files.length){ dGrid.innerHTML = `<p class="d-note">${T[lang]["detail.empty"]}</p>`; return; }
+    if (w.desk && DESK_ON && files.length > 1 && files.every(f => !f.video)){ buildDesk(w, files); return; }
     if (w.flip && FLIP_ON && files.length > 1 && files.every(f => !f.video)){ buildFlip(w, files); return; }
     dGrid.classList.toggle("one", files.length === 1);
     const cols = [0, 1].map(() => { const c = document.createElement("div"); c.className = "d-col"; dGrid.appendChild(c); return c; });
@@ -2275,6 +2309,89 @@ ul,ol{padding:0;list-style:none}
     fb.addEventListener("pointercancel", () => { px = null; });
     fb.addEventListener("click", e => { if (swiped){ swiped = false; return; } const b = fb.getBoundingClientRect(); go(e.clientX - b.left > b.width / 2 ? 1 : -1); });
     render();
+  }
+  /* Baskı masası: işler kesim altlığına hafif açılarla saçılmış baskı provaları gibi durur (kâğıt payı, kesim izleri,
+     CMYK şeridi). Tıklanan öne gelip düzleşir ve büyür. Önizleme: şimdilik yalnızca adreste ?masa=1 varken açılır. */
+  const DESK_ON = /[?&]masa=1(&|$)/.test(location.search);
+  let deskLayout = null;
+  addEventListener("resize", () => { if (deskLayout) deskLayout(); });
+  function buildDesk(w, files){
+    const n = files.length, en = lang === "en", pad2 = v => String(v).padStart(2, "0");
+    const ARROW = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 16.5h21M18.5 8.5l8 8-8 8"/></svg>`;
+    const MK = c => `<svg class="pr-mk ${c}" viewBox="0 0 20 20" aria-hidden="true"><g filter="url(#boil)"><path d="M0 20H13M20 0V13"/></g></svg>`;
+    const hint = en ? "Click a print to pick it up" : "Yakından bakmak için bir baskıya tıkla";
+    dGrid.className = "detail-grid deskwrap";
+    dGrid.innerHTML = `<div class="deskbox"><div class="desk"></div>
+      <div class="desk-bar"><div class="car-info"><span class="car-count"></span><span class="car-hint">${hint}</span></div>
+      <div class="car-arrows"><button type="button" class="arrow prev" aria-label="${en ? "Previous" : "Önceki"}">${ARROW}</button><button type="button" class="arrow next" aria-label="${en ? "Next" : "Sonraki"}">${ARROW}</button></div></div></div>`;
+    const box = $(".deskbox", dGrid), desk = $(".desk", box), count = $(".car-count", box);
+    const ROT = [-6, 4.5, 3.5, -5, 7, -3], JX = [-.02, .025, .03, -.03, .01, -.015], JY = [.02, -.03, -.02, .035, -.01, .02];
+    let on = -1;
+    const items = files.map((file, i) => {
+      const el = document.createElement("figure");
+      el.className = "pr"; el.tabIndex = 0; el.setAttribute("role", "button");
+      el.innerHTML = `<div class="pr-paper"><img alt="${w.k[lang]} – Eren Yavuz, ${i + 1}" decoding="async">${MK("tl") + MK("tr") + MK("bl") + MK("br")}
+        <svg class="pr-reg" viewBox="0 0 20 20" aria-hidden="true"><g filter="url(#boil)"><circle cx="10" cy="10" r="5.5"/><path d="M10 0V20M0 10H20"/></g></svg>
+        <div class="pr-bar" aria-hidden="true"><i style="background:#00AEEF"></i><i style="background:#EC008C"></i><i style="background:#FFE600"></i><i style="background:#1D1D1B"></i><span class="pr-id">${w.k[lang].toUpperCase()} · ${pad2(i + 1)}/${pad2(n)}</span></div></div>`;
+      const it = { el, a:0 }, img = $("img", el);
+      img.addEventListener("load", () => { it.a = img.naturalWidth / img.naturalHeight; ready(); });
+      img.addEventListener("error", () => { it.a = -1; el.remove(); ready(); });
+      img.src = fresh(file.url);
+      el.addEventListener("click", e => { e.stopPropagation(); pick(on === i ? -1 : i); });
+      el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); pick(on === i ? -1 : i); } });
+      desk.appendChild(el);
+      return it;
+    });
+    const kOf = a => .89 / a + .14;      // kâğıdın yüksekliği / genişliği (paylar dahil)
+    function layout(){
+      if (!desk.isConnected){ deskLayout = null; return; }
+      const live = items.filter(it => it.a > 0), m = live.length;
+      if (!m) return;
+      const W = desk.clientWidth, mob = W < 620;
+      const cols = mob ? Math.min(m, 2) : (m <= 3 ? m : Math.min(4, Math.ceil(m / 2))), rows = Math.ceil(m / cols);
+      const base = mob ? W * 1.25 : Math.min(innerHeight * .8, W * .62);
+      const H = Math.round(base * (rows === 1 ? .72 : rows / 2));
+      desk.style.height = H + "px";
+      const cw = W / cols, ch = H / rows, sp = !mob && cols <= 2 ? .64 : .84;   // sütunlar birbirine ne kadar yakın
+      live.forEach((it, j) => {
+        const c = j % cols, r = Math.floor(j / cols), inRow = r === rows - 1 ? m - r * cols : cols, k = kOf(it.a);
+        const pw = Math.min(cw * (mob ? 1.05 : .76), ch / k);
+        const st = it.el.style;
+        st.setProperty("--x", (((c + .5) / inRow * sp + (1 - sp) / 2 + JX[j % 6]) * 100).toFixed(2) + "%");
+        st.setProperty("--y", (((r + .5) / rows * .8 + .1 + JY[j % 6]) * 100).toFixed(2) + "%");
+        st.setProperty("--w", pw.toFixed(1) + "px");
+        st.setProperty("--r", ROT[j % 6] + "deg");
+        st.setProperty("--z", j + 1);
+        st.setProperty("--aw", Math.min(W * .95, H * .95 / k).toFixed(1) + "px");
+      });
+    }
+    let shown = false;
+    function ready(){
+      if (items.some(it => it.a === 0)) return;
+      layout();
+      if (shown) return; shown = true;
+      requestAnimationFrame(() => items.forEach((it, j) => setTimeout(() => it.el.classList.add("in"), reduce ? 0 : 90 * j)));
+    }
+    function pick(i){
+      on = i;
+      items.forEach((it, j) => { it.el.classList.toggle("on", j === i); it.el.setAttribute("aria-pressed", String(j === i)); });
+      desk.classList.toggle("has-on", i >= 0);
+      count.textContent = i >= 0 ? `${pad2(i + 1)} / ${pad2(n)}` : "";
+      if (i >= 0){
+        const b = desk.getBoundingClientRect();
+        if (b.top < 70 || b.bottom > innerHeight) desk.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block:"center" });
+      }
+    }
+    const step = d => { let i = on; do { i = (i + d + n) % n; } while (items[i].a < 0 && i !== on); pick(i); };
+    desk.addEventListener("click", () => pick(-1));
+    $(".prev", box).addEventListener("click", () => step(on < 0 ? 0 : -1));
+    $(".next", box).addEventListener("click", () => step(on < 0 ? 1 - n + n : 1));
+    box.addEventListener("keydown", e => {
+      if (e.key === "Escape" && on >= 0){ e.stopPropagation(); pick(-1); }
+      else if (e.key === "ArrowRight"){ e.preventDefault(); step(1); }
+      else if (e.key === "ArrowLeft"){ e.preventDefault(); step(on < 0 ? 0 : -1); }
+    });
+    deskLayout = layout;
   }
   function closeWork(){
     openIdx = -1; openToken++;

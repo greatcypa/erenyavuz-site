@@ -153,3 +153,7 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 ## Sayfa çevirme galerisi (önizleme)
 - WORKS'te `flip:true` olan işlerde (şimdilik Print) galeri iki sütun yerine ortadan katlı bir kart olarak açılır; ileri/geri giderken kartın yarısı 3B dönerek sayfa gibi çevrilir. Tıklama (sağ yarı ileri, sol yarı geri), oklar, klavye okları ve kaydırma ile çalışır.
 - Şimdilik yalnızca adreste `?flip=1` varken açılır (`FLIP_ON`). Yayına almak için `FLIP_ON` koşulu kaldırılır.
+
+## Baskı masası (önizleme)
+- WORKS'te `desk:true` olan işlerde (şimdilik Print) galeri bir kesim altlığı olarak açılır: işler hafif açılarla saçılmış baskı provalarıdır (kâğıt payı ve grenı, titrek turkuaz kesim izleri, kayıt işareti, CMYK şeridi, "PRINT · 01/04" etiketi). Tıklanan baskı öne gelir, düzleşir ve büyür; oklar ve klavye oklarıyla sıradakine geçilir, Esc ya da altlığa tıklamak bırakır.
+- Şimdilik yalnızca adreste `?masa=1` varken açılır (`DESK_ON`).
