@@ -2130,7 +2130,7 @@ ul,ol{padding:0;list-style:none}
   /* ---------- İşler: carousel (kapaklar) + tıklayınca altta açılan galeri ---------- */
   const WORK_DIR = "assets/work/";
   // Görsel değiştirince bu sayıyı bir artır: tarayıcıların eski kopyayı göstermesini önler
-  const MEDIA_V = "17";
+  const MEDIA_V = "18";
   const fresh = url => `${url}?v=${MEDIA_V}`;
   const track = $("#track"), count = $("#carCount"), prevBtn = $("#prevBtn"), nextBtn = $("#nextBtn");
   const detail = $("#detail"), dGrid = $("#detailGrid"), dTitle = $("#detailTitle"), dClose = $("#detailClose"), dMore = $("#detailMore");
@@ -2374,7 +2374,18 @@ ul,ol{padding:0;list-style:none}
         <svg class="pr-reg" viewBox="0 0 20 20" aria-hidden="true"><g filter="url(#boil)"><circle cx="10" cy="10" r="5.5"/><path d="M10 0V20M0 10H20"/></g></svg>
         <div class="pr-bar" aria-hidden="true"><i style="background:#00AEEF"></i><i style="background:#EC008C"></i><i style="background:#FFE600"></i><i style="background:#1D1D1B"></i><span class="pr-id">CMYK · ${w.k[lang].toUpperCase()} · ${pad2(i + 1)}/${pad2(n)}</span></div></div>`;
       const it = { el, a:0, cut }, img = $("img", el);
-      img.addEventListener("load", () => { it.a = img.naturalWidth / img.naturalHeight; ready(); });
+      img.addEventListener("load", () => {
+        it.a = img.naturalWidth / img.naturalHeight;
+        // raptiye kâğıdın başladığı yere batsın: düzgün olmayan kenarlarda (ör. yırtık kenarlı logo) üst ortadaki boşluğu ölç
+        const pinEl = $(".pin", el);
+        if (pinEl) try {
+          const cw0 = 80, ch0 = Math.max(1, Math.round(cw0 / it.a)), cv = document.createElement("canvas"); cv.width = cw0; cv.height = ch0;
+          const cx = cv.getContext("2d"); cx.drawImage(img, 0, 0, cw0, ch0);
+          const col = cx.getImageData(cw0 >> 1, 0, 1, ch0).data; let y0 = 0; while (y0 < ch0 && col[y0 * 4 + 3] < 128) y0++;
+          if (y0 < ch0 * .6) pinEl.style.top = (y0 / cw0 * 100 - 11.6).toFixed(1) + "cqw";
+        } catch {}
+        ready();
+      });
       img.addEventListener("error", () => { it.a = -1; el.remove(); ready(); });
       img.src = fresh(file.url);
       el.addEventListener("click", e => { e.stopPropagation(); pick(on === i ? -1 : i); });
@@ -2396,14 +2407,14 @@ ul,ol{padding:0;list-style:none}
       const cw = W / cols, ch = H / rows, sp = cork && !mob ? .62 : !mob && cols <= 2 ? .64 : .84;   // sütunlar birbirine ne kadar yakın
       live.forEach((it, j) => {
         const c = j % cols, r = Math.floor(j / cols), inRow = r === rows - 1 ? m - r * cols : cols, k = it.cut ? 1 / it.a : kOf(it.a);
-        const pw = Math.min(cw * (mob ? 1.05 : rows === 1 ? 1 : .76), ch * (cork ? .93 : rows === 1 ? .8 : 1) / k);
+        const pw = Math.min(cw * (mob ? 1.05 : rows === 1 ? 1 : .76) * (cork && !mob && it.a > 1.5 ? 1.4 : 1), ch * (cork ? .93 : rows === 1 ? .8 : 1) / k);
         const st = it.el.style;
         it.yf = cork ? (r + .5) / rows * .76 + .15 + JY[j % 6] * .6 : (r + .5) / rows * .8 + .1 + JY[j % 6]; it.j = j;
         st.setProperty("--x", (((c + .5) / inRow * sp + (1 - sp) / 2 + JX[j % 6]) * 100).toFixed(2) + "%");
         st.setProperty("--y", (it.yf * 100).toFixed(2) + "%");
         st.setProperty("--w", pw.toFixed(1) + "px");
         st.setProperty("--r", ROT[j % 6] + "deg");
-        st.setProperty("--z", j + 1);
+        st.setProperty("--z", cork && it.a > 1.5 ? 20 : j + 1);   // geniş başlık/logo hep üstte dursun
         st.setProperty("--aw", Math.min(W * (cork ? .86 : .95), H * (cork ? .8 : .95) / k).toFixed(1) + "px");
       });
     }
