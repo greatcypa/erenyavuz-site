@@ -165,4 +165,4 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 
 ## Mantar pano (İllüstrasyon galerisi)
 - `desk:"cork"`: kesim matıyla aynı düzenek, zemin tam genişlikte mantar pano (`assets/ui/cork.jpg`). İşler zemini temizlenmiş kartlardır (`cut:"all"`, şeffaf `.webp`), her biri bir raptiyeyle (`assets/ui/pin-*.webp`) tutturulur ve kaydırırken raptiyenin battığı noktadan sallanır. Tıklanan kart öne gelip büyür.
-- Carousel kapağı (`kapak.jpg`) panoya iğnelenmiş üç karttan oluşur.
+- Carousel kapağı (`kapak.jpg`) yalnızca Bitebug kartıdır. Panonun ilk öğesi (`1.webp`) seri logosudur; geniş öğeler hep üstte durur ve raptiye kâğıdın başladığı yeri kendisi bulur.
