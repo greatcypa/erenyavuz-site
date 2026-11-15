@@ -162,3 +162,7 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - Galeri dosya yoklaması da `?v=MEDIA_V` ile yapılır: silinen bir görsel önbellekte kalıp galeride görünmeye devam etmesin. Görsel silince de `MEDIA_V` artırılır.
 - `cut:[3, 4]`: D-Colefor kapsül ve Prizin çek-çıkar matta dikdörtgen kâğıt yerine kendi biçimlerinde kesilmiş durur (şeffaf zeminli `.webp`, kenarında beyaz pay; gölge biçimi izler).
 - Kaydırma hareketi güncellendi: her baskı kaydırma boyunca birkaç derece döner, ekranın ortasından geçerken düzleşip kalkar (`--rr`, `--ly`; hesap JS'te). `cut` listesine 8 (NMN matbaa provası, kendi kesim izleriyle) eklendi.
+
+## Mantar pano (İllüstrasyon galerisi)
+- `desk:"cork"`: kesim matıyla aynı düzenek, zemin tam genişlikte mantar pano (`assets/ui/cork.jpg`). İşler zemini temizlenmiş kartlardır (`cut:"all"`, şeffaf `.webp`), her biri bir raptiyeyle (`assets/ui/pin-*.webp`) tutturulur ve kaydırırken raptiyenin battığı noktadan sallanır. Tıklanan kart öne gelip büyür.
+- Carousel kapağı (`kapak.jpg`) panoya iğnelenmiş üç karttan oluşur.

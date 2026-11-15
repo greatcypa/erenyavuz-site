@@ -932,6 +932,10 @@ ul,ol{padding:0;list-style:none}
 .pr.cut .pr-paper{padding:0;background:none;box-shadow:none;border-radius:0}
 .pr.cut img{filter:drop-shadow(0 1px 1px rgba(0,0,0,.28)) drop-shadow(0 16px 14px rgba(0,0,0,.34))}
 .pr.cut:focus-visible img{filter:drop-shadow(0 0 3px var(--monster)) drop-shadow(0 16px 14px rgba(0,0,0,.34))}
+/* Mantar pano (desk:"cork"): kartlar raptiyeyle tutturulur, raptiyenin battığı noktadan sallanır */
+.desk.cork{background:#b8763c url("assets/ui/cork.jpg") center/cover;box-shadow:inset 0 0 90px rgba(70,30,0,.38)}
+.desk.cork .pr{transform-origin:50% 6%}
+.pr img.pin{position:absolute;width:auto;height:17cqw;filter:drop-shadow(-.5cqw 1.1cqw .6cqw rgba(0,0,0,.42))}
 .pr-reg{position:absolute;left:50%;top:1.2cqw;width:3cqw;height:3cqw;margin-left:-1.5cqw;overflow:visible;fill:none;stroke:var(--monster);stroke-width:1.4;stroke-linecap:round}
 .pr-bar{position:absolute;left:5.5cqw;right:5.5cqw;bottom:2.9cqw;height:2.6cqw;display:flex;align-items:center;gap:.55cqw}
 .pr-bar i{width:2.6cqw;height:2.6cqw;border-radius:.3cqw}
@@ -1158,14 +1162,16 @@ ul,ol{padding:0;list-style:none}
   //   more  = (isteğe bağlı) galerinin altındaki "Daha fazlası için" düğmesinin gideceği adres
   //   cover = (isteğe bağlı) carousel'de 1.jpg yerine gösterilecek kapak dosyası; galeri yine 1'den başlar
   //   flip  = (isteğe bağlı) true ise galeri iki sütun yerine sayfa çevirir gibi açılır (yalnızca görseller)
-  //   desk  = (isteğe bağlı) true ise galeri "kesim matı" olarak açılır: saçılmış baskı provaları (yalnızca görseller)
+  //   desk  = (isteğe bağlı) true ise galeri "kesim matı" olarak açılır: saçılmış baskı provaları (yalnızca görseller);
+  //           "cork" ise mantar pano olur: işler raptiyeyle tutturulmuş kartlardır
+  //   cut   : "all" yazılırsa bütün görseller kendi biçiminde durur
   //   cut   = (isteğe bağlı) kesim matında kâğıt provası yerine kendi biçiminde kesilmiş (şeffaf zeminli, beyaz kenarlı) duracak görsel numaraları
   //   deskSkip = (isteğe bağlı) kesim matına konmayacak görsel numaraları (ör. zaten masa fotoğrafı olan kapak)
   //   right = (isteğe bağlı) iki sütunlu galeride sağ sütuna alınacak görsel numaraları (normalde tekler sol, çiftler sağ)
   const WORKS = [
     { folder:"01-peain",            k:{tr:"Product - KV", en:"Product - KV"}, right:[15] },
     { folder:"05-clay-storyboard",  k:{tr:"Video - Motion", en:"Video - Motion"}, more:VIMEO },
-    { folder:"10-illustrasyon",     k:{tr:"İllüstrasyon", en:"Illustration"}, cover:"kapak.jpg" },
+    { folder:"10-illustrasyon",     k:{tr:"İllüstrasyon", en:"Illustration"}, cover:"kapak.jpg", desk:"cork", cut:"all" },
     { folder:"09-infografik",       k:{tr:"İnfografik",   en:"Infographic"} },
     { folder:"03-kendine-iyi-bak",  k:{tr:"Kampanya",     en:"Campaign"} },
     { folder:"04-efervesan",        k:{tr:"Ambalaj",      en:"Packaging"} },
@@ -2124,7 +2130,7 @@ ul,ol{padding:0;list-style:none}
   /* ---------- İşler: carousel (kapaklar) + tıklayınca altta açılan galeri ---------- */
   const WORK_DIR = "assets/work/";
   // Görsel değiştirince bu sayıyı bir artır: tarayıcıların eski kopyayı göstermesini önler
-  const MEDIA_V = "16";
+  const MEDIA_V = "17";
   const fresh = url => `${url}?v=${MEDIA_V}`;
   const track = $("#track"), count = $("#carCount"), prevBtn = $("#prevBtn"), nextBtn = $("#nextBtn");
   const detail = $("#detail"), dGrid = $("#detailGrid"), dTitle = $("#detailTitle"), dClose = $("#detailClose"), dMore = $("#detailMore");
@@ -2333,12 +2339,16 @@ ul,ol{padding:0;list-style:none}
     const n = files.length, en = lang === "en", pad2 = v => String(v).padStart(2, "0");
     const ARROW = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 16.5h21M18.5 8.5l8 8-8 8"/></svg>`;
     const MK = c => `<svg class="pr-mk ${c}" viewBox="0 0 20 20" aria-hidden="true"><g filter="url(#boil)"><path d="M0 20H13M20 0V13"/></g></svg>`;
-    const hint = en ? "Click a print to pick it up" : "Yakından bakmak için bir baskıya tıkla";
+    const cork = w.desk === "cork";
+    // raptiyeler: [renk, iğne ucunun yatay konumu (0..1), en/boy oranı]
+    const PINS = [["red", .006, 845 / 950], ["blue", .212, 722 / 1157], ["yellow", .004, 1053 / 1123]];
+    const hint = cork ? (en ? "Click a card to take a closer look" : "Yakından bakmak için bir karta tıkla") : (en ? "Click a print to pick it up" : "Yakından bakmak için bir baskıya tıkla");
     dGrid.className = "detail-grid deskwrap";
     dGrid.innerHTML = `<div class="deskbox"><div class="desk"><svg class="mat" aria-hidden="true"></svg></div>
       <div class="desk-bar"><div class="car-info"><span class="car-count"></span><span class="car-hint">${hint}</span></div>
       <div class="car-arrows"><button type="button" class="arrow prev" aria-label="${en ? "Previous" : "Önceki"}">${ARROW}</button><button type="button" class="arrow next" aria-label="${en ? "Next" : "Sonraki"}">${ARROW}</button></div></div></div>`;
     const box = $(".deskbox", dGrid), desk = $(".desk", box), mat = $(".mat", desk), count = $(".car-count", box);
+    desk.classList.toggle("cork", cork);
     // Kesim matı: 1 cm'lik ince, 5 cm'lik kalın çizgiler, kenarda cm rakamları, köşeden açı çizgileri
     function drawMat(W, H){
       const u = W < 620 ? 18 : 24, m = u, x1 = W - m, y1 = H - m;
@@ -2355,9 +2365,11 @@ ul,ol{padding:0;list-style:none}
     let on = -1;
     const items = files.map((file, i) => {
       const el = document.createElement("figure");
-      const cut = (w.cut || []).includes(+(/(\d+)\.\w+$/.exec(file.url) || [])[1]);
+      const cut = w.cut === "all" || (w.cut || []).includes(+(/(\d+)\.\w+$/.exec(file.url) || [])[1]);
+      const pn = PINS[i % PINS.length];
+      const pin = cork ? `<img class="pin" alt="" src="assets/ui/pin-${pn[0]}.webp" style="left:calc(50% - ${(17 * pn[2] * pn[1]).toFixed(2)}cqw);top:-11.6cqw">` : "";
       el.className = "pr" + (cut ? " cut" : ""); el.tabIndex = 0; el.setAttribute("role", "button");
-      el.innerHTML = cut ? `<div class="pr-paper"><img alt="${w.k[lang]} – Eren Yavuz, ${i + 1}" decoding="async"></div>`
+      el.innerHTML = cut ? `<div class="pr-paper"><img alt="${w.k[lang]} – Eren Yavuz, ${i + 1}" decoding="async">${pin}</div>`
         : `<div class="pr-paper"><img alt="${w.k[lang]} – Eren Yavuz, ${i + 1}" decoding="async">${MK("tl") + MK("tr") + MK("bl") + MK("br")}
         <svg class="pr-reg" viewBox="0 0 20 20" aria-hidden="true"><g filter="url(#boil)"><circle cx="10" cy="10" r="5.5"/><path d="M10 0V20M0 10H20"/></g></svg>
         <div class="pr-bar" aria-hidden="true"><i style="background:#00AEEF"></i><i style="background:#EC008C"></i><i style="background:#FFE600"></i><i style="background:#1D1D1B"></i><span class="pr-id">CMYK · ${w.k[lang].toUpperCase()} · ${pad2(i + 1)}/${pad2(n)}</span></div></div>`;
@@ -2380,19 +2392,19 @@ ul,ol{padding:0;list-style:none}
       const base = mob ? W * 1.25 : Math.min(innerHeight * .8, W * .62);
       const H = Math.round(base * (rows === 1 ? .86 : rows / 2));
       desk.style.height = H + "px";
-      drawMat(W, H);
-      const cw = W / cols, ch = H / rows, sp = !mob && cols <= 2 ? .64 : .84;   // sütunlar birbirine ne kadar yakın
+      if (!cork) drawMat(W, H);
+      const cw = W / cols, ch = H / rows, sp = cork && !mob ? .62 : !mob && cols <= 2 ? .64 : .84;   // sütunlar birbirine ne kadar yakın
       live.forEach((it, j) => {
         const c = j % cols, r = Math.floor(j / cols), inRow = r === rows - 1 ? m - r * cols : cols, k = it.cut ? 1 / it.a : kOf(it.a);
-        const pw = Math.min(cw * (mob ? 1.05 : rows === 1 ? 1 : .76), ch * (rows === 1 ? .8 : 1) / k);
+        const pw = Math.min(cw * (mob ? 1.05 : rows === 1 ? 1 : .76), ch * (cork ? .93 : rows === 1 ? .8 : 1) / k);
         const st = it.el.style;
-        it.yf = (r + .5) / rows * .8 + .1 + JY[j % 6]; it.j = j;
+        it.yf = cork ? (r + .5) / rows * .76 + .15 + JY[j % 6] * .6 : (r + .5) / rows * .8 + .1 + JY[j % 6]; it.j = j;
         st.setProperty("--x", (((c + .5) / inRow * sp + (1 - sp) / 2 + JX[j % 6]) * 100).toFixed(2) + "%");
-        st.setProperty("--y", (((r + .5) / rows * .8 + .1 + JY[j % 6]) * 100).toFixed(2) + "%");
+        st.setProperty("--y", (it.yf * 100).toFixed(2) + "%");
         st.setProperty("--w", pw.toFixed(1) + "px");
         st.setProperty("--r", ROT[j % 6] + "deg");
         st.setProperty("--z", j + 1);
-        st.setProperty("--aw", Math.min(W * .95, H * .95 / k).toFixed(1) + "px");
+        st.setProperty("--aw", Math.min(W * (cork ? .86 : .95), H * (cork ? .8 : .95) / k).toFixed(1) + "px");
       });
     }
     let shown = false;
