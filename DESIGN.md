@@ -171,3 +171,4 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 - `<head>` betiği Android'de (ve belleği 2 GB ve altı cihazlarda) `html.lite` ekler: çizgileri titreten SVG süzgeci (`#boil`) kapatılır, giriş deseni tek seferde gelir. Süzgeç her 125 ms'de bütün karakterleri yeniden çizdirdiği için zayıf telefonlarda siteyi kastırıyordu.
 - Intro Android'de yalnızca güçlü cihazlarda (8 GB+ bellek ve 8 çekirdek) oynar. Deneme: `?lite=1` / `?lite=0`.
 - Herkes için: titreme yalnızca ekranda karakter varken çalışır; intro ve pano katmanları `will-change` ile ayrı katmana alınır; betik hata verirse intro kilidi hemen kalkar.
+- Mantar panoda dönme merkezi raptiyenin ucudur (`--py`, her parçada ölçülür). Üzerine gelince kart raptiyeden asılı kâğıt gibi sallanıp durulur (`pinSwing`); kaydırırken de yalnızca döner, raptiye yer değiştirmez.
