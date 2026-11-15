@@ -27,17 +27,26 @@
 /* Intro (paraşütle iniş) oynayacak mı? İlk boyamadan önce karar verilir ki giriş ekranı bir an görünüp kaybolmasın.
    Her ziyarette bir kez oynar; adresin sonuna ?intro=1 eklenince her seferinde oynar. */
 (function(){
-  var INTRO_AUTO = true, d = document.documentElement, play = false;
+  var INTRO_AUTO = true, d = document.documentElement, play = false, lite = false;
   try {
+    /* Hafif mod: Android telefonlarda (ve belleği az cihazlarda) site kasmasın diye çizgilerin sürekli titremesi kapatılır.
+       Intro ise yalnızca güçlü Android'lerde (8 GB+, 8 çekirdek) oynar; zayıf olanlarda site doğrudan açılır.
+       Denemek için adrese ?lite=1 (aç) ya da ?lite=0 (kapat) eklenir. */
+    var q = location.search, mem = navigator.deviceMemory || 8, cores = navigator.hardwareConcurrency || 8;
+    lite = /[?&]lite=1(&|$)/.test(q) || (!/[?&]lite=0(&|$)/.test(q) && (mem <= 2 || /Android/i.test(navigator.userAgent)));
+    var weak = lite && !(mem >= 8 && cores >= 8);
+    if (lite) d.classList.add("lite");
     var forced = /[?&]intro=1(&|$)/.test(location.search);
     var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
     var seen = false; try { seen = sessionStorage.getItem("intro") === "1"; } catch (e) {}
-    play = forced || (INTRO_AUTO && !calm && !seen && !location.hash);
+    play = forced || (INTRO_AUTO && !calm && !seen && !location.hash && !weak);
   } catch (e) {}
   if (!play) return;
   d.classList.add("intro-on");
   // Güvenlik: bir şey ters giderse site kilitli kalmasın
-  setTimeout(function(){ if (!window.__introDone) d.classList.remove("intro-on"); }, 9000);
+  var bail = function(){ if (!window.__introDone) d.classList.remove("intro-on"); };
+  setTimeout(bail, 6000);
+  window.addEventListener("error", bail);      // betik hata verirse (ör. eski tarayıcı) sayfa boş kalmasın
 })();
 </script>
 <script type="application/ld+json">
@@ -843,7 +852,12 @@ ul,ol{padding:0;list-style:none}
   .d-item{transition:none;opacity:1;transform:none}
 }
 
+/* ===== Hafif mod (.lite): titreme süzgeci yok, desen tek seferde gelir ===== */
+.lite g[filter]{filter:none}
+.lite .pattern .pg{transition:none;opacity:1;transform:none}
+
 /* ===== Intro: paraşütle kalabalığın içine iniş ===== */
+.intro-on #hero{will-change:transform}
 .intro-on,.intro-on body{overflow:hidden}
 .intro-on #hero{transform:translateY(100vh)}
 .intro-on .nav{transform:translateY(-100%)}
@@ -859,7 +873,7 @@ ul,ol{padding:0;list-style:none}
 .intro-skip{position:absolute;right:var(--pad);bottom:max(var(--pad),env(safe-area-inset-bottom));padding:10px 18px;border:2px solid var(--monster);border-radius:999px;background:var(--paper);color:var(--ink);font:500 15px/1 var(--font);cursor:pointer}
 .intro.land .intro-skip{opacity:0;transition:opacity .2s}
 .m.diver{position:fixed;left:0;top:0;z-index:96;pointer-events:none;will-change:transform;transform-origin:50% 50%}
-.diver .mon{transform-origin:50% -55%}
+.diver .mon{transform-origin:50% -55%;will-change:transform}
 .diver .ln{transition:none;stroke-dashoffset:0;pointer-events:none;cursor:default}
 .diver .fl{transition:none;opacity:1}
 .diver .strings .ln{stroke-width:2.2}
@@ -905,7 +919,7 @@ ul,ol{padding:0;list-style:none}
   background:radial-gradient(120% 90% at 50% 40%,#0C7A6D 0%,#096257 70%,#07544B 100%)}
 .desk .mat{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;fill:none;stroke:#CFF3EB;font:600 10px/1 var(--font);letter-spacing:.04em}
 .desk .mat text{fill:#CFF3EB;stroke:none;opacity:.6}
-.pr{position:absolute;left:var(--x);top:var(--y);width:var(--w);margin:0;z-index:var(--z);cursor:zoom-in;outline:none;container-type:inline-size;
+.pr{position:absolute;left:var(--x);top:var(--y);width:var(--w);margin:0;z-index:var(--z);cursor:zoom-in;outline:none;container-type:inline-size;will-change:transform;
   transform:translate(-50%,-50%) rotate(var(--r));opacity:0;
   transition:left .7s var(--ease-out),top .7s var(--ease-out),width .7s var(--ease-out),transform .7s var(--ease-out),opacity .45s ease,filter .45s ease}
 .pr.in{opacity:1}
@@ -2567,9 +2581,11 @@ ul,ol{padding:0;list-style:none}
     if (e.animationName === "wave") e.target.closest(".m")?.classList.remove("waving");
   });
 
-  if (!reduce){
+  // Çizgilerin titremesi: süzgeç her değişimde bütün karakterleri yeniden çizdirir, bu yüzden yalnızca
+  // ekranda bir karakter varken çalışır; hafif modda hiç çalışmaz.
+  if (!reduce && !document.documentElement.classList.contains("lite")){
     const noise = $("#boilNoise"); let k = 0;
-    setInterval(() => { if (!document.hidden) noise.setAttribute("seed", String(1 + (k++ % 3))); }, 125);
+    setInterval(() => { if (!document.hidden && (visible.size || document.documentElement.classList.contains("intro-on"))) noise.setAttribute("seed", String(1 + (k++ % 3))); }, 125);
   }
 
   let px = innerWidth / 2, py = innerHeight * .3, eyeQueued = false;

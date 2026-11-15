@@ -166,3 +166,8 @@ Kural: Sayfada tek renk vurgu var, o da turkuaz. Başlıkta tek bir kelimeyi ren
 ## Mantar pano (İllüstrasyon galerisi)
 - `desk:"cork"`: kesim matıyla aynı düzenek, zemin tam genişlikte mantar pano (`assets/ui/cork.jpg`). İşler zemini temizlenmiş kartlardır (`cut:"all"`, şeffaf `.webp`), her biri bir raptiyeyle (`assets/ui/pin-*.webp`) tutturulur ve kaydırırken raptiyenin battığı noktadan sallanır. Tıklanan kart öne gelip büyür.
 - Carousel kapağı (`kapak.jpg`) yalnızca Bitebug kartıdır. Panonun ilk öğesi (`1.webp`) seri logosudur; geniş öğeler hep üstte durur ve raptiye kâğıdın başladığı yeri kendisi bulur.
+
+## Hafif mod (.lite)
+- `<head>` betiği Android'de (ve belleği 2 GB ve altı cihazlarda) `html.lite` ekler: çizgileri titreten SVG süzgeci (`#boil`) kapatılır, giriş deseni tek seferde gelir. Süzgeç her 125 ms'de bütün karakterleri yeniden çizdirdiği için zayıf telefonlarda siteyi kastırıyordu.
+- Intro Android'de yalnızca güçlü cihazlarda (8 GB+ bellek ve 8 çekirdek) oynar. Deneme: `?lite=1` / `?lite=0`.
+- Herkes için: titreme yalnızca ekranda karakter varken çalışır; intro ve pano katmanları `will-change` ile ayrı katmana alınır; betik hata verirse intro kilidi hemen kalkar.
